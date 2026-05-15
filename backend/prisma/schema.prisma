@@ -1,0 +1,135 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+//model pasien---------------------------------------------------------------------
+model RegPeriksa {
+  no_reg          String @db.VarChar(8)
+  no_rawat        String @id @db.VarChar(17)
+
+  tgl_registrasi  DateTime @db.Date
+  jam_reg         DateTime @db.Time(0)
+
+  kd_dokter       String @db.VarChar(20)
+  no_rkm_medis    String @db.VarChar(15)
+  kd_poli         String @db.Char(5)
+
+  p_jawab         String @db.VarChar(100)
+  almt_pj         String @db.VarChar(200)
+  hubunganpj      String @db.VarChar(20)
+
+  biaya_reg       Float @db.Double
+
+  stts            StatusRegPeriksa
+  stts_daftar     StatusDaftar
+  status_lanjut   StatusLanjut
+
+  kd_pj           String @db.Char(3)
+
+  umurdaftar      Int
+
+  sttsumur        StatusUmur
+  status_bayar    StatusBayar
+  status_poli     StatusPoli
+
+  @@map("reg_periksa")
+}
+
+enum StatusRegPeriksa {
+  Belum
+  Sudah
+  Batal
+  Berkas_Diterima @map("Berkas Diterima")
+  Dirujuk
+  Meninggal
+  Dirawat
+  Pulang_Paksa    @map("Pulang Paksa")
+}
+
+enum StatusDaftar {
+  DASH @map("-")
+  Lama
+  Baru
+}
+
+enum StatusLanjut {
+  Ralan
+  Ranap
+}
+
+enum StatusUmur {
+  Th
+  Bl
+  Hr
+}
+
+enum StatusBayar {
+  Sudah_Bayar @map("Sudah Bayar")
+  Belum_Bayar @map("Belum Bayar")
+}
+
+enum StatusPoli {
+  Lama
+  Baru
+}
+
+
+//model igd---------------------------------------------------------------------
+model DataTriaseIgd {
+  no_rawat String @id @db.VarChar(17)
+
+  tgl_kunjungan DateTime @db.DateTime
+
+  cara_masuk CaraMasuk
+  alat_transportasi AlatTransportasi
+  alasan_kedatangan AlasanKedatangan
+
+  keterangan_kedatangan String @db.VarChar(100)
+
+  kode_kasus String @db.VarChar(3)
+
+  tekanan_darah String @db.VarChar(8)
+  nadi String @db.VarChar(3)
+  pernapasan String @db.VarChar(3)
+  suhu String @db.VarChar(5)
+  saturasi_o2 String @db.VarChar(3)
+  nyeri String @db.VarChar(5)
+
+  @@map("data_triase_igd")
+}
+
+enum CaraMasuk {
+  Jalan
+  Brankar
+  Kursi_Roda @map("Kursi Roda")
+  Digendong
+}
+
+enum AlatTransportasi {
+  DASH @map("-")
+  AGD
+  Sendiri
+  Swasta
+}
+
+enum AlasanKedatangan {
+  Datang_Sendiri @map("Datang Sendiri")
+  Polisi
+  Rujukan
+  Bidan
+  Puskesmas
+  Rumah_Sakit @map("Rumah Sakit")
+  Poliklinik
+  Faskes_Lain @map("Faskes Lain")
+  DASH @map("-")
+}
