@@ -66,10 +66,7 @@ export const getDataRegPeriksa = async (req, res) => {
 } 
 
 
-export const getDataIgdHarian = async (req, res
-     
-
-) => {
+export const getDataIgdHarian = async (req, res) => {
     try {
 
         const {date} = req.query
