@@ -1,131 +1,125 @@
-import prisma from "../config/prisma.js"
-import getDataHarian from "../utils/date.js"
+import prisma from "../config/prisma.js";
+import { getDataHarian } from "../utils/date.js";
 
 export const getDataRegPeriksa = async (req, res) => {
-   try {
-    const {date} =  req.query
+  try {
+    const { date } = req.query;
     if (!date) {
-        return res.status(400).json({
-            success: false,
-            message: "Date wajib diisi"
-        })
+      return res.status(400).json({
+        success: false,
+        message: "Date wajib diisi",
+      });
     }
 
-    const {start, end} = getDataHarian(date)
+    const { start, end } = getDataHarian(date);
 
-    const page = Number(req.query.page) || 1
-    const limit = Number(req.query.limit) || 50
-    const skip = (page -1) * limit
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 50;
+    const skip = (page - 1) * limit;
 
     const where = {
-        tgl_registrasi: {
-            gte: start,
-            lte:end
-        }
-    }
+      tgl_registrasi: {
+        gte: start,
+        lte: end,
+      },
+    };
 
     const [data, totalDataPasien] = await Promise.all([
-        prisma.regPeriksa.findMany({
-
+      prisma.regPeriksa.findMany({
         where,
         skip,
         take: limit,
         orderBy: {
-            tgl_registrasi: "desc"
-        }
-        }),
+          tgl_registrasi: "desc",
+        },
+      }),
 
-        prisma.regPeriksa.count({
-            where,
-        })
-    ])
+      prisma.regPeriksa.count({
+        where,
+      }),
+    ]);
 
-    const totalPages = Math.ceil(totalDataPasien / limit)
+    const totalPages = Math.ceil(totalDataPasien / limit);
 
     const meta = {
-        page, 
-        limit,
-        totalDataPasien,
-        totalPages,
-    }
+      page,
+      limit,
+      totalDataPasien,
+      totalPages,
+    };
 
     return res.status(200).json({
-        success: true,
-        pagination: meta,
-        data
-    })
-
-   } catch (error) {
-    console.error(error)
+      success: true,
+      pagination: meta,
+      data,
+    });
+  } catch (error) {
+    console.error(error);
     return res.status(500).json({
-        success: false,
-        message: "Gagal mengambil data pasien",
-        error: error.message
-    })
-   }
-} 
-
+      success: false,
+      message: "Gagal mengambil data pasien",
+      error: error.message,
+    });
+  }
+};
 
 export const getDataIgdHarian = async (req, res) => {
-    try {
+  try {
+    const { date } = req.query;
+    if (!date) {
+      return res.status(400).json({
+        success: false,
+        message: "Date wajib diisi",
+      });
+    }
 
-        const {date} = req.query
-        if (!date) {
-            return res.status(400).json({
-                success: false,
-                message: "Date wajib diisi"
-            })
-        }
-
-        const {start, end} = getDataHarian(date)
+    const { start, end } = getDataHarian(date);
 
     const where = {
-        tgl_kunjungan: {
-            gte: start,
-            lte: end,
-        }
-    }
+      tgl_kunjungan: {
+        gte: start,
+        lte: end,
+      },
+    };
 
-    const page = Number(req.query.page) || 1
-    const limit = Number(req.query.limit) || 50
-    const skip = (page - 1) * limit
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 50;
+    const skip = (page - 1) * limit;
 
     const [dataIgd, totalDataIgd] = await Promise.all([
-        prisma.dataTriaseIgd.findMany({
-            where,
-            skip,
-            take: limit,
-            orderBy: {
-                tgl_kunjungan: "desc"
-            }
-        }),
+      prisma.dataTriaseIgd.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: {
+          tgl_kunjungan: "desc",
+        },
+      }),
 
-        prisma.dataTriaseIgd.count({
-            where,
-        })
-    ])
+      prisma.dataTriaseIgd.count({
+        where,
+      }),
+    ]);
 
-
-    const totalPages = Math.ceil(totalDataIgd / limit)
+    const totalPages = Math.ceil(totalDataIgd / limit);
 
     const meta = {
-        page,
-        limit,
-        totalDataIgd,
-        totalPages,
-    }
+      page,
+      limit,
+      totalDataIgd,
+      totalPages,
+    };
     return res.status(200).json({
-        success: true,
-        pagination: meta,
-        dataIgd,
-    })
-    } catch (error) {
-        console.error(error)
-        return res.status(500).json({
-            success: false,
-            message: "Gagal mengambil data pasien IGD",
-            error: error.messagge
-        })
-    }
-
-}
+      success: true,
+      pagination: meta,
+      dataIgd,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Gagal mengambil data pasien IGD",
+      error: error.messagge,
+    });
+  }
+};

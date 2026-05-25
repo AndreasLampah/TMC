@@ -11,6 +11,7 @@ import DashboardPage
 from "./pages/DashboardPage"
 
 import "../src/styles/Sidebar.css"
+import NotFound from "./pages/NotFound"
 
 
 export default function App(){
@@ -32,6 +33,13 @@ export default function App(){
               path="/"
               element={
                 <DashboardPage />
+              }
+            />
+
+            <Route
+              path="*"
+              element={
+                <NotFound />
               }
             />
 

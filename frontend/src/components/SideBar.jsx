@@ -1,67 +1,39 @@
-import {
-  NavLink
-} from "react-router-dom"
+import { NavLink } from "react-router-dom";
 
-import {
-  LayoutDashboard,
-  Users,
-  Ambulance,
-  Bed
-} from "lucide-react"
+import { LayoutDashboard, Users, Ambulance, Bed } from "lucide-react";
 
-import "../styles/Sidebar.css"
+import "../styles/Sidebar.css";
 
-
-export default function Sidebar(){
-
-  return(
-
+export default function Sidebar() {
+  return (
     <aside className="sidebar">
-
       <div className="sidebar-logo">
-
-        <h2>
-          SIMRS 
-        </h2>
-
+        {/* <h2>
+          DASHBOARD  
+        </h2> */}
       </div>
 
-
       <nav className="sidebar-menu">
-
-        <NavLink
-          to="/"
-        >
+        <NavLink to="/">
           <LayoutDashboard />
-          Dashboard
+          <span>Dashboard</span>
         </NavLink>
 
-
-        <NavLink
-          to="/patients"
-        >
+        <NavLink to="/pasien">
           <Users />
-          Pasien
+          <span>Pasien</span>
         </NavLink>
 
-
-        <NavLink
-          to="/igd"
-        >
+        <NavLink to="/igd">
           <Ambulance />
-          IGD
+          <span>IGD</span>
         </NavLink>
 
-
-        <NavLink
-          to="/ranap"
-        >
+        <NavLink to="/ranap">
           <Bed />
-          Rawat Inap
+          <span>Rawat Inap</span>
         </NavLink>
-
       </nav>
-
     </aside>
-  )
+  );
 }

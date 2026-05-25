@@ -1,31 +1,16 @@
-const getDataHarian = (
-  dateStr = null
-) => {
+export const getDataHarian = (dateStr = null) => {
+  const date = dateStr ? new Date(dateStr) : new Date();
 
-  const date =
-    dateStr
-      ? new Date(dateStr)
-      : new Date();
+  const start = new Date(date);
 
-  const start =
-    new Date(date);
+  start.setHours(0, 0, 0, 0);
 
-  start.setHours(
-    0, 0, 0, 0
-  );
+  const end = new Date(date);
 
-  const end =
-    new Date(date);
-
-  end.setHours(
-    23, 59, 59, 999
-  );
+  end.setHours(23, 59, 59, 999);
 
   return {
     start,
     end,
   };
 };
-
-export default
-  getDataHarian;
