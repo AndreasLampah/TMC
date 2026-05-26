@@ -38,7 +38,27 @@ export default function DashboardPage() {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="dashboard-page">
+        <div className="dashboard-header">
+          <div className="skeleton skeleton-title"></div>
+          <div className="skeleton skeleton-subtitle"></div>
+        </div>
+
+        <div className="dashboard-grid">
+          {[1, 2, 3, 4].map((item) => (
+            <div key={item} className="card-skeleton">
+              <div className="skeleton skeleton-icon"></div>
+
+              <div className="skeleton-content">
+                <div className="skeleton skeleton-text"></div>
+                <div className="skeleton skeleton-number"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (error) {
