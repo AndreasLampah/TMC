@@ -113,7 +113,7 @@ export const chart = async (req, res) => {
 
     const grouped = {};
     pasienChart.forEach((item) => {
-      const date = item.tgl_registrasi.toISOString().split("T")[0];
+      const date = item.tgl_registrasi.toLocaleDateString("sv-SE");
 
       if (!grouped[date]) {
         grouped[date] = 0;

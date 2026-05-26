@@ -1,5 +1,5 @@
 export const getDataHarian = (dateStr = null) => {
-  const date = dateStr ? new Date(dateStr) : new Date();
+  const date = dateStr ? new Date(dateStr + "T00:00:00") : new Date();
 
   const start = new Date(date);
 
