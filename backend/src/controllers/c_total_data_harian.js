@@ -4,7 +4,7 @@ import { getDataHarian } from "../utils/date.js";
 
 export const getTotalDataHarian = async (req, res) => {
   try {
-    const { start, end } = getDataHarian();
+    const { start, end } = getDataHarian("2026-01-20");
 
     const [dataPasien, dataRalan, dataRanap, dataIgd] = await Promise.all([
       prisma.regPeriksa.count({
