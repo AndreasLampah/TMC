@@ -1,3 +1,4 @@
+import { StatusRegPeriksa } from "@prisma/client";
 import prisma from "../config/prisma.js";
 import { getDataHarian } from "../utils/date.js";
 
@@ -11,6 +12,9 @@ export const getTotalDataHarian = async (req, res) => {
           tgl_registrasi: {
             gte: start,
             lte: end,
+          },
+          stts: {
+            not: StatusRegPeriksa.Batal,
           },
         },
       }),

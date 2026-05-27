@@ -1,6 +1,6 @@
 import prisma from "../config/prisma.js";
 import { grafikDate } from "../utils/grafik_date.js";
-
+import { StatusDaftar, StatusRegPeriksa } from "@prisma/client";
 // export const grafikSevenDaysAgo = async (req, res) => {
 //   try {
 //     const { sevenDaysAgo } = grafikDate();
@@ -97,13 +97,16 @@ import { grafikDate } from "../utils/grafik_date.js";
 
 export const chart = async (req, res) => {
   try {
-    const { todayStart, todayEnd, sevenDaysAgo } = grafikDate();
+    const { todayStart, todayEnd, sevenDaysAgo } = grafikDate("2026-01-20");
 
     const pasienChart = await prisma.regPeriksa.findMany({
       where: {
         tgl_registrasi: {
           gte: sevenDaysAgo,
           lte: todayEnd,
+        },
+        stts: {
+          not: StatusRegPeriksa.Batal,
         },
       },
       orderBy: {
