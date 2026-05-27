@@ -1,35 +1,15 @@
-export default function PasienCard({
-  title,
-  value,
-  icon
-}){
-
-  return(
-
+export default function PasienCard({ title, value, icon }) {
+  return (
     <div className="stats-card">
-
       <div className="card-top">
+        <p>{title}</p>
 
-        <p>
-          {title}
-        </p>
-
-        <span>
-          {icon}
-        </span>
-
+        <span>{icon}</span>
       </div>
 
-      <h2>
-        {value}
-      </h2>
+      <h2>{value ?? 0}</h2>
 
-      <p className="card-trend">
-
-    ↑ realtime hari ini
-  </p>
-
+      <p className="card-trend">↑ realtime hari ini</p>
     </div>
-
-  )
+  );
 }

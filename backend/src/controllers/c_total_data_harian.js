@@ -7,55 +7,42 @@ export const getTotalDataHarian = async (req, res) => {
     const { start, end } = getDataHarian("2026-01-20");
 
     const [dataPasien, dataRalan, dataRanap, dataIgd] = await Promise.all([
-      prisma.regPeriksa.count({
-        where: {
-          tgl_registrasi: {
-            gte: start,
-            lte: end,
-          },
-          stts: {
-            not: StatusRegPeriksa.Batal,
-          },
-        },
-      }),
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_pasien FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end} 
+      AND stts != 'Batal'`,
 
-      prisma.regPeriksa.count({
-        where: {
-          status_lanjut: "Ralan",
-          tgl_registrasi: {
-            gte: start,
-            lte: end,
-          },
-        },
-      }),
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_ralan FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND status_lanjut = 'Ralan'
+      AND stts != 'Batal'`,
 
-      prisma.regPeriksa.count({
-        where: {
-          status_lanjut: "Ranap",
-          tgl_registrasi: {
-            gte: start,
-            lte: end,
-          },
-        },
-      }),
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_ranap FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND status_lanjut = 'Ranap'
+      AND stts != 'Batal'`,
 
-      prisma.dataTriaseIgd.count({
-        where: {
-          tgl_kunjungan: {
-            gte: start,
-            lte: end,
-          },
-        },
-      }),
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_igd FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'IGDK'
+      AND stts != 'Batal'`,
     ]);
+
+    const totalPasien = Number(dataPasien[0]?.total_pasien ?? 0);
+    const totalRalan = Number(dataRalan[0]?.total_ralan ?? 0);
+    const totalRanap = Number(dataRanap[0]?.total_ranap ?? 0);
+    const totalIgd = Number(dataIgd[0]?.total_igd ?? 0);
 
     return res.status(200).json({
       success: true,
       data: {
-        total_pasien: dataPasien,
-        total_igd: dataIgd,
-        total_ralan: dataRalan,
-        total_Ranap: dataRanap,
+        total_pasien: totalPasien,
+        total_ralan: totalRalan,
+        total_ranap: totalRanap,
+        total_igd: totalIgd,
       },
     });
   } catch (error) {
