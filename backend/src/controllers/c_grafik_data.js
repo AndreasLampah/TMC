@@ -97,7 +97,7 @@ import { StatusDaftar, StatusRegPeriksa } from "@prisma/client";
 
 export const chart = async (req, res) => {
   try {
-    const { todayStart, todayEnd, sevenDaysAgo } = grafikDate("2026-01-20");
+    const { todayStart, todayEnd, sevenDaysAgo } = grafikDate();
 
     const pasienChart = await prisma.regPeriksa.findMany({
       where: {
