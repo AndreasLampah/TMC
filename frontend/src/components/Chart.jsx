@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import {
   ResponsiveContainer,
   LineChart,
@@ -21,15 +20,14 @@ const ChartPasien = () => {
     const fetchData = async () => {
       try {
         const response = await fetch("http://localhost:3000/api/grafik");
-
         const result = await response.json();
 
         if (result.success) {
-          setChartData(result.data);
-          setTotalToday(result.totalToday);
+          setChartData(result.data || []);
+          setTotalToday(result.totalToday || 0);
         }
       } catch (error) {
-        console.error(error);
+        console.error("Failed to fetch chart data:", error);
       } finally {
         setLoading(false);
       }
@@ -38,12 +36,44 @@ const ChartPasien = () => {
     fetchData();
   }, []);
 
-  if (loading) {
-    return <div className="chart-loading">Loading Dashboard...</div>;
-  }
+  const renderChartContent = () => {
+    if (loading) {
+      return <div className="chart-skeleton" />;
+    }
+
+    if (!chartData.length) {
+      return (
+        <div className="chart-empty">
+          <div className="chart-empty-icon">📊</div>
+          <h3>No patient data available</h3>
+          <p>Data akan muncul ketika ada registrasi pasien</p>
+        </div>
+      );
+    }
+
+    return (
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart data={chartData}>
+          <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Line
+            type="monotone"
+            dataKey="total"
+            stroke="#4f46e5"
+            strokeWidth={3}
+            dot={{ r: 4 }}
+            activeDot={{ r: 7 }}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    );
+  };
 
   return (
     <div className="chart-container">
+      {/* HEADER (always consistent) */}
       <div className="chart-header">
         <div>
           <h1>Patient Analytics</h1>
@@ -56,28 +86,8 @@ const ChartPasien = () => {
         </div>
       </div>
 
-      <div className="chart-wrapper">
-        <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-
-            <XAxis dataKey="date" />
-
-            <YAxis />
-
-            <Tooltip />
-
-            <Line
-              type="monotone"
-              dataKey="total"
-              stroke="#4f46e5"
-              strokeWidth={4}
-              dot={{ r: 5 }}
-              activeDot={{ r: 8 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+      {/* CONTENT AREA */}
+      <div className="chart-wrapper">{renderChartContent()}</div>
     </div>
   );
 };
