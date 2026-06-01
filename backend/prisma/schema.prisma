@@ -133,3 +133,44 @@ enum AlasanKedatangan {
   Faskes_Lain @map("Faskes Lain")
   DASH @map("-")
 }
+
+
+//model Laboratorium---------------------------------------------------------------------
+
+model PeriksaLab {
+  no_rawat                 String   @db.VarChar(17)
+  nip                      String?  @db.VarChar(20)
+  kd_jenis_prw             String   @db.VarChar(15)
+  tgl_periksa              DateTime @db.Date
+  jam                      DateTime @db.Time(0)
+
+  dokter_perujuk           String?  @db.VarChar(20)
+
+  bagian_rs                Float?
+  bhp                      Float?
+  tarif_perujuk            Float?
+  tarif_tindakan_dokter    Float?
+  tarif_tindakan_petugas   Float?
+  kso                      Float?
+  menejemen                Float?
+  biaya                    Float?
+
+  kd_dokter                String?  @db.VarChar(20)
+
+  status                   StatusPeriksaLab?
+  kategori                 KategoriPeriksaLab?
+
+  @@id([no_rawat, kd_jenis_prw, tgl_periksa, jam])
+  @@map("periksa_lab")
+}
+
+enum StatusPeriksaLab {
+  Ralan
+  Ranap
+}
+
+enum KategoriPeriksaLab {
+  PA
+  PK
+  MB
+}

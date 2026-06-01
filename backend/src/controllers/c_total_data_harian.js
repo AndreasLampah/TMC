@@ -1,4 +1,3 @@
-import { StatusRegPeriksa } from "@prisma/client";
 import prisma from "../config/prisma.js";
 import { getDataHarian } from "../utils/date.js";
 
@@ -6,7 +5,14 @@ export const getTotalDataHarian = async (req, res) => {
   try {
     const { start, end } = getDataHarian();
 
-    const [dataPasien, dataRalan, dataRanap, dataIgd] = await Promise.all([
+    const [
+      dataPasien,
+      dataRalan,
+      dataRanap,
+      dataIgd,
+      dataLabRalan,
+      dataLabRanap,
+    ] = await Promise.all([
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_pasien FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end} 
@@ -29,12 +35,30 @@ export const getTotalDataHarian = async (req, res) => {
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'IGDK'
       AND stts != 'Batal'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_laboratorium_ralan FROM periksa_lab
+      WHERE tgl_periksa >= ${start} AND tgl_periksa < ${end}
+      AND status = 'Ralan'
+      `,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_laboratorium_ranap FROM periksa_lab
+      WHERE tgl_periksa >= ${start} AND tgl_periksa < ${end}
+      AND status = 'Ranap'
+      `,
     ]);
 
     const totalPasien = Number(dataPasien[0]?.total_pasien ?? 0);
     const totalRalan = Number(dataRalan[0]?.total_ralan ?? 0);
     const totalRanap = Number(dataRanap[0]?.total_ranap ?? 0);
     const totalIgd = Number(dataIgd[0]?.total_igd ?? 0);
+    const totalLabRalan = Number(
+      dataLabRalan[0]?.total_laboratorium_ralan ?? 0,
+    );
+    const totalLabRanap = Number(
+      dataLabRanap[0]?.total_laboratorium_ranap ?? 0,
+    );
 
     return res.status(200).json({
       success: true,
@@ -43,6 +67,8 @@ export const getTotalDataHarian = async (req, res) => {
         total_ralan: totalRalan,
         total_ranap: totalRanap,
         total_igd: totalIgd,
+        total_laboratorium_ralan: totalLabRalan,
+        total_laboratorium_ranap: totalLabRanap,
       },
     });
   } catch (error) {

@@ -134,7 +134,6 @@ export const chart = async (req, res) => {
         item.tgl_registrasi >= todayStart && item.tgl_registrasi <= todayEnd
       );
     }).length;
-
     return res.status(200).json({
       success: true,
       message: "Berhasil ambil data grafik",

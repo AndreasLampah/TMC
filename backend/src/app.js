@@ -15,9 +15,6 @@ app.get("/", (req, res) => {
   res.send("Server Running");
 });
 
-// console.log("DATABASE:", process.env.DATABASE_URL)
-// console.log("PORT", process.env.PORT)
-
 app.listen(PORT, () => {
   console.log(`Server running at port: ${PORT}`);
 });
