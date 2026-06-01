@@ -5,7 +5,15 @@ import axios from "axios";
 import PasienCard from "../components/PasienCard";
 import Chart from "../components/Chart";
 
-import { Users, Activity, Bed, HeartPulse, FlaskConical } from "lucide-react";
+import {
+  Users,
+  Activity,
+  Bed,
+  HeartPulse,
+  FlaskConical,
+  Microscope,
+  Bug,
+} from "lucide-react";
 
 import "../styles/DashboardPageStyle.css";
 import "../styles/DashboardText.css";
@@ -98,14 +106,33 @@ export default function DashboardPage() {
           icon={<Bed />}
         />
         <PasienCard
-          title="Lab ralan"
+          title="Lab Ralan"
           value={dashboard?.total_laboratorium_ralan}
           icon={<FlaskConical />}
         />
+
         <PasienCard
-          title="Lab ranap"
+          title="Lab Ranap"
           value={dashboard?.total_laboratorium_ranap}
           icon={<FlaskConical />}
+        />
+
+        <PasienCard
+          title="Lab PA"
+          value={dashboard?.total_laboratorium_pa}
+          icon={<Microscope />}
+        />
+
+        <PasienCard
+          title="Lab PK"
+          value={dashboard?.total_laboratorium_pk}
+          icon={<FlaskConical />}
+        />
+
+        <PasienCard
+          title="Lab MB"
+          value={dashboard?.total_laboratorium_mb}
+          icon={<Bug />}
         />
       </div>
       <Chart />

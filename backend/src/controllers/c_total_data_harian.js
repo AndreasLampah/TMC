@@ -12,6 +12,9 @@ export const getTotalDataHarian = async (req, res) => {
       dataIgd,
       dataLabRalan,
       dataLabRanap,
+      dataLabPa,
+      dataLabPk,
+      dataLabMb,
     ] = await Promise.all([
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_pasien FROM reg_periksa
@@ -47,6 +50,21 @@ export const getTotalDataHarian = async (req, res) => {
       WHERE tgl_periksa >= ${start} AND tgl_periksa < ${end}
       AND status = 'Ranap'
       `,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_laboratorium_pa FROM periksa_lab
+      WHERE tgl_periksa >= ${start} AND tgl_periksa < ${end}
+      AND kategori = 'PA'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_laboratorium_pk FROM periksa_lab
+      WHERE tgl_periksa >= ${start} AND tgl_periksa < ${end}
+      AND kategori = 'PK'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_laboratorium_mb FROM periksa_lab
+      WHERE tgl_periksa >= ${start} AND tgl_periksa < ${end}
+      AND kategori = 'MB'`,
     ]);
 
     const totalPasien = Number(dataPasien[0]?.total_pasien ?? 0);
@@ -59,6 +77,9 @@ export const getTotalDataHarian = async (req, res) => {
     const totalLabRanap = Number(
       dataLabRanap[0]?.total_laboratorium_ranap ?? 0,
     );
+    const totalLabPa = Number(dataLabPa[0]?.total_laboratorium_pa ?? 0);
+    const totalLabPk = Number(dataLabPk[0]?.total_laboratorium_pk ?? 0);
+    const totalLabMb = Number(dataLabMb[0]?.total_laboratorium_mb ?? 0);
 
     return res.status(200).json({
       success: true,
@@ -69,6 +90,9 @@ export const getTotalDataHarian = async (req, res) => {
         total_igd: totalIgd,
         total_laboratorium_ralan: totalLabRalan,
         total_laboratorium_ranap: totalLabRanap,
+        total_laboratorium_pa: totalLabPa,
+        total_laboratorium_pk: totalLabPk,
+        total_laboratorium_mb: totalLabMb,
       },
     });
   } catch (error) {
