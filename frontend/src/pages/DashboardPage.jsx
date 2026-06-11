@@ -28,6 +28,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
+        // rsutmc ganti ke localhost:3000 untuk develop
         const response = await axios.get(
           "http://localhost:3000/api/data-harian",
         );
@@ -43,6 +44,12 @@ export default function DashboardPage() {
     };
 
     fetchDashboard();
+
+    const interval = setInterval(() => {
+      fetchDashboard();
+    }, 30000);
+
+    return () => clearInterval(interval);
   }, []);
 
   if (loading) {
@@ -54,7 +61,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="dashboard-grid">
-          {[1, 2, 3, 4].map((item) => (
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
             <div key={item} className="card-skeleton">
               <div className="skeleton skeleton-icon"></div>
 
@@ -77,65 +84,125 @@ export default function DashboardPage() {
     <div className="dashboard-page">
       <div className="dashboard-header">
         <p>Hospital Analytics</p>
-
         <h1>RSU. Tumpaan Medical Center</h1>
       </div>
 
-      <div className="dashboard-grid">
-        <PasienCard
-          title="Total Pasien"
-          value={dashboard?.total_pasien}
-          icon={<Users />}
-        />
+      {/* KPI Utama */}
+      <section className="dashboard-section">
+        <h2 className="section-title">Ringkasan Pasien</h2>
 
-        <PasienCard
-          title="IGD"
-          value={dashboard?.total_igd}
-          icon={<HeartPulse />}
-        />
+        <div className="dashboard-grid-main">
+          <PasienCard
+            title="Total Pasien"
+            value={dashboard?.total_pasien}
+            icon={<Users />}
+          />
 
-        <PasienCard
-          title="Rawat Jalan"
-          value={dashboard?.total_ralan}
-          icon={<Activity />}
-        />
+          <PasienCard
+            title="IGD"
+            value={dashboard?.total_igd}
+            icon={<HeartPulse />}
+          />
 
-        <PasienCard
-          title="Rawat Inap"
-          value={dashboard?.total_ranap}
-          icon={<Bed />}
-        />
-        <PasienCard
-          title="Lab Ralan"
-          value={dashboard?.total_laboratorium_ralan}
-          icon={<FlaskConical />}
-        />
+          <PasienCard
+            title="Rawat Jalan"
+            value={dashboard?.total_ralan}
+            icon={<Activity />}
+          />
 
-        <PasienCard
-          title="Lab Ranap"
-          value={dashboard?.total_laboratorium_ranap}
-          icon={<FlaskConical />}
-        />
+          <PasienCard
+            title="Rawat Inap"
+            value={dashboard?.total_ranap}
+            icon={<Bed />}
+          />
+        </div>
+      </section>
 
-        <PasienCard
-          title="Lab PA"
-          value={dashboard?.total_laboratorium_pa}
-          icon={<Microscope />}
-        />
+      {/* Grafik */}
+      <section className="dashboard-section">
+        <h2 className="section-title">Tren Kunjungan</h2>
 
-        <PasienCard
-          title="Lab PK"
-          value={dashboard?.total_laboratorium_pk}
-          icon={<FlaskConical />}
-        />
+        <Chart />
+      </section>
 
-        <PasienCard
-          title="Lab MB"
-          value={dashboard?.total_laboratorium_mb}
-          icon={<Bug />}
-        />
-      </div>
-      <Chart />
+      {/* Laboratorium */}
+      <section className="dashboard-section">
+        <h2 className="section-title">Laboratorium</h2>
+
+        <div className="dashboard-grid-lab">
+          <PasienCard
+            title="Lab Ralan"
+            value={dashboard?.total_laboratorium_ralan}
+            icon={<FlaskConical />}
+          />
+
+          <PasienCard
+            title="Lab Ranap"
+            value={dashboard?.total_laboratorium_ranap}
+            icon={<FlaskConical />}
+          />
+
+          <PasienCard
+            title="Lab PK"
+            value={dashboard?.total_laboratorium_pk}
+            icon={<FlaskConical />}
+          />
+
+          <PasienCard
+            title="Lab PA"
+            value={dashboard?.total_laboratorium_pa}
+            icon={<Microscope />}
+          />
+
+          <PasienCard
+            title="Lab MB"
+            value={dashboard?.total_laboratorium_mb}
+            icon={<Bug />}
+          />
+
+          <PasienCard
+            title=" Gawat Darurat"
+            value={dashboard?.total_gawat_darurat}
+            icon={<Bug />}
+          />
+
+          <PasienCard
+            title=" Poli Penyakit Dalam"
+            value={dashboard?.total_penyakit_dalam}
+            icon={<Bug />}
+          />
+
+          <PasienCard
+            title=" Poli Pediatri / Anak"
+            value={dashboard?.total_pediatri_anak}
+            icon={<Bug />}
+          />
+
+          <PasienCard
+            title=" Poli Bedah"
+            value={dashboard?.total_bedah}
+            icon={<Bug />}
+          />
+
+          <PasienCard
+            title=" Poli Kandungan Kebidanan"
+            value={dashboard?.total_kandungan_kebidanan}
+            icon={<Bug />}
+          />
+
+          <PasienCard
+            title=" Poli Neurologi Saraf"
+            value={dashboard?.total_neurologi_saraf}
+            icon={<Bug />}
+          />
+
+          <PasienCard
+            title=" Poli Jantung Pembuluh Darah"
+            value={dashboard?.total_jantung_pembuluh_darah}
+            icon={<Bug />}
+          />
+        </div>
+      </section>
     </div>
   );
 }

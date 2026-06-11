@@ -138,6 +138,7 @@ export const chart = async (req, res) => {
       success: true,
       message: "Berhasil ambil data grafik",
       totalToday,
+
       data: chartData,
     });
   } catch (error) {

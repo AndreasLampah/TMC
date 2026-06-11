@@ -1,3 +1,5 @@
+import "../styles/PasienCard.css";
+
 export default function PasienCard({ title, value, icon }) {
   return (
     <div className="stats-card">
