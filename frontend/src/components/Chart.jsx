@@ -21,8 +21,20 @@ export default function ChartPasien() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // rsutmc ganti ke localhost:3000 untuk develop
-        const response = await fetch("http://localhost:3000/api/grafik");
+        const controller = new AbortController();
+
+        const timeout = setTimeout(() => {
+          controller.abort();
+        }, 10000);
+
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/grafik`,
+          {
+            signal: controller.signal,
+          },
+        );
+
+        clearTimeout(timeout);
 
         const result = await response.json();
 
@@ -38,6 +50,12 @@ export default function ChartPasien() {
     };
 
     fetchData();
+
+    const interval = setInterval(() => {
+      fetchData();
+    }, 30000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const renderChartContent = () => {
@@ -138,12 +156,20 @@ export default function ChartPasien() {
           <p>Jumlah pasien dalam 7 hari terakhir</p>
         </div>
 
-        <div className="analytics-card">
-          <span>Total Hari Ini</span>
+        <div
+          style={{
+            display: "flex",
+            gap: "12px",
+            alignItems: "center",
+          }}
+        >
+          <div className="analytics-card">
+            <span>Total Hari Ini</span>
 
-          <h2>{totalToday.toLocaleString("id-ID")}</h2>
+            <h2>{totalToday.toLocaleString("id-ID")}</h2>
 
-          <small>Realtime</small>
+            <small>Realtime</small>
+          </div>
         </div>
       </div>
 

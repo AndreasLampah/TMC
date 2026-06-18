@@ -1,17 +1,14 @@
-import "../styles/PasienCard.css";
-
-export default function PasienCard({ title, value, icon }) {
+export default function PasienCard({ title, value, icon, variant }) {
   return (
-    <div className="stats-card">
-      <div className="card-top">
-        <p>{title}</p>
+    <div className={`pasien-card${variant ? ` variant-${variant}` : ""}`}>
+      <div className="icon-wrap">{icon}</div>
 
-        <span>{icon}</span>
+      <div className="info">
+        <span className="title">{title}</span>
+        <span className="value">
+          {value !== undefined && value !== null ? value : "–"}
+        </span>
       </div>
-
-      <h2>{value ?? 0}</h2>
-
-      <p className="card-trend">↑ realtime hari ini</p>
     </div>
   );
 }

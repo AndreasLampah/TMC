@@ -22,6 +22,17 @@ export const getTotalDataHarian = async (req, res) => {
       dataKandunganKebidanan,
       dataNeurologiSaraf,
       dataJantungPembuluhDarah,
+      dataRehabilitasiMedik,
+      dataKulitKelamin,
+      dataThtKl,
+      dataMata,
+      dataGeriatri,
+      dataOrthopedi,
+      dataUrologi,
+      dataGigiMulut,
+      dataTbDots,
+      dataVct,
+      dataUmumMcu,
     ] = await Promise.all([
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_pasien FROM reg_periksa
@@ -114,6 +125,72 @@ export const getTotalDataHarian = async (req, res) => {
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0007'
       AND stts != 'Batal'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_rehabilitasi_medik FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli ='U0008'
+      AND stts != 'Batal'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_kulit_kelamin FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0009'
+      AND stts != 'Batal'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_tht_kl FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0010'
+      AND stts != 'Batal'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_mata FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli ='U0011'
+      AND stts != 'Batal'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_geriatri FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0012'
+      AND stts != 'Batal'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_orthopedi FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND  kd_poli = 'U0013'
+      AND stts != 'Batal'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_urologi FROM reg_periksa 
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0014'
+      AND stts != 'Batal'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_gigi_mulut FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0015'
+      AND stts != 'Batal'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_tb_dots FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0016'
+      AND stts != 'Batal'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_vct FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0017'
+      AND stts != 'Batal'`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_umum_mcu FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0020'
+      AND stts != 'Batal'`,
     ]);
 
     const totalPasien = Number(dataPasien[0]?.total_pasien ?? 0);
@@ -148,6 +225,21 @@ export const getTotalDataHarian = async (req, res) => {
     const totalJantungPembuluhDarah = Number(
       dataJantungPembuluhDarah[0]?.total_jantung_pembuluh_darah ?? 0,
     );
+    const totalRehabilitasiMedik = Number(
+      dataRehabilitasiMedik[0]?.total_rehabilitasi_medik ?? 0,
+    );
+    const totalKulitKelamin = Number(
+      dataKulitKelamin[0]?.total_kulit_kelamin ?? 0,
+    );
+    const totalThtKl = Number(dataThtKl[0]?.total_tht_kl ?? 0);
+    const totalMata = Number(dataMata[0]?.total_mata ?? 0);
+    const totalGeriatri = Number(dataGeriatri[0]?.total_geriatri ?? 0);
+    const totalOrthopedi = Number(dataOrthopedi[0]?.total_orthopedi ?? 0);
+    const totalUrologi = Number(dataUrologi[0]?.total_urologi ?? 0);
+    const totalGigiMulut = Number(dataGigiMulut[0]?.total_gigi_mulut ?? 0);
+    const totalTbDots = Number(dataTbDots[0]?.total_tb_dots ?? 0);
+    const totalVct = Number(dataVct[0]?.total_vct ?? 0);
+    const totalUmumMcu = Number(dataUmumMcu[0]?.total_umum_mcu ?? 0);
 
     return res.status(200).json({
       success: true,
@@ -168,6 +260,17 @@ export const getTotalDataHarian = async (req, res) => {
         total_kandungan_kebidanan: totalKandunganKebidanan,
         total_neurologi_saraf: totalNeurologiSaraf,
         total_jantung_pembuluh_darah: totalJantungPembuluhDarah,
+        total_rehabilitasi_medik: totalRehabilitasiMedik,
+        total_kulit_kelamin: totalKulitKelamin,
+        total_tht_kl: totalThtKl,
+        total_mata: totalMata,
+        total_geriatri: totalGeriatri,
+        total_orthopedi: totalOrthopedi,
+        total_urologi: totalUrologi,
+        total_gigi_mulut: totalGigiMulut,
+        total_tb_dots: totalTbDots,
+        total_vct: totalVct,
+        total_umum_mcu: totalUmumMcu,
       },
     });
   } catch (error) {

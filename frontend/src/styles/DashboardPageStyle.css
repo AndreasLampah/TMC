@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap");
 
 /* ==========================================
    RESET
@@ -11,15 +11,53 @@
 }
 
 /* ==========================================
+   TOKENS
+========================================== */
+
+:root {
+  --color-bg: #faf9f6;
+  --color-surface: #ffffff;
+  --color-ink: #14211e;
+  --color-ink-soft: #5b6764;
+  --color-line: #e4e2dc;
+
+  --color-accent: #0d9488;
+  --color-accent-soft: #ccfbf1;
+  --color-accent-deep: #0a5c54;
+
+  --color-vital: #dc4f4f;
+  --color-vital-soft: #fde7e7;
+
+  --color-lab: #7c5cd6;
+  --color-lab-soft: #ede7fb;
+
+  --color-poli: #c97a2c;
+  --color-poli-soft: #fbece0;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --radius-card: 16px;
+  --radius-pill: 999px;
+
+  --shadow-card:
+    0 1px 2px rgba(20, 33, 30, 0.04), 0 6px 20px rgba(20, 33, 30, 0.05);
+}
+
+/* ==========================================
    BODY
 ========================================== */
 
 body {
-  font-family: "Inter", sans-serif;
-
-  background: #f8fafc;
-
-  color: #0f172a;
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(20, 33, 30, 0.045) 1px,
+    transparent 0
+  );
+  background-size: 24px 24px;
+  color: var(--color-ink);
 }
 
 /* ==========================================
@@ -28,8 +66,169 @@ body {
 
 .dashboard-page {
   min-height: 100vh;
-
   padding: 32px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+/* ==========================================
+   CONNECTION ERROR BANNER
+========================================== */
+
+.connection-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: var(--color-vital-soft);
+  color: var(--color-vital);
+  border: 1px solid rgba(220, 79, 79, 0.25);
+
+  padding: 12px 18px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.connection-error .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-vital);
+  animation: blink 1.2s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* ==========================================
+   SYSTEM BANNER (signature element)
+========================================== */
+
+.system-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+
+  margin-bottom: 28px;
+  padding: 22px 28px;
+
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-deep),
+    var(--color-accent)
+  );
+  border-radius: var(--radius-card);
+  color: #ffffff;
+  box-shadow: 0 12px 32px rgba(13, 148, 136, 0.25);
+
+  position: relative;
+  overflow: hidden;
+}
+
+.system-banner::after {
+  content: "";
+  position: absolute;
+  top: -60%;
+  right: -10%;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.12),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.system-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pulse-indicator {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.pulse-indicator .core {
+  position: absolute;
+  inset: 3px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+.pulse-indicator .ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+}
+
+.system-banner-content h3 {
+  font-family: var(--font-display);
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.system-banner-content p {
+  margin-top: 4px;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.sync-info {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.sync-info span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.sync-info strong {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
 }
 
 /* ==========================================
@@ -37,33 +236,38 @@ body {
 ========================================== */
 
 .dashboard-header {
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 }
 
-.dashboard-header p {
-  font-size: 13px;
+.dashboard-header .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 
-  font-weight: 600;
-
+  font-size: 12px;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-accent-deep);
+  margin-bottom: 10px;
+}
 
-  letter-spacing: 1px;
-
-  color: #2563eb;
-
-  margin-bottom: 8px;
+.dashboard-header .eyebrow::before {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-accent);
+  border-radius: 1px;
 }
 
 .dashboard-header h1 {
-  font-size: 38px;
-
-  font-weight: 800;
-
-  line-height: 1.1;
-
-  letter-spacing: -1px;
-
-  color: #0f172a;
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  color: var(--color-ink);
 }
 
 /* ==========================================
@@ -71,17 +275,28 @@ body {
 ========================================== */
 
 .dashboard-section {
-  margin-top: 32px;
+  margin-top: 36px;
 }
 
 .section-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+
   margin-bottom: 16px;
 
-  font-size: 18px;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-ink);
+  letter-spacing: -0.1px;
+}
 
-  font-weight: 700;
-
-  color: #1e293b;
+.section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-line);
 }
 
 /* ==========================================
@@ -90,18 +305,115 @@ body {
 
 .dashboard-grid-main {
   display: grid;
-
   grid-template-columns: repeat(4, 1fr);
-
   gap: 16px;
 }
 
 .dashboard-grid-lab {
   display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
 
-  grid-template-columns: repeat(5, 1fr);
+/* ==========================================
+   PASIEN CARD
+========================================== */
 
+.pasien-card {
+  position: relative;
+  display: flex;
+  align-items: center;
   gap: 16px;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-card);
+  padding: 18px 20px;
+
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.pasien-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 8px rgba(20, 33, 30, 0.05),
+    0 12px 28px rgba(20, 33, 30, 0.07);
+}
+
+.pasien-card .icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+
+  border-radius: 12px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-deep);
+}
+
+.pasien-card .icon-wrap svg {
+  width: 22px;
+  height: 22px;
+}
+
+.pasien-card .info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.pasien-card .title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pasien-card .value {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1;
+  letter-spacing: -0.5px;
+}
+
+/* category variants */
+.pasien-card.variant-lab {
+  border-left-color: var(--color-lab);
+}
+
+.pasien-card.variant-lab .icon-wrap {
+  background: var(--color-lab-soft);
+  color: var(--color-lab);
+}
+
+.pasien-card.variant-poli {
+  border-left-color: var(--color-poli);
+}
+
+.pasien-card.variant-poli .icon-wrap {
+  background: var(--color-poli-soft);
+  color: var(--color-poli);
+}
+
+.pasien-card.variant-vital {
+  border-left-color: var(--color-vital);
+}
+
+.pasien-card.variant-vital .icon-wrap {
+  background: var(--color-vital-soft);
+  color: var(--color-vital);
 }
 
 /* ==========================================
@@ -109,17 +421,11 @@ body {
 ========================================== */
 
 .chart-container {
-  background: #ffffff;
-
-  border: 1px solid #e2e8f0;
-
-  border-radius: 20px;
-
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
   padding: 24px;
-
-  box-shadow:
-    0 1px 3px rgba(15, 23, 42, 0.05),
-    0 8px 24px rgba(15, 23, 42, 0.04);
+  box-shadow: var(--shadow-card);
 }
 
 /* ==========================================
@@ -128,52 +434,42 @@ body {
 
 .skeleton {
   animation: pulse 1.5s infinite;
-
-  background: #e5e7eb;
-
+  background: var(--color-line);
   border-radius: 8px;
 }
 
 .skeleton-title {
   width: 200px;
-
   height: 20px;
-
   margin-bottom: 10px;
 }
 
 .skeleton-subtitle {
   width: 320px;
-
   height: 34px;
 }
 
-.card-skeleton {
-  background: white;
-
-  border: 1px solid #e2e8f0;
-
-  border-radius: 20px;
-
-  padding: 20px;
-
-  display: flex;
-
-  align-items: center;
-
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+}
 
-  box-shadow:
-    0 1px 3px rgba(15, 23, 42, 0.05),
-    0 8px 24px rgba(15, 23, 42, 0.04);
+.card-skeleton {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow-card);
 }
 
 .skeleton-icon {
-  width: 48px;
-
-  height: 48px;
-
-  border-radius: 14px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
 }
 
 .skeleton-content {
@@ -182,29 +478,24 @@ body {
 
 .skeleton-text {
   width: 120px;
-
-  height: 14px;
-
+  height: 12px;
   margin-bottom: 10px;
 }
 
 .skeleton-number {
   width: 80px;
-
   height: 24px;
 }
 
 @keyframes pulse {
   0% {
-    opacity: 0.6;
+    opacity: 0.55;
   }
-
   50% {
     opacity: 1;
   }
-
   100% {
-    opacity: 0.6;
+    opacity: 0.55;
   }
 }
 
@@ -213,10 +504,8 @@ body {
 ========================================== */
 
 .error {
-  color: #dc2626;
-
+  color: var(--color-vital);
   font-size: 16px;
-
   font-weight: 600;
 }
 
@@ -232,6 +521,10 @@ body {
   .dashboard-grid-lab {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* ==========================================
@@ -240,15 +533,88 @@ body {
 
 @media (max-width: 768px) {
   .dashboard-page {
-    padding: 20px;
+    padding: 18px;
+    padding-bottom: calc(84px + env(safe-area-inset-bottom));
   }
 
   .dashboard-header h1 {
-    font-size: 28px;
+    font-size: 27px;
   }
 
   .dashboard-grid-main,
-  .dashboard-grid-lab {
+  .dashboard-grid {
     grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid-lab {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .pasien-card {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .pasien-card .icon-wrap {
+    width: 38px;
+    height: 38px;
+  }
+
+  .pasien-card .icon-wrap svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .pasien-card .value {
+    font-size: 21px;
+  }
+
+  .pasien-card .title {
+    font-size: 12px;
+  }
+
+  .system-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px 20px;
+  }
+
+  .system-banner-content h3 {
+    font-size: 15.5px;
+  }
+
+  .system-banner-content p {
+    font-size: 12.5px;
+  }
+
+  .sync-info span {
+    font-size: 10px;
+  }
+
+  .sync-info strong {
+    font-size: 13px;
+  }
+
+  .connection-error {
+    font-size: 13px;
+    padding: 10px 14px;
+  }
+
+  .sync-info {
+    text-align: left;
+  }
+}
+
+/* ==========================================
+   REDUCED MOTION
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-indicator .ring,
+  .connection-error .dot,
+  .skeleton {
+    animation: none;
   }
 }
