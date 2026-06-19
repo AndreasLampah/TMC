@@ -60,7 +60,7 @@ export default function ChartPasien() {
 
   const renderChartContent = () => {
     if (loading) {
-      return <div className="chart-skeleton">Loading chart...</div>;
+      return <div className="chart-skeleton">Memuat grafik...</div>;
     }
 
     if (!chartData.length) {
@@ -88,19 +88,24 @@ export default function ChartPasien() {
         >
           <defs>
             <linearGradient id="patientGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#2563eb" stopOpacity={0.25} />
+              <stop offset="0%" stopColor="#0d9488" stopOpacity={0.22} />
 
-              <stop offset="100%" stopColor="#2563eb" stopOpacity={0} />
+              <stop offset="100%" stopColor="#0d9488" stopOpacity={0} />
             </linearGradient>
           </defs>
 
-          <CartesianGrid strokeDasharray="3 3" opacity={0.15} />
+          <CartesianGrid
+            strokeDasharray="3 3"
+            opacity={0.15}
+            vertical={false}
+          />
 
           <XAxis
             dataKey="date"
             tickLine={false}
             axisLine={false}
             tickMargin={30}
+            tick={{ fill: "#64748b", fontSize: 12 }}
             tickFormatter={(value) => {
               const date = new Date(value);
 
@@ -116,6 +121,7 @@ export default function ChartPasien() {
             axisLine={false}
             tickMargin={12}
             width={60}
+            tick={{ fill: "#64748b", fontSize: 12 }}
             tickFormatter={(value) => value.toLocaleString("id-ID")}
           />
 
@@ -124,7 +130,18 @@ export default function ChartPasien() {
               borderRadius: "12px",
               border: "1px solid #e2e8f0",
               boxShadow: "0 8px 24px rgba(0,0,0,.08)",
+              fontSize: "13px",
             }}
+            labelFormatter={(value) => {
+              const date = new Date(value);
+
+              return date.toLocaleDateString("id-ID", {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+              });
+            }}
+            formatter={(value) => [value.toLocaleString("id-ID"), "Pasien"]}
           />
 
           <Area
@@ -137,10 +154,15 @@ export default function ChartPasien() {
           <Line
             type="monotone"
             dataKey="total"
-            stroke="#2563eb"
+            stroke="#0d9488"
             strokeWidth={3}
             dot={false}
-            activeDot={{ r: 6 }}
+            activeDot={{
+              r: 6,
+              fill: "#0d9488",
+              stroke: "#fff",
+              strokeWidth: 2,
+            }}
           />
         </AreaChart>
       </ResponsiveContainer>
@@ -150,26 +172,22 @@ export default function ChartPasien() {
   return (
     <div className="chart-container">
       <div className="chart-header">
-        <div>
-          <h2>Tren Kunjungan Pasien</h2>
+        <div className="chart-header-text">
+          <span className="chart-header-dot" />
 
-          <p>Jumlah pasien dalam 7 hari terakhir</p>
+          <div>
+            <h2>Tren Kunjungan Pasien</h2>
+
+            <p>Jumlah pasien dalam 7 hari terakhir</p>
+          </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            gap: "12px",
-            alignItems: "center",
-          }}
-        >
-          <div className="analytics-card">
-            <span>Total Hari Ini</span>
+        <div className="analytics-card">
+          <span>Total Hari Ini</span>
 
-            <h2>{totalToday.toLocaleString("id-ID")}</h2>
+          <h2>{totalToday.toLocaleString("id-ID")}</h2>
 
-            <small>Realtime</small>
-          </div>
+          <small>Realtime</small>
         </div>
       </div>
 
