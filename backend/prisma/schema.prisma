@@ -174,3 +174,49 @@ enum KategoriPeriksaLab {
   PK
   MB
 }
+
+//model petugas---------------------------------------------------------------------
+
+model Petugas {
+  nip         String       @id @db.VarChar(20)
+  nama        String       @db.VarChar(50)
+  jk          JenisKelamin
+  tmpLahir    String?      @map("tmp_lahir") @db.VarChar(20)
+  tglLahir    DateTime?    @map("tgl_lahir") @db.Date
+  golDarah    GolDarah?    @map("gol_darah")
+  agama       String?      @db.VarChar(12)
+  sttsNikah   StatusNikah? @map("stts_nikah")
+  alamat      String?      @db.VarChar(60)
+  kdJbtn      String?      @map("kd_jbtn") @db.Char(4)
+  noTelp      String?      @map("no_telp") @db.VarChar(13)
+  email       String?      @db.VarChar(70)
+  status      StatusPetugas?
+
+  @@map("petugas")
+}
+
+enum JenisKelamin {
+  L
+  P
+}
+
+enum GolDarah {
+  A
+  B
+  O
+  AB
+  MINUS @map("-")
+}
+
+enum StatusNikah {
+  BELUM_MENIKAH @map("BELUM MENIKAH")
+  MENIKAH
+  JANDA
+  DUDHA
+  JOMBLO
+}
+
+enum StatusPetugas {
+  AKTIF     @map("1")
+  NONAKTIF  @map("0")
+}

@@ -4,6 +4,7 @@ import cors from "cors";
 import r_route from "./routes/r_route.js";
 
 const app = express();
+app.use(express.json());
 
 const PORT = process.env.PORT;
 
