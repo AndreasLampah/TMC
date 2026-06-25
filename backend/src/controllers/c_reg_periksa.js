@@ -4,6 +4,7 @@ import { getDataHarian } from "../utils/date.js";
 export const getDataRegPeriksa = async (req, res) => {
   try {
     const { date } = req.query;
+
     if (!date) {
       return res.status(400).json({
         success: false,

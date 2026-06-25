@@ -5,7 +5,19 @@ export const auth = async (req, res) => {
   try {
     const { nip, password } = req.body;
 
-    const user = await prisma.Petugas.findUnique({
+    if (!nip || !password) {
+      return res.status(400).json({
+        message: "Nip dan Password wajib diisi",
+      });
+    }
+
+    if (nip !== "TMC00001") {
+      return res.status(403).json({
+        message: "Akses ditolak",
+      });
+    }
+
+    const user = await prisma.petugas.findUnique({
       where: {
         nip,
       },
@@ -43,7 +55,7 @@ export const auth = async (req, res) => {
     console.error(error);
 
     return res.status(500).json({
-      message: error.message,
+      message: "Internal server error",
     });
   }
 };

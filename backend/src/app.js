@@ -6,7 +6,15 @@ import r_route from "./routes/r_route.js";
 const app = express();
 app.use(express.json());
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
+
+if (!process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET belum dikonfigurasi");
+}
+
+if (!process.env.JWT_EXPIRES) {
+  throw new Error("JWT_EXPIRES belum dikonfigurasi");
+}
 
 app.use(
   cors({
