@@ -220,3 +220,5 @@ enum StatusPetugas {
   AKTIF     @map("1")
   NONAKTIF  @map("0")
 }
+
+

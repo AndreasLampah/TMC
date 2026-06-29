@@ -1,0 +1,422 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap");
+
+/* ==========================================
+   TOKENS (mirror DashboardPageStyle.css)
+========================================== */
+
+:root {
+  --color-bg: #faf9f6;
+  --color-surface: #ffffff;
+  --color-ink: #14211e;
+  --color-ink-soft: #5b6764;
+  --color-line: #e4e2dc;
+
+  --color-accent: #0d9488;
+  --color-accent-soft: #ccfbf1;
+  --color-accent-deep: #0a5c54;
+
+  --color-vital: #dc4f4f;
+  --color-vital-soft: #fde7e7;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --radius-card: 16px;
+  --shadow-card:
+    0 1px 2px rgba(20, 33, 30, 0.04), 0 6px 20px rgba(20, 33, 30, 0.05);
+}
+
+/* ==========================================
+   PAGE LAYOUT
+========================================== */
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(20, 33, 30, 0.045) 1px,
+    transparent 0
+  );
+  background-size: 24px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ==========================================
+   AMBIENT CIRCLES (subtle bg decoration)
+========================================== */
+
+.login-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.18;
+  filter: blur(80px);
+}
+
+.ambient-circle--1 {
+  width: 420px;
+  height: 420px;
+  background: var(--color-accent);
+  top: -120px;
+  left: -100px;
+}
+
+.ambient-circle--2 {
+  width: 320px;
+  height: 320px;
+  background: var(--color-accent-deep);
+  bottom: -80px;
+  right: -80px;
+}
+
+/* ==========================================
+   CARD
+========================================== */
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  padding: 36px 40px;
+  box-shadow: var(--shadow-card);
+}
+
+/* ==========================================
+   BRAND HEADER
+========================================== */
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.login-brand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-deep),
+    var(--color-accent)
+  );
+  border-radius: 12px;
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(13, 148, 136, 0.3);
+}
+
+.login-brand-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--color-accent-deep);
+  margin-bottom: 4px;
+}
+
+.login-brand-name {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-ink);
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+}
+
+/* ==========================================
+   DIVIDER
+========================================== */
+
+.login-divider {
+  height: 1px;
+  background: var(--color-line);
+  margin-bottom: 24px;
+}
+
+/* ==========================================
+   HEADING
+========================================== */
+
+.login-heading {
+  margin-bottom: 20px;
+}
+
+.login-heading h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: -0.3px;
+  margin-bottom: 6px;
+}
+
+.login-heading p {
+  font-size: 13.5px;
+  color: var(--color-ink-soft);
+  line-height: 1.5;
+}
+
+/* ==========================================
+   ERROR BANNER
+========================================== */
+
+.login-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: var(--color-vital-soft);
+  color: var(--color-vital);
+  border: 1px solid rgba(220, 79, 79, 0.25);
+
+  padding: 11px 14px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+
+  font-weight: 600;
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+
+.login-error-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-vital);
+  flex-shrink: 0;
+  animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* ==========================================
+   FORM
+========================================== */
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.form-input {
+  width: 100%;
+  padding: 11px 14px;
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-ink);
+
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-line);
+  border-radius: 10px;
+  outline: none;
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.form-input::placeholder {
+  color: #b0afa9;
+}
+
+.form-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+  background: var(--color-surface);
+}
+
+.form-input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Password field with toggle button */
+.form-input-wrapper {
+  position: relative;
+}
+
+.form-input--password {
+  padding-right: 42px;
+}
+
+.form-toggle-pw {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+
+  color: var(--color-ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: color 0.15s ease;
+}
+
+.form-toggle-pw:hover {
+  color: var(--color-accent);
+}
+
+/* ==========================================
+   SUBMIT BUTTON
+========================================== */
+
+.login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 6px;
+
+  width: 100%;
+  padding: 13px;
+
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-deep),
+    var(--color-accent)
+  );
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+
+  box-shadow: 0 6px 18px rgba(13, 148, 136, 0.28);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.login-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(13, 148, 136, 0.34);
+}
+
+.login-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-btn:disabled,
+.login-btn--loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Spinner */
+.login-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.login-footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-ink-soft);
+  line-height: 1.5;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 28px 24px;
+  }
+
+  .login-brand-name {
+    font-size: 13.5px;
+  }
+
+  .login-heading h2 {
+    font-size: 20px;
+  }
+}
+
+/* ==========================================
+   REDUCED MOTION
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .login-error-dot,
+  .login-spinner {
+    animation: none;
+  }
+
+  .login-btn {
+    transition: none;
+  }
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
 import PasienCard from "../components/PasienCard";
 import Chart from "../components/Chart";
@@ -35,37 +35,25 @@ import "../styles/DashboardPageStyle.css";
 export default function DashboardPage() {
   const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const [error, setError] = useState("");
   const [connected, setConnected] = useState(true);
-
   const [lastUpdate, setLastUpdate] = useState(null);
-
   const [fetching, setFetching] = useState(false);
 
   useEffect(() => {
     const fetchDashboard = async () => {
       if (fetching) return;
-
       setFetching(true);
 
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/data-harian`,
-          {
-            timeout: 10000,
-          },
-        );
+        const response = await axiosInstance.get("/api/data-harian");
 
         setDashboard(response.data.data);
-
         setConnected(true);
         setError("");
-
         setLastUpdate(new Date());
       } catch (error) {
         console.error("Dashboard Error:", error);
-
         setConnected(false);
 
         if (!navigator.onLine) {
@@ -82,7 +70,6 @@ export default function DashboardPage() {
     const handleOnline = () => {
       setConnected(true);
       setError("");
-
       fetchDashboard();
     };
 
@@ -102,7 +89,6 @@ export default function DashboardPage() {
 
     return () => {
       clearInterval(interval);
-
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
     };
@@ -120,7 +106,6 @@ export default function DashboardPage() {
           {[...Array(16)].map((_, index) => (
             <div key={index} className="card-skeleton">
               <div className="skeleton skeleton-icon"></div>
-
               <div className="skeleton-content">
                 <div className="skeleton skeleton-text"></div>
                 <div className="skeleton skeleton-number"></div>
@@ -147,7 +132,6 @@ export default function DashboardPage() {
             <span className="ring"></span>
             <span className="core"></span>
           </div>
-
           <div>
             <h3>Sistem Monitoring Rumah Sakit</h3>
             <p>
@@ -159,7 +143,6 @@ export default function DashboardPage() {
 
         <div className="sync-info">
           <span>Sinkronisasi Terakhir</span>
-
           <strong>
             {lastUpdate
               ? lastUpdate.toLocaleString("id-ID", {
@@ -182,27 +165,23 @@ export default function DashboardPage() {
       {/* KPI Utama */}
       <section className="dashboard-section">
         <h2 className="section-title">Ringkasan Pasien</h2>
-
         <div className="dashboard-grid-main">
           <PasienCard
             title="Total Pasien"
             value={dashboard?.total_pasien}
             icon={<Users />}
           />
-
           <PasienCard
             title="IGD"
             value={dashboard?.total_igd}
             icon={<HeartPulse />}
             variant="vital"
           />
-
           <PasienCard
             title="Rawat Jalan"
             value={dashboard?.total_ralan}
             icon={<Activity />}
           />
-
           <PasienCard
             title="Rawat Inap"
             value={dashboard?.total_ranap}
@@ -214,14 +193,12 @@ export default function DashboardPage() {
       {/* Grafik */}
       <section className="dashboard-section">
         <h2 className="section-title">Tren Kunjungan</h2>
-
         <Chart />
       </section>
 
       {/* Laboratorium */}
       <section className="dashboard-section">
         <h2 className="section-title">Laboratorium</h2>
-
         <div className="dashboard-grid-lab">
           <PasienCard
             title="Lab Rawat Jalan"
@@ -229,21 +206,18 @@ export default function DashboardPage() {
             icon={<FlaskConical />}
             variant="lab"
           />
-
           <PasienCard
             title="Lab Rawat Inap"
             value={dashboard?.total_laboratorium_ranap}
             icon={<FlaskConical />}
             variant="lab"
           />
-
           <PasienCard
             title="Lab Patologi Klinik"
             value={dashboard?.total_laboratorium_pk}
             icon={<FlaskConical />}
             variant="lab"
           />
-
           <PasienCard
             title="Lab Patologi Anatomi"
             value={dashboard?.total_laboratorium_pa}
@@ -256,7 +230,6 @@ export default function DashboardPage() {
       {/* Poliklinik */}
       <section className="dashboard-section">
         <h2 className="section-title">Poliklinik &amp; Unit Layanan</h2>
-
         <div className="dashboard-grid-lab">
           <PasienCard
             title="Mikrobiologi"
@@ -264,128 +237,110 @@ export default function DashboardPage() {
             icon={<Microscope />}
             variant="lab"
           />
-
           <PasienCard
             title="Gawat Darurat"
             value={dashboard?.total_gawat_darurat}
             icon={<Siren />}
             variant="vital"
           />
-
           <PasienCard
             title="Penyakit Dalam"
             value={dashboard?.total_penyakit_dalam}
             icon={<Stethoscope />}
             variant="poli"
           />
-
           <PasienCard
             title="Pediatri / Anak"
             value={dashboard?.total_pediatri_anak}
             icon={<Baby />}
             variant="poli"
           />
-
           <PasienCard
             title="Bedah"
             value={dashboard?.total_bedah}
             icon={<Scissors />}
             variant="poli"
           />
-
           <PasienCard
             title="Kandungan &amp; Kebidanan"
             value={dashboard?.total_kandungan_kebidanan}
             icon={<HeartPulse />}
             variant="poli"
           />
-
           <PasienCard
             title="Neurologi / Saraf"
             value={dashboard?.total_neurologi_saraf}
             icon={<Brain />}
             variant="poli"
           />
-
           <PasienCard
             title="Jantung &amp; Pembuluh Darah"
             value={dashboard?.total_jantung_pembuluh_darah}
             icon={<HeartCrack />}
             variant="poli"
           />
-
           <PasienCard
             title="Rehabilitasi Medik"
             value={dashboard?.total_rehabilitasi_medik}
             icon={<User />}
             variant="poli"
           />
-
           <PasienCard
             title="Kulit &amp; Kelamin"
             value={dashboard?.total_kulit_kelamin}
             icon={<Bug />}
             variant="poli"
           />
-
           <PasienCard
             title="THT KL"
             value={dashboard?.total_tht_kl}
             icon={<Volume2 />}
             variant="poli"
           />
-
           <PasienCard
             title="Mata"
             value={dashboard?.total_mata}
             icon={<Eye />}
             variant="poli"
           />
-
           <PasienCard
             title="Geriatri"
             value={dashboard?.total_geriatri}
             icon={<Heart />}
             variant="poli"
           />
-
           <PasienCard
             title="Orthopedi"
             value={dashboard?.total_orthopedi}
             icon={<Bone />}
             variant="poli"
           />
-
           <PasienCard
             title="Urologi"
             value={dashboard?.total_urologi}
             icon={<Droplets />}
             variant="poli"
           />
-
           <PasienCard
-            title="Gigi & Mulut"
+            title="Gigi &amp; Mulut"
             value={dashboard?.total_gigi_mulut}
             icon={<Smile />}
             variant="poli"
           />
-
           <PasienCard
             title="TB-DOTS"
             value={dashboard?.total_tb_dots}
             icon={<Shield />}
             variant="poli"
           />
-
           <PasienCard
             title="VCT"
             value={dashboard?.total_vct}
             icon={<Ribbon />}
             variant="poli"
           />
-
           <PasienCard
-            title="Umum / Mcu"
+            title="Umum / MCU"
             value={dashboard?.total_umum_mcu}
             icon={<ClipboardList />}
             variant="poli"
