@@ -16,7 +16,9 @@ export const attendanceController = async (req, res) => {
     if (!attendance || attendance.length === 0) {
       return res.status(200).json({
         success: true,
-        message: "Belum ada data presensi",
+        message: date
+          ? "Tidak ada data pada tanggal tersebut"
+          : "Belum ada data presensi",
         data: [],
       });
     }
