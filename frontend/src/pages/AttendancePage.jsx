@@ -6,18 +6,19 @@ import {
   useRef,
   Fragment,
 } from "react";
+import axios from "axios";
 import "../styles/AttendancePage.css";
 
 const API_BASE = `${import.meta.env.VITE_API_URL}/api/presensi`;
 
-// jam batas dianggap "Terlambat". SESUAIKAN dengan jam shift
+// jam batas dianggap "Terlambat".
 const LATE_THRESHOLD = "08:00";
 
 /* ==========================================
    HELPERS
 ========================================== */
 
-function useDebouncedValue(value, delay = 400) {
+const useDebouncedValue = (value, delay = 400) => {
   const [debounced, setDebounced] = useState(value);
 
   useEffect(() => {
@@ -26,19 +27,17 @@ function useDebouncedValue(value, delay = 400) {
   }, [value, delay]);
 
   return debounced;
-}
+};
 
-function todayISO() {
-  return new Date().toISOString().slice(0, 10);
-}
+const todayISO = () => new Date().toISOString().slice(0, 10);
 
-function timeOnly(checktime) {
+const timeOnly = (checktime) => {
   if (!checktime) return null;
   const parts = checktime.split(" ");
-  return parts[1] ? parts[1].slice(0, 5) : null; //
-}
+  return parts[1] ? parts[1].slice(0, 5) : null;
+};
 
-function highlightMatch(text, query) {
+const highlightMatch = (text, query) => {
   if (!query || !text) return text;
   const idx = text.toLowerCase().indexOf(query.toLowerCase());
   if (idx === -1) return text;
@@ -50,9 +49,9 @@ function highlightMatch(text, query) {
       {text.slice(idx + query.length)}
     </>
   );
-}
+};
 
-function groupByEmployee(rawLogs) {
+const groupByEmployee = (rawLogs) => {
   const map = new Map();
 
   for (const log of rawLogs) {
@@ -106,94 +105,92 @@ function groupByEmployee(rawLogs) {
       };
     })
     .sort((a, b) => (a.name || "").localeCompare(b.name || ""));
-}
+};
 
-function IconCalendarOff() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M21 13V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7" />
-      <path d="M16 2v4M8 2v4M3 10h18" />
-      <path d="m17 17 4 4m0-4-4 4" />
-    </svg>
-  );
-}
+/* ==========================================
+   ICONS
+========================================== */
 
-function IconUsers() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  );
-}
+const IconCalendarOff = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M21 13V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7" />
+    <path d="M16 2v4M8 2v4M3 10h18" />
+    <path d="m17 17 4 4m0-4-4 4" />
+  </svg>
+);
 
-function IconClock() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 6v6l4 2" />
-    </svg>
-  );
-}
+const IconUsers = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+    <circle cx="9" cy="7" r="4" />
+    <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+  </svg>
+);
 
-function IconAlert() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-      <path d="M12 9v4M12 17h.01" />
-    </svg>
-  );
-}
+const IconClock = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="12" r="10" />
+    <path d="M12 6v6l4 2" />
+  </svg>
+);
 
-function IconChevron({ open }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      style={{
-        transform: open ? "rotate(90deg)" : "rotate(0deg)",
-        transition: "transform 0.15s ease",
-      }}
-    >
-      <path d="m9 18 6-6-6-6" />
-    </svg>
-  );
-}
+const IconAlert = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+    <path d="M12 9v4M12 17h.01" />
+  </svg>
+);
 
-export default function AttendancePage() {
+const IconChevron = ({ open }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={{
+      transform: open ? "rotate(90deg)" : "rotate(0deg)",
+      transition: "transform 0.15s ease",
+    }}
+  >
+    <path d="m9 18 6-6-6-6" />
+  </svg>
+);
+
+/* ==========================================
+   PAGE
+========================================== */
+
+const AttendancePage = () => {
   const [date, setDate] = useState(todayISO());
   const [searchInput, setSearchInput] = useState("");
   const debouncedSearch = useDebouncedValue(searchInput, 350);
@@ -216,34 +213,37 @@ export default function AttendancePage() {
 
     try {
       const token = localStorage.getItem("token");
-      const url = targetDate ? `${API_BASE}?date=${targetDate}` : API_BASE;
 
-      const res = await fetch(url, {
+      const res = await axios.get(API_BASE, {
+        params: targetDate ? { date: targetDate } : undefined,
         signal: controller.signal,
         headers: {
-          "Content-Type": "application/json",
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
       });
 
-      const contentType = res.headers.get("content-type") || "";
-      if (!contentType.includes("application/json")) {
+      if (typeof res.data === "string") {
         throw new Error(
-          "Server tidak mengembalikan JSON — cek API_BASE / proxy Vite ke backend Express.",
+          "Server tidak mengembalikan JSON — cek VITE_API_URL / proxy ke backend Express.",
         );
       }
 
-      const json = await res.json();
+      const json = res.data;
 
-      if (!res.ok || !json.success) {
+      if (!json.success) {
         throw new Error(json.message || "Gagal mengambil data presensi");
       }
 
       setRawLogs(json.data || []);
       setEmptyMessage(json.data.length === 0 ? json.message : "");
     } catch (err) {
-      if (err.name === "AbortError") return;
-      setError(err.message || "Terjadi kesalahan pada server");
+      if (axios.isCancel(err) || err.code === "ERR_CANCELED") return;
+
+      const message =
+        err.response?.data?.message ||
+        err.message ||
+        "Terjadi kesalahan pada server";
+      setError(message);
       setRawLogs([]);
     } finally {
       setLoading(false);
@@ -522,4 +522,6 @@ export default function AttendancePage() {
       </div>
     </div>
   );
-}
+};
+
+export default AttendancePage;
