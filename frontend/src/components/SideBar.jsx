@@ -1,6 +1,13 @@
 import { NavLink } from "react-router-dom";
 
-import { LayoutDashboard, Users, Ambulance, Bed, Cross } from "lucide-react";
+import {
+  LayoutDashboard,
+  Users,
+  Ambulance,
+  Bed,
+  Cross,
+  ClipboardCheck,
+} from "lucide-react";
 
 import "../styles/Sidebar.css";
 
@@ -39,6 +46,11 @@ export default function Sidebar() {
         <NavLink to="/ranap">
           <Bed />
           <span>Rawat Inap</span>
+        </NavLink>
+
+        <NavLink to="/presensi">
+          <ClipboardCheck />
+          <span>Absensi</span>
         </NavLink>
       </nav>
 

@@ -1,0 +1,299 @@
+/* ==========================================
+   ATTENDANCE / PRESENSI PAGE
+   Menggunakan token dari design system SIMRS
+   (--color-*, --font-*, --radius-*, --shadow-card)
+   Pastikan file token global (yang berisi :root { ... })
+   sudah di-import di level app.
+========================================== */
+
+.attendance-page {
+  min-height: 100vh;
+  padding: 32px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+/* ------- toolbar: date filter + search ------- */
+
+.attendance-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.attendance-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.attendance-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.attendance-field input {
+  font-family: var(--font-body);
+  font-size: 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  min-width: 220px;
+}
+
+.attendance-field input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.attendance-field.search-field input {
+  min-width: 260px;
+}
+
+.attendance-reset-btn {
+  align-self: flex-end;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-accent-deep);
+  background: var(--color-accent-soft);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.attendance-reset-btn:hover {
+  filter: brightness(0.96);
+}
+
+/* ------- summary cards (reuses pasien-card look) ------- */
+
+.attendance-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+/* ------- table card ------- */
+
+.attendance-table-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attendance-table thead th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--color-ink-soft);
+  background: var(--color-bg);
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--color-line);
+  white-space: nowrap;
+}
+
+.attendance-table tbody td {
+  padding: 14px 20px;
+  font-size: 14px;
+  color: var(--color-ink);
+  border-bottom: 1px solid var(--color-line);
+  vertical-align: middle;
+}
+
+.attendance-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.attendance-table tbody tr:hover {
+  background: var(--color-bg);
+}
+
+.attendance-table mark {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-deep);
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+.attendance-name {
+  font-weight: 600;
+}
+
+.attendance-unit {
+  color: var(--color-ink-soft);
+  font-size: 13px;
+}
+
+/* status badge */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+}
+
+.status-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.status-badge.status-hadir {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-deep);
+}
+.status-badge.status-hadir::before {
+  background: var(--color-accent);
+}
+
+.status-badge.status-terlambat {
+  background: var(--color-poli-soft);
+  color: var(--color-poli);
+}
+.status-badge.status-terlambat::before {
+  background: var(--color-poli);
+}
+
+.status-badge.status-tidak-hadir {
+  background: var(--color-vital-soft);
+  color: var(--color-vital);
+}
+.status-badge.status-tidak-hadir::before {
+  background: var(--color-vital);
+}
+
+/* ------- empty state ------- */
+
+.attendance-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 64px 24px;
+  text-align: center;
+}
+
+.attendance-empty .icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.attendance-empty h4 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.attendance-empty p {
+  font-size: 13.5px;
+  color: var(--color-ink-soft);
+  max-width: 320px;
+}
+
+/* ------- expandable raw log chips ------- */
+
+.attendance-raw-log {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.attendance-raw-chip {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-ink-soft);
+  background: var(--color-bg);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+}
+
+/* ------- table loading skeleton rows ------- */
+
+.attendance-skel-row td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.attendance-skel-bar {
+  height: 14px;
+  border-radius: 6px;
+}
+
+/* ------- mobile ------- */
+
+@media (max-width: 1200px) {
+  .attendance-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .attendance-page {
+    padding: 18px;
+  }
+
+  .attendance-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .attendance-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .attendance-field input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .attendance-reset-btn {
+    align-self: stretch;
+  }
+
+  .attendance-table-card {
+    overflow-x: auto;
+  }
+
+  .attendance-table {
+    min-width: 640px;
+  }
+}

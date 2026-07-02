@@ -7,6 +7,7 @@ import DashboardPage from "./pages/DashboardPage";
 import LoginPage from "./pages/LoginPage";
 import NotFound from "./pages/NotFound";
 import RanapPage from "./pages/RanapPage";
+import AttendancePage from "./pages/AttendancePage";
 
 import "../src/styles/Sidebar.css";
 
@@ -28,6 +29,7 @@ export default function App() {
                   <Routes>
                     <Route path="/" element={<DashboardPage />} />
                     <Route path="/ranap" element={<RanapPage />} />
+                    <Route path="/presensi" element={<AttendancePage />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>
