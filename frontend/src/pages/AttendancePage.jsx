@@ -8,14 +8,9 @@ import {
 } from "react";
 import "../styles/AttendancePage.css";
 
-/* ==========================================
-   CONFIG
-========================================== */
-
 const API_BASE = `${import.meta.env.VITE_API_URL}/api/presensi`;
 
 // jam batas dianggap "Terlambat". SESUAIKAN dengan jam shift
-// resmi RSU Tumpaan (ini masih asumsi, ganti kalau beda).
 const LATE_THRESHOLD = "08:00";
 
 /* ==========================================
@@ -37,11 +32,10 @@ function todayISO() {
   return new Date().toISOString().slice(0, 10);
 }
 
-// CHECKTIME format dari mesin: "2026-07-01 07:36:48" (bukan ISO, ada spasi)
 function timeOnly(checktime) {
   if (!checktime) return null;
   const parts = checktime.split(" ");
-  return parts[1] ? parts[1].slice(0, 5) : null; // "HH:mm"
+  return parts[1] ? parts[1].slice(0, 5) : null; //
 }
 
 function highlightMatch(text, query) {
@@ -58,17 +52,6 @@ function highlightMatch(text, query) {
   );
 }
 
-/**
- * Data dari backend adalah RAW LOG mesin fingerprint — satu baris
- * per event scan (CHECKTYPE: "I" = masuk, "O" = keluar), satu
- * pegawai bisa punya banyak baris dalam sehari.
- *
- * Fungsi ini group per USERID lalu ambil:
- * - jamMasuk = scan "I" paling awal
- * - jamKeluar = scan "O" paling akhir
- * - status = Terlambat kalau jamMasuk > LATE_THRESHOLD, selain itu Hadir
- * - belumCheckout = ada jamMasuk tapi tidak ada jamKeluar
- */
 function groupByEmployee(rawLogs) {
   const map = new Map();
 
@@ -124,10 +107,6 @@ function groupByEmployee(rawLogs) {
     })
     .sort((a, b) => (a.name || "").localeCompare(b.name || ""));
 }
-
-/* ==========================================
-   ICONS
-========================================== */
 
 function IconCalendarOff() {
   return (
@@ -214,10 +193,6 @@ function IconChevron({ open }) {
   );
 }
 
-/* ==========================================
-   PAGE
-========================================== */
-
 export default function AttendancePage() {
   const [date, setDate] = useState(todayISO());
   const [searchInput, setSearchInput] = useState("");
@@ -275,9 +250,6 @@ export default function AttendancePage() {
     }
   }, []);
 
-  // fetch-on-param-change with loading/error state is intentional here;
-  // project doesn't use React Query/SWR yet. See fetchAttendance above
-  // for the actual setState calls.
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchAttendance(date);
