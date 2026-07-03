@@ -221,4 +221,45 @@ enum StatusPetugas {
   NONAKTIF  @map("0")
 }
 
+//model kamar---------------------------------------------------------------------
+model Kamar {
+  kdKamar     String       @id @map("kd_kamar") @db.VarChar(15)
+  kdBangsal   String       @map("kd_bangsal") @db.Char(5)
+  tarifKamar  Float        @map("trf_kamar") @db.Double
 
+  status      StatusKamar
+  kelas       KelasKamar
+  statusData  StatusData   @map("statusdata")
+
+  @@map("kamar")
+
+  @@index([status])
+  @@index([kelas])
+  @@index([kdBangsal])
+  @@index([statusData])
+
+  @@index([status, kelas])
+  @@index([status, kdBangsal])
+}
+
+enum StatusKamar {
+  ISI
+  KOSONG
+  DIBERSIHKAN
+  DIBOOKING
+  PERBAIKAN
+}
+
+enum KelasKamar {
+  KELAS_1      @map("Kelas 1")
+  KELAS_2      @map("Kelas 2")
+  KELAS_3      @map("Kelas 3")
+  KELAS_UTAMA  @map("Kelas Utama")
+  KELAS_VIP    @map("Kelas VIP")
+  KELAS_VVIP   @map("Kelas VVIP")
+}
+
+enum StatusData {
+  NON_AKTIF @map("0")
+  AKTIF     @map("1")
+}
