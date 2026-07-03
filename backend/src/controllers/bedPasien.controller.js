@@ -1,4 +1,4 @@
-import { getBed } from "../services/bedPasien.service";
+import { getBed } from "../services/bedPasien.service.js";
 
 export const dashboardBed = async (req, res) => {
   try {
