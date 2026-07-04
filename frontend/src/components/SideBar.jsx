@@ -52,6 +52,11 @@ export default function Sidebar() {
           <ClipboardCheck />
           <span>Absensi</span>
         </NavLink>
+
+        <NavLink to="/bed">
+          <ClipboardCheck />
+          <span>Bed</span>
+        </NavLink>
       </nav>
 
       <div className="sidebar-footer">

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "../utils/axiosInstance";
+import axios from "axios";
 
 import PasienCard from "../components/PasienCard";
 import Chart from "../components/Chart";
@@ -46,8 +46,9 @@ export default function DashboardPage() {
       setFetching(true);
 
       try {
-        const response = await axiosInstance.get("/api/data-harian");
-
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/data-harian`,
+        );
         setDashboard(response.data.data);
         setConnected(true);
         setError("");
