@@ -1,10 +1,23 @@
 .status-badge {
   display: inline-flex;
   align-items: center;
+  gap: 5px;
   padding: 4px 10px;
   border-radius: var(--radius-pill);
   font-size: 12px;
   font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+/* dot indicator - lebih cepat dibaca daripada cuma warna teks */
+.status-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
 }
 
 .status-badge-accent {
@@ -48,6 +61,7 @@
 .breakdown-count {
   color: var(--color-ink-soft);
   font-weight: 600;
+  font-variant-numeric: tabular-nums; /* angka gak "loncat" lebar tiap update */
 }
 
 .breakdown-track {
@@ -65,7 +79,7 @@
     var(--color-accent-deep)
   );
   border-radius: var(--radius-pill);
-  transition: width 0.3s ease;
+  transition: width 0.4s ease;
 }
 
 .bed-table {
@@ -75,6 +89,13 @@
 }
 
 .bed-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(
+    --color-surface,
+    #fff
+  ); /* wajib biar sticky gak transparan nimpa row */
   text-align: left;
   padding: 14px 20px;
   font-size: 11.5px;
@@ -93,6 +114,10 @@
 
 .bed-table tbody tr:last-child td {
   border-bottom: none;
+}
+
+.bed-table tbody tr {
+  transition: background 0.15s ease;
 }
 
 .bed-table tbody tr:hover {

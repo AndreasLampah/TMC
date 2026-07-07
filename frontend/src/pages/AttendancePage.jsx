@@ -9,8 +9,6 @@ import {
 import axios from "axios";
 import "../styles/AttendancePage.css";
 
-const API_BASE = `${import.meta.env.VITE_API_URL}/api/presensi`;
-
 // jam batas dianggap "Terlambat".
 const LATE_THRESHOLD = "08:00";
 
@@ -214,13 +212,16 @@ const AttendancePage = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await axios.get(API_BASE, {
-        params: targetDate ? { date: targetDate } : undefined,
-        signal: controller.signal,
-        headers: {
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/presensi`,
+        {
+          params: targetDate ? { date: targetDate } : undefined,
+          signal: controller.signal,
+          headers: {
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
         },
-      });
+      );
 
       if (typeof res.data === "string") {
         throw new Error(

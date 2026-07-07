@@ -7,6 +7,7 @@ import {
   Bed,
   Cross,
   ClipboardCheck,
+  BedSingle,
 } from "lucide-react";
 
 import "../styles/Sidebar.css";
@@ -44,7 +45,7 @@ export default function Sidebar() {
         </NavLink>
 
         <NavLink to="/ranap">
-          <Bed />
+          <BedSingle />
           <span>Rawat Inap</span>
         </NavLink>
 
@@ -54,7 +55,7 @@ export default function Sidebar() {
         </NavLink>
 
         <NavLink to="/bed">
-          <ClipboardCheck />
+          <Bed />
           <span>Bed</span>
         </NavLink>
       </nav>
