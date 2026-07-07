@@ -178,6 +178,13 @@ export default function DashboardPage() {
             icon={<HeartPulse />}
             variant="vital"
           />
+
+          <PasienCard
+            title="Gawat Darurat"
+            value={dashboard?.total_gawat_darurat}
+            icon={<Siren />}
+            variant="vital"
+          />
           <PasienCard
             title="Rawat Jalan"
             value={dashboard?.total_ralan}
@@ -225,6 +232,13 @@ export default function DashboardPage() {
             icon={<Microscope />}
             variant="lab"
           />
+
+          <PasienCard
+            title="Mikrobiologi"
+            value={dashboard?.total_laboratorium_mb}
+            icon={<Microscope />}
+            variant="lab"
+          />
         </div>
       </section>
 
@@ -232,18 +246,6 @@ export default function DashboardPage() {
       <section className="dashboard-section">
         <h2 className="section-title">Poliklinik &amp; Unit Layanan</h2>
         <div className="dashboard-grid-lab">
-          <PasienCard
-            title="Mikrobiologi"
-            value={dashboard?.total_laboratorium_mb}
-            icon={<Microscope />}
-            variant="lab"
-          />
-          <PasienCard
-            title="Gawat Darurat"
-            value={dashboard?.total_gawat_darurat}
-            icon={<Siren />}
-            variant="vital"
-          />
           <PasienCard
             title="Penyakit Dalam"
             value={dashboard?.total_penyakit_dalam}
