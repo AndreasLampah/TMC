@@ -17,7 +17,7 @@ const router = express.Router();
 // auth
 router.post("/login", auth);
 
-// router.use(moduleJwt);
+router.use(moduleJwt);
 router.get("/data-harian", getTotalDataHarian);
 router.get("/grafik", chart);
 router.get("/pasien-ranap", filterPasien);
