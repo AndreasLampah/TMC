@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import { Activity, Eye, EyeOff, LogIn } from "lucide-react";
 import "../styles/LoginPage.css";
 
@@ -15,6 +15,7 @@ export default function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     setError("");
 
     if (!nip || !password) {
@@ -25,15 +26,18 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/login`,
-        { nip, password },
-        { timeout: 10000 },
-      );
+      const response = await axiosInstance.post("/api/login", {
+        nip,
+        password,
+      });
 
       const { token } = response.data;
+
       localStorage.setItem("token", token);
-      navigate("/", { replace: true });
+
+      navigate("/", {
+        replace: true,
+      });
     } catch (err) {
       const msg = err.response?.data?.message;
 

@@ -10,22 +10,19 @@ import {
   getAllPetugasController,
   filterPetugasController,
 } from "../controllers/petugas.controller.js";
+import { moduleJwt } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 // auth
 router.post("/login", auth);
 
+// router.use(moduleJwt);
 router.get("/data-harian", getTotalDataHarian);
-
 router.get("/grafik", chart);
-
 router.get("/pasien-ranap", filterPasien);
-
 router.get("/presensi", attendanceController);
-
 router.get("/bed", dashboardBed);
-
 router.get("/petugas", getAllPetugasController);
 router.post("/search-petugas", filterPetugasController);
 

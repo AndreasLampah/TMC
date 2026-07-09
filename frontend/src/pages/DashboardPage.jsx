@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
 import PasienCard from "../components/PasienCard";
 import Chart from "../components/Chart";
@@ -43,18 +43,19 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchDashboard = async () => {
       if (fetching) return;
+
       setFetching(true);
 
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/data-harian`,
-        );
+        const response = await axiosInstance.get("/api/data-harian");
+
         setDashboard(response.data.data);
         setConnected(true);
         setError("");
         setLastUpdate(new Date());
       } catch (error) {
         console.error("Dashboard Error:", error);
+
         setConnected(false);
 
         if (!navigator.onLine) {
@@ -80,17 +81,18 @@ export default function DashboardPage() {
     };
 
     window.addEventListener("online", handleOnline);
+
     window.addEventListener("offline", handleOffline);
 
     fetchDashboard();
 
-    const interval = setInterval(() => {
-      fetchDashboard();
-    }, 30000);
+    const interval = setInterval(fetchDashboard, 30000);
 
     return () => {
       clearInterval(interval);
+
       window.removeEventListener("online", handleOnline);
+
       window.removeEventListener("offline", handleOffline);
     };
   }, [fetching]);

@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import RanapPage from "./pages/RanapPage";
 import AttendancePage from "./pages/AttendancePage";
 import BedPage from "./pages/BedPage";
+import PetugasPage from "./pages/PetugasPage";
 
 import "../src/styles/Sidebar.css";
 
@@ -32,6 +33,7 @@ export default function App() {
                     <Route path="/ranap" element={<RanapPage />} />
                     <Route path="/presensi" element={<AttendancePage />} />
                     <Route path="/bed" element={<BedPage />} />
+                    <Route path="/petugas" element={<PetugasPage />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 </main>

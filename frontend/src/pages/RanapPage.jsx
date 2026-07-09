@@ -40,15 +40,30 @@ export default function RanapPage() {
           setStatus("idle");
           setErrorMsg("");
         }
+
         return;
       }
 
-      if (!cancelled) setStatus("loading");
+      // minimal 3 karakter
+      if (nama.length < 3) {
+        if (!cancelled) {
+          setPasien([]);
+          setStatus("idle");
+          setErrorMsg("Masukkan minimal 3 karakter nama pasien.");
+        }
+
+        return;
+      }
+
+      if (!cancelled) {
+        setStatus("loading");
+      }
 
       try {
         const res = await axiosInstance.post("/ranap/filter", {
           namaPasien: nama,
         });
+
         if (!cancelled) {
           setPasien(res.data.data);
           setStatus("found");
@@ -56,12 +71,16 @@ export default function RanapPage() {
       } catch (err) {
         if (!cancelled) {
           const msg = err.response?.data?.message;
+
           setPasien([]);
+
           if (err.response?.status === 404) {
             setErrorMsg(msg || "Pasien tidak ditemukan.");
+
             setStatus("empty");
           } else {
             setErrorMsg(msg || "Gagal mengambil data. Coba lagi.");
+
             setStatus("error");
           }
         }

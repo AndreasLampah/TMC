@@ -7,6 +7,7 @@ import {
   Fragment,
 } from "react";
 import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import "../styles/AttendancePage.css";
 
 // jam batas dianggap "Terlambat".
@@ -210,18 +211,10 @@ const AttendancePage = () => {
     setError(null);
 
     try {
-      const token = localStorage.getItem("token");
-
-      const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/presensi`,
-        {
-          params: targetDate ? { date: targetDate } : undefined,
-          signal: controller.signal,
-          headers: {
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-          },
-        },
-      );
+      const res = await axiosInstance.get("/api/presensi", {
+        params: targetDate ? { date: targetDate } : undefined,
+        signal: controller.signal,
+      });
 
       if (typeof res.data === "string") {
         throw new Error(

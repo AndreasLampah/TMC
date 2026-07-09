@@ -2,6 +2,11 @@ import prisma from "../config/prisma.js";
 
 export const getAllPetugasService = async () => {
   const getPetugas = await prisma.petugas.findMany({
+    where: {
+      nip: {
+        startsWith: "TMC",
+      },
+    },
     select: {
       nip: true,
       nama: true,
@@ -11,7 +16,14 @@ export const getAllPetugasService = async () => {
     skip: 0,
     take: 30,
   });
-  return getPetugas;
+
+  const finalName = getPetugas.map((item) => {
+    return {
+      nama: item.nama.split(",")[0].trim(),
+    };
+  });
+
+  return finalName;
 };
 
 export const filterPetugasService = async (namaPetugas) => {

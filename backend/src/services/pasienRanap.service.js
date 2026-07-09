@@ -23,6 +23,7 @@ export const pasienRanapService = async (namaPasien) => {
     AND rp.status_lanjut = 'Ranap'
     AND rp.stts != 'Batal'
     AND ki.stts_pulang = '-'
+  ORDER BY ki.tgl_masuk DESC
     LIMIT 50`;
 
   if (pasienRanap.length === 0) {

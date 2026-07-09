@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
 const STATUS_LABEL = {
   KOSONG: "Kosong",
@@ -122,7 +122,9 @@ export default function BedPage() {
   const fetchData = useCallback(async () => {
     try {
       setError(null);
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/bed`);
+
+      const res = await axiosInstance.get("/api/bed");
+
       if (res.data?.success) {
         setData(res.data.data);
         setLastSync(new Date());
