@@ -19,6 +19,7 @@ export const getAllPetugasService = async () => {
 
   const finalName = getPetugas.map((item) => {
     return {
+      nip: item.nip,
       nama: item.nama.split(",")[0].trim(),
     };
   });
