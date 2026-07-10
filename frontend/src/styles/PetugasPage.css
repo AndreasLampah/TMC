@@ -143,3 +143,58 @@
     transform: rotate(360deg);
   }
 }
+/* =========================
+   Pagination
+========================= */
+
+.pagination {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 16px;
+
+  margin-top: 24px;
+}
+
+.pagination button {
+  border: 1px solid var(--color-line);
+
+  background: white;
+
+  color: var(--color-accent-deep);
+
+  padding: 8px 18px;
+
+  border-radius: 12px;
+
+  font-family: var(--font-body);
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: var(--color-accent-soft);
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+.pagination span {
+  color: var(--color-ink-soft);
+
+  font-size: 14px;
+
+  font-weight: 600;
+}

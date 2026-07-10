@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Search, UserRound, UserX, Loader2 } from "lucide-react";
 
 import axiosInstance from "../utils/axiosInstance";
@@ -6,67 +6,118 @@ import "../styles/PetugasPage.css";
 
 export default function PetugasPage() {
   const [petugas, setPetugas] = useState([]);
+
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    limit: 30,
+    totalData: 0,
+    totalPage: 1,
+  });
+
+  const [page, setPage] = useState(1);
+
   const [query, setQuery] = useState("");
 
   const [status, setStatus] = useState("idle");
+
   const [errorMsg, setErrorMsg] = useState("");
 
   const inputRef = useRef(null);
 
-  const getAllPetugas = async () => {
+  // =========================
+  // GET ALL PETUGAS
+  // =========================
+
+  const getAllPetugas = useCallback(async (currentPage = 1) => {
     try {
       setStatus("loading");
 
-      const response = await axiosInstance.get("api/petugas");
+      const response = await axiosInstance.get(
+        `/api/petugas?page=${currentPage}&limit=30`,
+      );
 
-      setPetugas(response.data.data || []);
+      const result = response.data.data;
+
+      setPetugas(result.data || []);
+
+      setPagination(result.pagination);
 
       setStatus("found");
     } catch (error) {
+      setPetugas([]);
+
       setErrorMsg(
         error.response?.data?.message || "Gagal mengambil data petugas",
       );
 
       setStatus("error");
     }
-  };
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    getAllPetugas();
   }, []);
 
+  // =========================
+  // PAGINATION
+  // =========================
+
   useEffect(() => {
-    const namaPetugas = query.trim();
+    if (!query.trim()) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      getAllPetugas(page);
+    }
+  }, [page, query, getAllPetugas]);
+
+  // =========================
+  // SEARCH
+  // =========================
+
+  useEffect(() => {
+    const keyword = query.trim();
 
     let cancelled = false;
 
     const delay = setTimeout(async () => {
-      if (!namaPetugas) {
-        getAllPetugas();
+      if (!keyword) {
+        setPage(1);
 
         return;
       }
 
-      if (namaPetugas.length < 3) {
+      if (keyword.length < 3) {
         setPetugas([]);
 
-        setStatus("empty");
+        setPagination({
+          currentPage: 1,
+
+          limit: 30,
+
+          totalData: 0,
+
+          totalPage: 1,
+        });
 
         setErrorMsg("Masukkan minimal 3 karakter nama petugas");
 
+        setStatus("empty");
+
         return;
       }
 
-      setStatus("loading");
-
       try {
-        const response = await axiosInstance.post("api/search-petugas", {
-          namaPetugas,
-        });
+        setStatus("loading");
+
+        const response = await axiosInstance.post(
+          "/api/search-petugas?page=1&limit=30",
+
+          {
+            namaPetugas: keyword,
+          },
+        );
 
         if (!cancelled) {
-          setPetugas(response.data.data || []);
+          const result = response.data.data;
+
+          setPetugas(result.data || []);
+
+          setPagination(result.pagination);
 
           setStatus("found");
         }
@@ -74,17 +125,21 @@ export default function PetugasPage() {
         if (!cancelled) {
           setPetugas([]);
 
-          if (error.response?.status === 404) {
-            setErrorMsg("Petugas tidak ditemukan");
+          setPagination({
+            currentPage: 1,
 
-            setStatus("empty");
-          } else {
-            setErrorMsg(
-              error.response?.data?.message || "Gagal mencari petugas",
-            );
+            limit: 30,
 
-            setStatus("error");
-          }
+            totalData: 0,
+
+            totalPage: 1,
+          });
+
+          setErrorMsg(
+            error.response?.data?.message || "Petugas tidak ditemukan",
+          );
+
+          setStatus("empty");
         }
       }
     }, 400);
@@ -96,40 +151,23 @@ export default function PetugasPage() {
     };
   }, [query]);
 
+  // =========================
+  // CLEAR SEARCH
+  // =========================
+
   const handleClear = () => {
     setQuery("");
+
+    setPage(1);
+
+    setErrorMsg("");
 
     inputRef.current?.focus();
   };
 
   return (
     <div className="dashboard-page">
-      {/* Banner */}
-
-      <div className="system-banner">
-        <div className="system-banner-content">
-          <div className="pulse-indicator">
-            <span className="ring" />
-            <span className="core" />
-          </div>
-
-          <div>
-            <h3>Monitoring Petugas Rumah Sakit</h3>
-
-            <p>Data petugas SIMRS terintegrasi</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Header */}
-
-      <div className="dashboard-header">
-        <span className="eyebrow">Manajemen SDM</span>
-
-        <h1>Data Petugas</h1>
-      </div>
-
-      {/* Search */}
+      {/* SEARCH */}
 
       <section className="dashboard-section">
         <h2 className="section-title">Pencarian Petugas</h2>
@@ -152,9 +190,9 @@ export default function PetugasPage() {
         </div>
       </section>
 
-      {/* Empty */}
+      {/* ERROR / EMPTY MESSAGE */}
 
-      {status === "empty" && (
+      {(status === "error" || status === "empty") && (
         <div className="petugas-state">
           <UserX size={44} />
 
@@ -162,20 +200,12 @@ export default function PetugasPage() {
         </div>
       )}
 
-      {status === "error" && (
-        <div className="petugas-state error">
-          <UserX size={44} />
+      {/* TABLE */}
 
-          <p>{errorMsg}</p>
-        </div>
-      )}
+      <section className="dashboard-section">
+        <h2 className="section-title">Daftar Petugas</h2>
 
-      {/* Table */}
-
-      {petugas.length > 0 && (
-        <section className="dashboard-section">
-          <h2 className="section-title">Daftar Petugas</h2>
-
+        {petugas.length > 0 ? (
           <div className="petugas-table-wrapper">
             <table className="petugas-table">
               <thead>
@@ -190,8 +220,12 @@ export default function PetugasPage() {
 
               <tbody>
                 {petugas.map((item, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
+                  <tr key={item.nip}>
+                    <td>
+                      {(pagination.currentPage - 1) * pagination.limit +
+                        index +
+                        1}
+                    </td>
 
                     <td>
                       <span className="petugas-badge">
@@ -201,16 +235,46 @@ export default function PetugasPage() {
                       </span>
                     </td>
 
-                    <td className="nama-petugas">
-                      {item.nama || item.nama || "-"}
-                    </td>
+                    <td className="nama-petugas">{item.nama || "-"}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </section>
-      )}
+        ) : (
+          status !== "empty" && (
+            <div className="petugas-state">
+              <UserX size={44} />
+
+              <p>Data tidak tersedia</p>
+            </div>
+          )
+        )}
+
+        {/* PAGINATION */}
+
+        <div className="pagination">
+          <button
+            disabled={pagination.currentPage <= 1}
+            onClick={() => setPage(page - 1)}
+          >
+            Previous
+          </button>
+
+          <span>
+            Page {pagination.currentPage}
+            {" / "}
+            {pagination.totalPage}
+          </span>
+
+          <button
+            disabled={pagination.currentPage >= pagination.totalPage}
+            onClick={() => setPage(page + 1)}
+          >
+            Next
+          </button>
+        </div>
+      </section>
     </div>
   );
 }

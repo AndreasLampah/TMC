@@ -5,7 +5,10 @@ import {
 
 export const getAllPetugasController = async (req, res, next) => {
   try {
-    const getPetugas = await getAllPetugasService();
+    const getPetugas = await getAllPetugasService(
+      req.query.page,
+      req.query.limit,
+    );
 
     return res.status(200).json({
       success: true,
