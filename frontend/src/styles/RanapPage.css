@@ -1,374 +1,55 @@
-/* RanapPage.css — design tokens dari Sidebar.css & DashboardPage.css */
+/* =========================
+   Tambahan untuk PetugasPage.jsx
+   (gabungkan dengan CSS petugas-search / petugas-table
+   yang sudah kamu miliki di PetugasPageStyle.css)
+========================= */
 
-/* ==========================================
-   PAGE
-========================================== */
-
-.ranap-page {
-  min-height: 100vh;
-  padding: 32px;
-  max-width: 1320px;
-  margin: 0 auto;
-}
-
-/* ==========================================
-   HEADER
-========================================== */
-
-.ranap-header {
-  margin-bottom: 28px;
-}
-
-.ranap-header .eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--color-accent-deep);
-  margin-bottom: 10px;
-}
-
-.ranap-header .eyebrow::before {
-  content: "";
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--color-accent);
-  border-radius: 1px;
-}
-
-.ranap-header h1 {
-  font-family: var(--font-display);
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.5px;
-  color: var(--color-ink);
-}
-
-.ranap-header p {
-  margin-top: 6px;
-  font-size: 14px;
-  color: var(--color-ink-soft);
-}
-
-/* ==========================================
-   SEARCH BAR
-========================================== */
-
-.ranap-search-bar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 28px;
-}
-
-.ranap-input-wrap {
-  position: relative;
-  flex: 1;
-  max-width: 480px;
-}
-
-.ranap-input-icon {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--color-ink-soft);
-  pointer-events: none;
-}
-
-.ranap-input {
-  width: 100%;
-  height: 46px;
-  padding: 0 40px 0 44px;
-  border: 1.5px solid var(--color-line);
-  border-radius: 12px;
-  font-family: var(--font-body);
-  font-size: 14px;
-  color: var(--color-ink);
-  background: var(--color-surface);
-  outline: none;
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
-  box-sizing: border-box;
-}
-
-.ranap-input:focus {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
-}
-
-.ranap-input::placeholder {
-  color: var(--color-ink-soft);
-  opacity: 0.6;
-}
-
-.ranap-clear-btn {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  font-size: 18px;
-  line-height: 1;
-  color: var(--color-ink-soft);
-  cursor: pointer;
-  padding: 0 4px;
-  transition: color 0.15s;
-}
-
-.ranap-clear-btn:hover {
-  color: var(--color-ink);
-}
-
-.ranap-search-btn {
-  height: 46px;
-  padding: 0 22px;
-  background: var(--color-accent);
-  color: #ffffff;
-  border: none;
-  border-radius: 12px;
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 8px 20px rgba(13, 148, 136, 0.28);
-  transition:
-    background 0.2s,
-    box-shadow 0.2s,
-    opacity 0.2s;
-  white-space: nowrap;
-}
-
-.ranap-search-btn:hover:not(:disabled) {
-  background: var(--color-accent-deep);
-  box-shadow: 0 10px 24px rgba(13, 148, 136, 0.35);
-}
-
-.ranap-search-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-/* ==========================================
-   SPINNER
-========================================== */
-
-.ranap-spinner {
-  animation: ranap-spin 0.7s linear infinite;
-}
-
-@keyframes ranap-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* ==========================================
-   EMPTY / LOADING / ERROR STATE
-========================================== */
-
-.ranap-state {
+.petugas-page {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 64px 24px;
-  text-align: center;
-  color: var(--color-ink-soft);
+  gap: 20px;
 }
 
-.ranap-state svg {
-  opacity: 0.35;
+.petugas-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 4px;
 }
 
-.ranap-state p {
-  font-size: 14px;
+.petugas-header .eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-accent-deep);
+}
+
+.petugas-header h1 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--color-ink);
   margin: 0;
 }
 
-.ranap-state.is-error {
-  color: var(--color-vital);
-}
-
-.ranap-state.is-error svg {
-  opacity: 0.5;
-}
-
-/* ==========================================
-   RESULT LABEL
-========================================== */
-
-.ranap-result-label {
-  font-size: 12.5px;
-  font-weight: 500;
-  color: var(--color-ink-soft);
-  margin-bottom: 12px;
-}
-
-.ranap-result-label strong {
-  color: var(--color-accent);
-}
-
-/* ==========================================
-   TABLE
-========================================== */
-
-.ranap-table-wrap {
-  background: var(--color-surface);
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
-  overflow: hidden;
-}
-
-.ranap-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13.5px;
-}
-
-.ranap-table thead tr {
-  background: #f4f3ef;
-  border-bottom: 1.5px solid var(--color-line);
-}
-
-.ranap-table th {
-  padding: 12px 18px;
-  text-align: left;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.9px;
-  color: var(--color-ink-soft);
-  white-space: nowrap;
-}
-
-.ranap-table td {
-  padding: 14px 18px;
-  color: var(--color-ink);
-  border-bottom: 1px solid var(--color-line);
-  vertical-align: middle;
-}
-
-.ranap-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-.ranap-table tbody tr:hover td {
-  background: rgba(13, 148, 136, 0.04);
-}
-
-.ranap-td-num {
-  color: var(--color-ink-soft) !important;
-  font-size: 12px;
-  width: 2.5rem;
-}
-
-.ranap-td-nama {
-  font-weight: 600;
-}
-
-/* No Rawat badge */
-.ranap-badge {
-  display: inline-block;
-  padding: 3px 9px;
+.petugas-highlight {
   background: var(--color-accent-soft);
   color: var(--color-accent-deep);
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  font-family: monospace;
-  letter-spacing: 0.02em;
-}
-
-/* ==========================================
-   MOBILE
-========================================== */
-
-@media (max-width: 768px) {
-  .ranap-page {
-    padding: 18px;
-    padding-bottom: calc(84px + env(safe-area-inset-bottom));
-  }
-
-  .ranap-header h1 {
-    font-size: 27px;
-  }
-
-  .ranap-search-bar {
-    flex-direction: column;
-  }
-
-  .ranap-input-wrap {
-    max-width: 100%;
-  }
-
-  .ranap-search-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .ranap-table-wrap {
-    overflow-x: auto;
-  }
-
-  .ranap-table {
-    min-width: 580px;
-  }
-}
-
-/* ==========================================
-   REDUCED MOTION
-========================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  .ranap-spinner {
-    animation: none;
-  }
-}
-
-/* spinner di dalam input (live search) */
-.ranap-input-spinner {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--color-accent);
-  animation: ranap-spin 0.7s linear infinite;
-}
-
-/* ==========================================
-   TABEL PERSISTENT (fade saat loading)
-========================================== */
-
-.ranap-table-section {
-  transition: opacity 0.2s ease;
-}
-
-.ranap-table-fading {
-  opacity: 0.45;
-  pointer-events: none;
-}
-
-/* ==========================================
-   HIGHLIGHT MATCH
-========================================== */
-
-.ranap-highlight {
-  background: var(--color-accent-soft);
-  color: var(--color-accent-deep);
-  font-weight: 600;
-  border-radius: 3px;
   padding: 0 2px;
+  border-radius: 4px;
+}
+
+.petugas-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.petugas-state svg {
+  color: var(--color-ink-soft);
+}
+
+.petugas-state.error svg {
+  color: var(--color-vital);
 }

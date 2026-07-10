@@ -22,7 +22,16 @@ const paginationService = (page = 1, limit = 30, totalData = 0) => {
 };
 
 export const getAllPetugasService = async (page, limit) => {
-  const { skip, take, pagination } = paginationService(page, limit);
+  // hitung dulu totalData dengan where yang SAMA persis dengan findMany
+  const totalData = await prisma.petugas.count({
+    where: {
+      nip: {
+        startsWith: "TMC",
+      },
+    },
+  });
+
+  const { skip, take, pagination } = paginationService(page, limit, totalData);
 
   const getPetugas = await prisma.petugas.findMany({
     where: {
@@ -38,7 +47,7 @@ export const getAllPetugasService = async (page, limit) => {
       kdJbtn: true,
     },
     orderBy: {
-      nama: "asc",
+      nip: "asc",
     },
   });
 
@@ -52,7 +61,6 @@ export const getAllPetugasService = async (page, limit) => {
 
   return { data: finalName, pagination };
 };
-
 export const filterPetugasService = async (namaPetugas) => {
   if (!namaPetugas || !namaPetugas.trim()) {
     throw new Error("Silahkan masukan nama petugas");
