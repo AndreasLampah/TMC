@@ -198,3 +198,52 @@
 
   font-weight: 600;
 }
+.petugas-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.petugas-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.petugas-header .eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-accent-deep);
+}
+
+.petugas-header h1 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.petugas-highlight {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-deep);
+  padding: 0 2px;
+  border-radius: 4px;
+}
+
+.petugas-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.petugas-state svg {
+  color: var(--color-ink-soft);
+}
+
+.petugas-state.error svg {
+  color: var(--color-vital);
+}
