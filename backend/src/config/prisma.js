@@ -1,17 +1,18 @@
 import "dotenv/config";
-import { PrismaClient } from "../../generated/prisma/client.js";
+
+import { PrismaClient } from "../../prisma/generated/prisma/client.js";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 
 if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL tidak ditemukan");
+    throw new Error("DATABASE_URL tidak ditemukan");
 }
 
 const adapter = new PrismaMariaDb(
-  process.env.DATABASE_URL
+    process.env.DATABASE_URL
 );
 
 const prisma = new PrismaClient({
-  adapter,
+    adapter,
 });
 
 export default prisma;

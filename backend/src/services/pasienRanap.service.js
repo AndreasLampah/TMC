@@ -7,8 +7,8 @@ export const pasienRanapService = async (namaPasien) => {
 
   const nama = namaPasien.trim();
 
-  const pasienRanap = await prisma.$queryRaw`SELECT
-    rp.no_rawat AS nomor_rawat,
+  const pasienRanap = await prisma.$queryRaw`
+  SELECT rp.no_rawat AS nomor_rawat,
     p.no_rkm_medis AS nomor_rekam_medis,
     p.nm_pasien AS nama_pasien,
     ki.kd_kamar,

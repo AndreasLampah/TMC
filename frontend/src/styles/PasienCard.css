@@ -1,110 +1,158 @@
-.stats-card {
+.pasien-card {
   position: relative;
-
-  background: #ffffff;
-
-  border: 1px solid #e2e8f0;
-
-  border-radius: 20px;
-
-  padding: 24px;
-
-  transition: all 0.25s ease;
-
-  box-shadow:
-    0 1px 3px rgba(15, 23, 42, 0.05),
-    0 8px 24px rgba(15, 23, 42, 0.04);
-}
-
-.stats-card:hover {
-  transform: translateY(-2px);
-
-  border-color: #cbd5e1;
-
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
-}
-
-.stats-card::before {
-  content: "";
-
-  position: absolute;
-
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 4px;
-
-  background: #2563eb;
-}
-
-.card-top {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-line);
+  border-left: 3px solid var(--signal-teal);
+  border-radius: 8px;
+  padding: 16px 18px;
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.pasien-card:hover {
+  background: var(--bg-surface-2);
+}
+
+.pasien-card-top {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  gap: 8px;
 }
 
-.card-top p {
-  font-size: 14px;
+.pasien-card-title {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
   font-weight: 600;
-  color: #64748b;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.card-top span,
-.card-icon {
-  width: 48px;
-  height: 48px;
-
+.pasien-card-icon {
+  flex-shrink: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-
-  border-radius: 14px;
-
-  background: #eff6ff;
-
-  color: #2563eb;
+  color: var(--text-faint);
 }
 
-.card-top svg,
-.card-icon svg {
-  width: 22px;
-  height: 22px;
+.pasien-card-icon svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2;
 }
 
-.stats-card h2 {
-  font-size: 42px;
-  font-weight: 800;
+.pasien-card-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 30px;
   line-height: 1;
-  letter-spacing: -1px;
-  color: #0f172a;
-  margin-bottom: 10px;
+  color: var(--signal-teal);
+  text-shadow: 0 0 14px rgba(51, 214, 192, 0.35);
+  font-variant-numeric: tabular-nums;
 }
 
-.card-trend,
-.card-subtitle {
-  font-size: 13px;
+.pasien-card-tag {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(255, 92, 97, 0.12);
+  color: var(--signal-red);
+}
+
+.pasien-card-tag-live {
+  background: rgba(51, 214, 192, 0.12);
+  color: var(--signal-teal);
+}
+
+/* Featured — Total Pasien, primary channel */
+
+.pasien-card-featured {
+  grid-column: span 2;
+  border-left-width: 4px;
+  padding: 20px 22px;
+}
+
+.pasien-card-featured .pasien-card-value {
+  font-size: 40px;
+}
+
+.pasien-card-featured .pasien-card-title {
+  color: var(--text-primary);
+  font-size: 11.5px;
+}
+
+/* Vital — IGD / Gawat Darurat, critical channel */
+
+.pasien-card-vital {
+  border-left-color: var(--signal-red);
+  animation: pasien-alert-border 2.2s ease-in-out infinite;
+}
+
+.pasien-card-vital .pasien-card-value {
+  color: var(--signal-red);
+  text-shadow: 0 0 14px rgba(255, 92, 97, 0.4);
+}
+
+/* Compact — Laboratorium & Poliklinik, dense reference rows */
+
+.pasien-card-compact {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-left: none;
+  border-radius: 0;
+  border-bottom: 1px solid var(--border-line);
+  padding: 10px 4px;
+  background: transparent;
+  gap: 12px;
+}
+
+.pasien-card-compact:hover {
+  background: var(--bg-surface-2);
+}
+
+.pasien-card-compact .pasien-card-top {
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.pasien-card-compact .pasien-card-title {
+  font-size: 11.5px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-muted);
+  font-family: var(--font-body);
   font-weight: 500;
-  color: #94a3b8;
 }
 
-.card-primary::before {
-  background: #2563eb;
+.pasien-card-compact .pasien-card-icon {
+  display: none;
 }
 
-.card-success::before {
-  background: #10b981;
+.pasien-card-compact .pasien-card-value {
+  font-size: 16px;
+  color: var(--text-primary);
+  text-shadow: none;
 }
 
-.card-danger::before {
-  background: #ef4444;
+@keyframes pasien-alert-border {
+  0%, 100% { border-left-color: var(--signal-red); }
+  50% { border-left-color: rgba(255, 92, 97, 0.35); }
 }
 
-.card-warning::before {
-  background: #f59e0b;
-}
-
-.card-purple::before {
-  background: #8b5cf6;
+@media (max-width: 640px) {
+  .pasien-card-featured {
+    grid-column: span 1;
+  }
 }

@@ -11,6 +11,7 @@ import {
   filterPetugasController,
 } from "../controllers/petugas.controller.js";
 import { moduleJwt } from "../middleware/authMiddleware.js";
+import {totalPendapatanRawatJalanController} from "../controllers/totalPendapatanRawatJalan.controller.js"
 
 const router = express.Router();
 
@@ -24,6 +25,8 @@ router.get("/pasien-ranap", filterPasien);
 router.get("/presensi", attendanceController);
 router.get("/bed", dashboardBed);
 router.get("/petugas", getAllPetugasController);
+router.get("/pendapatan-rawat-jalan", totalPendapatanRawatJalanController);
 router.post("/search-petugas", filterPetugasController);
 
 export default router;
+ 

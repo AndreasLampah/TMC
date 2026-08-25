@@ -1,0 +1,48 @@
+model DataTriaseIgd {
+  no_rawat String @id @db.VarChar(17)
+
+  tgl_kunjungan DateTime @db.DateTime
+
+  cara_masuk CaraMasuk
+  alat_transportasi AlatTransportasi
+  alasan_kedatangan AlasanKedatangan
+
+  keterangan_kedatangan String @db.VarChar(100)
+
+  kode_kasus String @db.VarChar(3)
+
+  tekanan_darah String @db.VarChar(8)
+  nadi String @db.VarChar(3)
+  pernapasan String @db.VarChar(3)
+  suhu String @db.VarChar(5)
+  saturasi_o2 String @db.VarChar(3)
+  nyeri String @db.VarChar(5)
+
+  @@map("data_triase_igd")
+}
+
+enum CaraMasuk {
+  Jalan
+  Brankar
+  Kursi_Roda @map("Kursi Roda")
+  Digendong
+}
+
+enum AlatTransportasi {
+  DASH @map("-")
+  AGD
+  Sendiri
+  Swasta
+}
+
+enum AlasanKedatangan {
+  Datang_Sendiri @map("Datang Sendiri")
+  Polisi
+  Rujukan
+  Bidan
+  Puskesmas
+  Rumah_Sakit @map("Rumah Sakit")
+  Poliklinik
+  Faskes_Lain @map("Faskes Lain")
+  DASH @map("-")
+}
