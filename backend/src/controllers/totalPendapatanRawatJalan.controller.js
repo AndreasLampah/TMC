@@ -2,12 +2,13 @@ import {totalPendapatanRawatJalanService} from "../services/totalPendapatanRawat
 
 export async function totalPendapatanRawatJalanController(req, res, next) {
     try {
-        const TotalUangHarian = await totalPendapatanRawatJalanService()
+        const {tanggal} = req.query
+        const totalUangHarian = await totalPendapatanRawatJalanService(tanggal)
 
     return res.status(200).json({
         success: true,
         message: "Berhasil ambil total pendapatan pasien rawat jalan harian",
-        data: TotalUangHarian
+        data: totalUangHarian
     })
 
     } catch (error) {

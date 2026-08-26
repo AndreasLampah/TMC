@@ -3,6 +3,7 @@ import axiosInstance from "../utils/axiosInstance";
 
 import PasienCard from "../components/PasienCard";
 import Chart from "../components/Chart";
+import PendapatanHarianCard from "../components/PendapatanHarianCard";
 
 import {
   Users,
@@ -198,6 +199,14 @@ export default function DashboardPage() {
             icon={<Bed />}
           />
         </div>
+      </section>
+
+      <section className="dashboard-section">
+        <h2 className="section-title">Pendapatan Harian</h2>
+        <PendapatanHarianCard
+          data={dashboard?.pendapatan_harian}
+          loading={loading}
+        />
       </section>
 
       {/* Grafik */}

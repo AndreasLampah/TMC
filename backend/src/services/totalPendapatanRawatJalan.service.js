@@ -1,10 +1,9 @@
-import { gte } from "zod";
 import prisma from "../config/prisma.js";
 import { getDataHarian } from "../utils/date.js";
 
-export async function totalPendapatanRawatJalanService() {
+export async function totalPendapatanRawatJalanService(tanggal) {
 
-    const {start, end} = getDataHarian()
+    const {start, end} = getDataHarian(tanggal)
 
     const totalUangHarian = await prisma.detailNotaJalan.findMany({
         where: {
@@ -12,7 +11,13 @@ export async function totalPendapatanRawatJalanService() {
                 tgl_registrasi: {
                 gte: start,
                 lte: end,
-             }
+             },
+             stts: {
+                not: "Batal"
+            },
+            stts_daftar: {
+                in: ["Lama", "Baru"],
+            }
             },
         },
         select: {
@@ -20,7 +25,12 @@ export async function totalPendapatanRawatJalanService() {
         }
     })
 
-    if (totalUangHarian.length === 0) throw new Error("Belum ada pendapatan untuk hari ini")
+    let totalPendapatan = 0
 
-    return totalUangHarian
+    for (let i = 0; i < totalUangHarian.length; i++) {
+        totalPendapatan = totalPendapatan + Number(totalUangHarian[i].besarBayar)
+    }
+
+
+    return totalPendapatan
 }
