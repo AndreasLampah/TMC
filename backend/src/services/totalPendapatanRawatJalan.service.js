@@ -1,7 +1,7 @@
 import prisma from "../config/prisma.js";
 import { getDataHarian } from "../utils/date.js";
 
-export async function totalPendapatanRawatJalanService(tanggal) {
+async function totalPendapatanRawatJalanService(tanggal) {
 
     const {start, end} = getDataHarian(tanggal)
 
@@ -42,7 +42,7 @@ async function totalPendapatanRawatInapService(tanggal) {
         where: {
             regPeriksa: {
                 tgl_registrasi: {
-                    gte: start, 
+                    gte: start,  
                     lte: end
                 },
                 stts: {
