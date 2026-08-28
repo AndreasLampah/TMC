@@ -217,3 +217,30 @@
     font-size: 1.4rem;
   }
 }
+
+.pendapatan-card-breakdown {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(52, 211, 153, 0.12);
+}
+
+.pendapatan-card-breakdown-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+}
+
+.pendapatan-card-breakdown-label {
+  font-size: 0.68rem;
+  color: rgba(229, 247, 239, 0.5);
+}
+
+.pendapatan-card-breakdown-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e5f7ef;
+}

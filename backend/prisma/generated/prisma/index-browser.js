@@ -136,6 +136,13 @@ exports.Prisma.DataTriaseIgdScalarFieldEnum = {
   nyeri: 'nyeri'
 };
 
+exports.Prisma.DetailNotaInapScalarFieldEnum = {
+  noRawat: 'noRawat',
+  namaBayar: 'namaBayar',
+  besarPpn: 'besarPpn',
+  besarBayar: 'besarBayar'
+};
+
 exports.Prisma.DetailNotaJalanScalarFieldEnum = {
   noRawat: 'noRawat',
   namaBayar: 'namaBayar',
@@ -225,6 +232,11 @@ exports.Prisma.DataTriaseIgdOrderByRelevanceFieldEnum = {
   suhu: 'suhu',
   saturasi_o2: 'saturasi_o2',
   nyeri: 'nyeri'
+};
+
+exports.Prisma.DetailNotaInapOrderByRelevanceFieldEnum = {
+  noRawat: 'noRawat',
+  namaBayar: 'namaBayar'
 };
 
 exports.Prisma.DetailNotaJalanOrderByRelevanceFieldEnum = {
@@ -397,6 +409,7 @@ exports.StatusPoli = exports.$Enums.StatusPoli = {
 
 exports.Prisma.ModelName = {
   DataTriaseIgd: 'DataTriaseIgd',
+  DetailNotaInap: 'DetailNotaInap',
   DetailNotaJalan: 'DetailNotaJalan',
   Kamar: 'Kamar',
   PeriksaLab: 'PeriksaLab',

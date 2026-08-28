@@ -1,13 +1,13 @@
-import {totalPendapatanRawatJalanService} from "../services/totalPendapatanRawatJalan.service.js"
+import {totalPendapatanHarian} from "../services/totalPendapatanRawatJalan.service.js"
 
-export async function totalPendapatanRawatJalanController(req, res, next) {
+export async function totalPendapatanController(req, res, next) {
     try {
         const {tanggal} = req.query
-        const totalUangHarian = await totalPendapatanRawatJalanService(tanggal)
+        const totalUangHarian = await totalPendapatanHarian(tanggal)
 
     return res.status(200).json({
         success: true,
-        message: "Berhasil ambil total pendapatan pasien rawat jalan harian",
+        message: "Berhasil ambil total pendapatan hari ini",
         data: totalUangHarian
     })
 

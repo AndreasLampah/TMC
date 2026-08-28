@@ -5,32 +5,38 @@ import "../styles/PendapatanHarianCard.css";
 
 const REFRESH_INTERVAL = 30000;
 
+const INITIAL_DATA = { rawatJalan: 0, rawatInap: 0, total: 0 };
+
 export default function PendapatanHarianCard() {
-  const [pendapatan, setPendapatan] = useState(0);
-  const [previous, setPrevious] = useState(null);
+  const [data, setData] = useState(INITIAL_DATA);
+  const [previousTotal, setPreviousTotal] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [lastUpdate, setLastUpdate] = useState(null);
   const isFirstLoad = useRef(true);
+  const dataRef = useRef(INITIAL_DATA);
 
   const fetchPendapatan = useCallback(async () => {
     try {
-      const response = await axiosInstance.get("/api/pendapatan-rawat-jalan");
-      const value = response.data.data ?? 0;
+      const response = await axiosInstance.get("/api/pendapatan-harian");
+      const result = response.data?.data ?? INITIAL_DATA;
 
-      // eslint-disable-next-line no-unused-vars
-      setPrevious((prev) => (isFirstLoad.current ? null : pendapatan));
-      setPendapatan(value);
+      if (!isFirstLoad.current) {
+        setPreviousTotal(dataRef.current.total);
+      }
+
+      dataRef.current = result;
+      setData(result);
       setError(false);
       setLastUpdate(new Date());
-    } catch (error) {
-      console.error("Pendapatan Error:", error);
+    } catch (err) {
+      console.error("Pendapatan Error:", err);
       setError(true);
     } finally {
       setLoading(false);
       isFirstLoad.current = false;
     }
-  }, [pendapatan]);
+  }, []);
 
   useEffect(() => {
     fetchPendapatan();
@@ -38,8 +44,7 @@ export default function PendapatanHarianCard() {
     const interval = setInterval(fetchPendapatan, REFRESH_INTERVAL);
 
     return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchPendapatan]);
 
   const formatRupiah = (value) =>
     new Intl.NumberFormat("id-ID", {
@@ -49,8 +54,8 @@ export default function PendapatanHarianCard() {
     }).format(value);
 
   const trend =
-    previous !== null && previous !== 0
-      ? ((pendapatan - previous) / previous) * 100
+    previousTotal !== null && previousTotal !== 0
+      ? ((data.total - previousTotal) / previousTotal) * 100
       : null;
 
   return (
@@ -63,7 +68,7 @@ export default function PendapatanHarianCard() {
         </div>
 
         <div className="pendapatan-card-heading">
-          <p className="pendapatan-card-label">Pendapatan Rawat Jalan</p>
+          <p className="pendapatan-card-label">Pendapatan Hari ini</p>
           <span className="pendapatan-card-description">
             Total pendapatan hari ini
           </span>
@@ -91,7 +96,7 @@ export default function PendapatanHarianCard() {
           </div>
         ) : (
           <div className="pendapatan-card-value-row">
-            <h3 className="pendapatan-card-value">{formatRupiah(pendapatan)}</h3>
+            <h3 className="pendapatan-card-value">{formatRupiah(data.total)}</h3>
 
             {trend !== null && Math.abs(trend) >= 0.1 && (
               <span
@@ -106,6 +111,23 @@ export default function PendapatanHarianCard() {
           </div>
         )}
       </div>
+
+      {!loading && !error && (
+        <div className="pendapatan-card-breakdown">
+          <div className="pendapatan-card-breakdown-item">
+            <span className="pendapatan-card-breakdown-label">Rawat Jalan</span>
+            <span className="pendapatan-card-breakdown-value">
+              {formatRupiah(data.rawatJalan)}
+            </span>
+          </div>
+          <div className="pendapatan-card-breakdown-item">
+            <span className="pendapatan-card-breakdown-label">Rawat Inap</span>
+            <span className="pendapatan-card-breakdown-value">
+              {formatRupiah(data.rawatInap)}
+            </span>
+          </div>
+        </div>
+      )}
 
       <div className="pendapatan-card-footer">
         <span className="pulse-dot" />

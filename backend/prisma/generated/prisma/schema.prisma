@@ -47,6 +47,18 @@ enum AlasanKedatangan {
   DASH           @map("-")
 }
 
+model DetailNotaInap {
+  noRawat    String @map("no_rawat") @db.VarChar(17)
+  namaBayar  String @map("nama_bayar") @db.VarChar(50)
+  besarPpn   Float  @map("besarppn") @db.Double
+  besarBayar Float  @map("besar_bayar") @db.Double
+
+  regPeriksa RegPeriksa @relation(fields: [noRawat], references: [no_rawat])
+
+  @@id([noRawat, namaBayar])
+  @@map("detail_nota_inap")
+}
+
 model DetailNotaJalan {
   noRawat   String @map("no_rawat") @db.VarChar(17)
   namaBayar String @map("nama_bayar") @db.VarChar(50)
@@ -212,6 +224,8 @@ model RegPeriksa {
   status_poli  StatusPoli
 
   detailNotaJalan DetailNotaJalan[]
+
+  detailNotaInap DetailNotaInap[]
 
   @@map("reg_periksa")
 }

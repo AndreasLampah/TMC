@@ -1,0 +1,11 @@
+model DetailNotaInap {
+  noRawat   String @db.VarChar(17) @map("no_rawat")
+  namaBayar String @db.VarChar(50) @map("nama_bayar")
+  besarPpn  Float  @db.Double @map("besarppn")
+  besarBayar Float @db.Double @map("besar_bayar")
+
+  regPeriksa RegPeriksa @relation(fields: [noRawat], references: [no_rawat])
+
+  @@id([noRawat, namaBayar])
+  @@map("detail_nota_inap")
+}

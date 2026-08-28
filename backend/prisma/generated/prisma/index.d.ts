@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type DataTriaseIgd = $Result.DefaultSelection<Prisma.$DataTriaseIgdPayload>
 /**
+ * Model DetailNotaInap
+ * 
+ */
+export type DetailNotaInap = $Result.DefaultSelection<Prisma.$DetailNotaInapPayload>
+/**
  * Model DetailNotaJalan
  * 
  */
@@ -428,6 +433,16 @@ export class PrismaClient<
     * ```
     */
   get dataTriaseIgd(): Prisma.DataTriaseIgdDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.detailNotaInap`: Exposes CRUD operations for the **DetailNotaInap** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DetailNotaInaps
+    * const detailNotaInaps = await prisma.detailNotaInap.findMany()
+    * ```
+    */
+  get detailNotaInap(): Prisma.DetailNotaInapDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.detailNotaJalan`: Exposes CRUD operations for the **DetailNotaJalan** model.
@@ -913,6 +928,7 @@ export namespace Prisma {
 
   export const ModelName: {
     DataTriaseIgd: 'DataTriaseIgd',
+    DetailNotaInap: 'DetailNotaInap',
     DetailNotaJalan: 'DetailNotaJalan',
     Kamar: 'Kamar',
     PeriksaLab: 'PeriksaLab',
@@ -933,7 +949,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "dataTriaseIgd" | "detailNotaJalan" | "kamar" | "periksaLab" | "petugas" | "regPeriksa"
+      modelProps: "dataTriaseIgd" | "detailNotaInap" | "detailNotaJalan" | "kamar" | "periksaLab" | "petugas" | "regPeriksa"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1000,6 +1016,72 @@ export namespace Prisma {
           count: {
             args: Prisma.DataTriaseIgdCountArgs<ExtArgs>
             result: $Utils.Optional<DataTriaseIgdCountAggregateOutputType> | number
+          }
+        }
+      }
+      DetailNotaInap: {
+        payload: Prisma.$DetailNotaInapPayload<ExtArgs>
+        fields: Prisma.DetailNotaInapFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DetailNotaInapFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DetailNotaInapPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DetailNotaInapFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DetailNotaInapPayload>
+          }
+          findFirst: {
+            args: Prisma.DetailNotaInapFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DetailNotaInapPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DetailNotaInapFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DetailNotaInapPayload>
+          }
+          findMany: {
+            args: Prisma.DetailNotaInapFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DetailNotaInapPayload>[]
+          }
+          create: {
+            args: Prisma.DetailNotaInapCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DetailNotaInapPayload>
+          }
+          createMany: {
+            args: Prisma.DetailNotaInapCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.DetailNotaInapDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DetailNotaInapPayload>
+          }
+          update: {
+            args: Prisma.DetailNotaInapUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DetailNotaInapPayload>
+          }
+          deleteMany: {
+            args: Prisma.DetailNotaInapDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DetailNotaInapUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DetailNotaInapUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DetailNotaInapPayload>
+          }
+          aggregate: {
+            args: Prisma.DetailNotaInapAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDetailNotaInap>
+          }
+          groupBy: {
+            args: Prisma.DetailNotaInapGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DetailNotaInapGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DetailNotaInapCountArgs<ExtArgs>
+            result: $Utils.Optional<DetailNotaInapCountAggregateOutputType> | number
           }
         }
       }
@@ -1442,6 +1524,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     dataTriaseIgd?: DataTriaseIgdOmit
+    detailNotaInap?: DetailNotaInapOmit
     detailNotaJalan?: DetailNotaJalanOmit
     kamar?: KamarOmit
     periksaLab?: PeriksaLabOmit
@@ -1528,10 +1611,12 @@ export namespace Prisma {
 
   export type RegPeriksaCountOutputType = {
     detailNotaJalan: number
+    detailNotaInap: number
   }
 
   export type RegPeriksaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     detailNotaJalan?: boolean | RegPeriksaCountOutputTypeCountDetailNotaJalanArgs
+    detailNotaInap?: boolean | RegPeriksaCountOutputTypeCountDetailNotaInapArgs
   }
 
   // Custom InputTypes
@@ -1550,6 +1635,13 @@ export namespace Prisma {
    */
   export type RegPeriksaCountOutputTypeCountDetailNotaJalanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DetailNotaJalanWhereInput
+  }
+
+  /**
+   * RegPeriksaCountOutputType without action
+   */
+  export type RegPeriksaCountOutputTypeCountDetailNotaInapArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DetailNotaInapWhereInput
   }
 
 
@@ -2529,6 +2621,967 @@ export namespace Prisma {
      * Omit specific fields from the DataTriaseIgd
      */
     omit?: DataTriaseIgdOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DetailNotaInap
+   */
+
+  export type AggregateDetailNotaInap = {
+    _count: DetailNotaInapCountAggregateOutputType | null
+    _avg: DetailNotaInapAvgAggregateOutputType | null
+    _sum: DetailNotaInapSumAggregateOutputType | null
+    _min: DetailNotaInapMinAggregateOutputType | null
+    _max: DetailNotaInapMaxAggregateOutputType | null
+  }
+
+  export type DetailNotaInapAvgAggregateOutputType = {
+    besarPpn: number | null
+    besarBayar: number | null
+  }
+
+  export type DetailNotaInapSumAggregateOutputType = {
+    besarPpn: number | null
+    besarBayar: number | null
+  }
+
+  export type DetailNotaInapMinAggregateOutputType = {
+    noRawat: string | null
+    namaBayar: string | null
+    besarPpn: number | null
+    besarBayar: number | null
+  }
+
+  export type DetailNotaInapMaxAggregateOutputType = {
+    noRawat: string | null
+    namaBayar: string | null
+    besarPpn: number | null
+    besarBayar: number | null
+  }
+
+  export type DetailNotaInapCountAggregateOutputType = {
+    noRawat: number
+    namaBayar: number
+    besarPpn: number
+    besarBayar: number
+    _all: number
+  }
+
+
+  export type DetailNotaInapAvgAggregateInputType = {
+    besarPpn?: true
+    besarBayar?: true
+  }
+
+  export type DetailNotaInapSumAggregateInputType = {
+    besarPpn?: true
+    besarBayar?: true
+  }
+
+  export type DetailNotaInapMinAggregateInputType = {
+    noRawat?: true
+    namaBayar?: true
+    besarPpn?: true
+    besarBayar?: true
+  }
+
+  export type DetailNotaInapMaxAggregateInputType = {
+    noRawat?: true
+    namaBayar?: true
+    besarPpn?: true
+    besarBayar?: true
+  }
+
+  export type DetailNotaInapCountAggregateInputType = {
+    noRawat?: true
+    namaBayar?: true
+    besarPpn?: true
+    besarBayar?: true
+    _all?: true
+  }
+
+  export type DetailNotaInapAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DetailNotaInap to aggregate.
+     */
+    where?: DetailNotaInapWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DetailNotaInaps to fetch.
+     */
+    orderBy?: DetailNotaInapOrderByWithRelationInput | DetailNotaInapOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DetailNotaInapWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DetailNotaInaps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DetailNotaInaps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DetailNotaInaps
+    **/
+    _count?: true | DetailNotaInapCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DetailNotaInapAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DetailNotaInapSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DetailNotaInapMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DetailNotaInapMaxAggregateInputType
+  }
+
+  export type GetDetailNotaInapAggregateType<T extends DetailNotaInapAggregateArgs> = {
+        [P in keyof T & keyof AggregateDetailNotaInap]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDetailNotaInap[P]>
+      : GetScalarType<T[P], AggregateDetailNotaInap[P]>
+  }
+
+
+
+
+  export type DetailNotaInapGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DetailNotaInapWhereInput
+    orderBy?: DetailNotaInapOrderByWithAggregationInput | DetailNotaInapOrderByWithAggregationInput[]
+    by: DetailNotaInapScalarFieldEnum[] | DetailNotaInapScalarFieldEnum
+    having?: DetailNotaInapScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DetailNotaInapCountAggregateInputType | true
+    _avg?: DetailNotaInapAvgAggregateInputType
+    _sum?: DetailNotaInapSumAggregateInputType
+    _min?: DetailNotaInapMinAggregateInputType
+    _max?: DetailNotaInapMaxAggregateInputType
+  }
+
+  export type DetailNotaInapGroupByOutputType = {
+    noRawat: string
+    namaBayar: string
+    besarPpn: number
+    besarBayar: number
+    _count: DetailNotaInapCountAggregateOutputType | null
+    _avg: DetailNotaInapAvgAggregateOutputType | null
+    _sum: DetailNotaInapSumAggregateOutputType | null
+    _min: DetailNotaInapMinAggregateOutputType | null
+    _max: DetailNotaInapMaxAggregateOutputType | null
+  }
+
+  type GetDetailNotaInapGroupByPayload<T extends DetailNotaInapGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DetailNotaInapGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DetailNotaInapGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DetailNotaInapGroupByOutputType[P]>
+            : GetScalarType<T[P], DetailNotaInapGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DetailNotaInapSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    noRawat?: boolean
+    namaBayar?: boolean
+    besarPpn?: boolean
+    besarBayar?: boolean
+    regPeriksa?: boolean | RegPeriksaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["detailNotaInap"]>
+
+
+
+  export type DetailNotaInapSelectScalar = {
+    noRawat?: boolean
+    namaBayar?: boolean
+    besarPpn?: boolean
+    besarBayar?: boolean
+  }
+
+  export type DetailNotaInapOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"noRawat" | "namaBayar" | "besarPpn" | "besarBayar", ExtArgs["result"]["detailNotaInap"]>
+  export type DetailNotaInapInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    regPeriksa?: boolean | RegPeriksaDefaultArgs<ExtArgs>
+  }
+
+  export type $DetailNotaInapPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DetailNotaInap"
+    objects: {
+      regPeriksa: Prisma.$RegPeriksaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      noRawat: string
+      namaBayar: string
+      besarPpn: number
+      besarBayar: number
+    }, ExtArgs["result"]["detailNotaInap"]>
+    composites: {}
+  }
+
+  type DetailNotaInapGetPayload<S extends boolean | null | undefined | DetailNotaInapDefaultArgs> = $Result.GetResult<Prisma.$DetailNotaInapPayload, S>
+
+  type DetailNotaInapCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DetailNotaInapFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DetailNotaInapCountAggregateInputType | true
+    }
+
+  export interface DetailNotaInapDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DetailNotaInap'], meta: { name: 'DetailNotaInap' } }
+    /**
+     * Find zero or one DetailNotaInap that matches the filter.
+     * @param {DetailNotaInapFindUniqueArgs} args - Arguments to find a DetailNotaInap
+     * @example
+     * // Get one DetailNotaInap
+     * const detailNotaInap = await prisma.detailNotaInap.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DetailNotaInapFindUniqueArgs>(args: SelectSubset<T, DetailNotaInapFindUniqueArgs<ExtArgs>>): Prisma__DetailNotaInapClient<$Result.GetResult<Prisma.$DetailNotaInapPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DetailNotaInap that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DetailNotaInapFindUniqueOrThrowArgs} args - Arguments to find a DetailNotaInap
+     * @example
+     * // Get one DetailNotaInap
+     * const detailNotaInap = await prisma.detailNotaInap.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DetailNotaInapFindUniqueOrThrowArgs>(args: SelectSubset<T, DetailNotaInapFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DetailNotaInapClient<$Result.GetResult<Prisma.$DetailNotaInapPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DetailNotaInap that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DetailNotaInapFindFirstArgs} args - Arguments to find a DetailNotaInap
+     * @example
+     * // Get one DetailNotaInap
+     * const detailNotaInap = await prisma.detailNotaInap.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DetailNotaInapFindFirstArgs>(args?: SelectSubset<T, DetailNotaInapFindFirstArgs<ExtArgs>>): Prisma__DetailNotaInapClient<$Result.GetResult<Prisma.$DetailNotaInapPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DetailNotaInap that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DetailNotaInapFindFirstOrThrowArgs} args - Arguments to find a DetailNotaInap
+     * @example
+     * // Get one DetailNotaInap
+     * const detailNotaInap = await prisma.detailNotaInap.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DetailNotaInapFindFirstOrThrowArgs>(args?: SelectSubset<T, DetailNotaInapFindFirstOrThrowArgs<ExtArgs>>): Prisma__DetailNotaInapClient<$Result.GetResult<Prisma.$DetailNotaInapPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DetailNotaInaps that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DetailNotaInapFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DetailNotaInaps
+     * const detailNotaInaps = await prisma.detailNotaInap.findMany()
+     * 
+     * // Get first 10 DetailNotaInaps
+     * const detailNotaInaps = await prisma.detailNotaInap.findMany({ take: 10 })
+     * 
+     * // Only select the `noRawat`
+     * const detailNotaInapWithNoRawatOnly = await prisma.detailNotaInap.findMany({ select: { noRawat: true } })
+     * 
+     */
+    findMany<T extends DetailNotaInapFindManyArgs>(args?: SelectSubset<T, DetailNotaInapFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DetailNotaInapPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DetailNotaInap.
+     * @param {DetailNotaInapCreateArgs} args - Arguments to create a DetailNotaInap.
+     * @example
+     * // Create one DetailNotaInap
+     * const DetailNotaInap = await prisma.detailNotaInap.create({
+     *   data: {
+     *     // ... data to create a DetailNotaInap
+     *   }
+     * })
+     * 
+     */
+    create<T extends DetailNotaInapCreateArgs>(args: SelectSubset<T, DetailNotaInapCreateArgs<ExtArgs>>): Prisma__DetailNotaInapClient<$Result.GetResult<Prisma.$DetailNotaInapPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DetailNotaInaps.
+     * @param {DetailNotaInapCreateManyArgs} args - Arguments to create many DetailNotaInaps.
+     * @example
+     * // Create many DetailNotaInaps
+     * const detailNotaInap = await prisma.detailNotaInap.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DetailNotaInapCreateManyArgs>(args?: SelectSubset<T, DetailNotaInapCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a DetailNotaInap.
+     * @param {DetailNotaInapDeleteArgs} args - Arguments to delete one DetailNotaInap.
+     * @example
+     * // Delete one DetailNotaInap
+     * const DetailNotaInap = await prisma.detailNotaInap.delete({
+     *   where: {
+     *     // ... filter to delete one DetailNotaInap
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DetailNotaInapDeleteArgs>(args: SelectSubset<T, DetailNotaInapDeleteArgs<ExtArgs>>): Prisma__DetailNotaInapClient<$Result.GetResult<Prisma.$DetailNotaInapPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DetailNotaInap.
+     * @param {DetailNotaInapUpdateArgs} args - Arguments to update one DetailNotaInap.
+     * @example
+     * // Update one DetailNotaInap
+     * const detailNotaInap = await prisma.detailNotaInap.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DetailNotaInapUpdateArgs>(args: SelectSubset<T, DetailNotaInapUpdateArgs<ExtArgs>>): Prisma__DetailNotaInapClient<$Result.GetResult<Prisma.$DetailNotaInapPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DetailNotaInaps.
+     * @param {DetailNotaInapDeleteManyArgs} args - Arguments to filter DetailNotaInaps to delete.
+     * @example
+     * // Delete a few DetailNotaInaps
+     * const { count } = await prisma.detailNotaInap.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DetailNotaInapDeleteManyArgs>(args?: SelectSubset<T, DetailNotaInapDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DetailNotaInaps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DetailNotaInapUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DetailNotaInaps
+     * const detailNotaInap = await prisma.detailNotaInap.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DetailNotaInapUpdateManyArgs>(args: SelectSubset<T, DetailNotaInapUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DetailNotaInap.
+     * @param {DetailNotaInapUpsertArgs} args - Arguments to update or create a DetailNotaInap.
+     * @example
+     * // Update or create a DetailNotaInap
+     * const detailNotaInap = await prisma.detailNotaInap.upsert({
+     *   create: {
+     *     // ... data to create a DetailNotaInap
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DetailNotaInap we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DetailNotaInapUpsertArgs>(args: SelectSubset<T, DetailNotaInapUpsertArgs<ExtArgs>>): Prisma__DetailNotaInapClient<$Result.GetResult<Prisma.$DetailNotaInapPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DetailNotaInaps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DetailNotaInapCountArgs} args - Arguments to filter DetailNotaInaps to count.
+     * @example
+     * // Count the number of DetailNotaInaps
+     * const count = await prisma.detailNotaInap.count({
+     *   where: {
+     *     // ... the filter for the DetailNotaInaps we want to count
+     *   }
+     * })
+    **/
+    count<T extends DetailNotaInapCountArgs>(
+      args?: Subset<T, DetailNotaInapCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DetailNotaInapCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DetailNotaInap.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DetailNotaInapAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DetailNotaInapAggregateArgs>(args: Subset<T, DetailNotaInapAggregateArgs>): Prisma.PrismaPromise<GetDetailNotaInapAggregateType<T>>
+
+    /**
+     * Group by DetailNotaInap.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DetailNotaInapGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DetailNotaInapGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DetailNotaInapGroupByArgs['orderBy'] }
+        : { orderBy?: DetailNotaInapGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DetailNotaInapGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDetailNotaInapGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DetailNotaInap model
+   */
+  readonly fields: DetailNotaInapFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DetailNotaInap.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DetailNotaInapClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    regPeriksa<T extends RegPeriksaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RegPeriksaDefaultArgs<ExtArgs>>): Prisma__RegPeriksaClient<$Result.GetResult<Prisma.$RegPeriksaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DetailNotaInap model
+   */
+  interface DetailNotaInapFieldRefs {
+    readonly noRawat: FieldRef<"DetailNotaInap", 'String'>
+    readonly namaBayar: FieldRef<"DetailNotaInap", 'String'>
+    readonly besarPpn: FieldRef<"DetailNotaInap", 'Float'>
+    readonly besarBayar: FieldRef<"DetailNotaInap", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DetailNotaInap findUnique
+   */
+  export type DetailNotaInapFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DetailNotaInap
+     */
+    select?: DetailNotaInapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DetailNotaInap
+     */
+    omit?: DetailNotaInapOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DetailNotaInapInclude<ExtArgs> | null
+    /**
+     * Filter, which DetailNotaInap to fetch.
+     */
+    where: DetailNotaInapWhereUniqueInput
+  }
+
+  /**
+   * DetailNotaInap findUniqueOrThrow
+   */
+  export type DetailNotaInapFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DetailNotaInap
+     */
+    select?: DetailNotaInapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DetailNotaInap
+     */
+    omit?: DetailNotaInapOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DetailNotaInapInclude<ExtArgs> | null
+    /**
+     * Filter, which DetailNotaInap to fetch.
+     */
+    where: DetailNotaInapWhereUniqueInput
+  }
+
+  /**
+   * DetailNotaInap findFirst
+   */
+  export type DetailNotaInapFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DetailNotaInap
+     */
+    select?: DetailNotaInapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DetailNotaInap
+     */
+    omit?: DetailNotaInapOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DetailNotaInapInclude<ExtArgs> | null
+    /**
+     * Filter, which DetailNotaInap to fetch.
+     */
+    where?: DetailNotaInapWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DetailNotaInaps to fetch.
+     */
+    orderBy?: DetailNotaInapOrderByWithRelationInput | DetailNotaInapOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DetailNotaInaps.
+     */
+    cursor?: DetailNotaInapWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DetailNotaInaps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DetailNotaInaps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DetailNotaInaps.
+     */
+    distinct?: DetailNotaInapScalarFieldEnum | DetailNotaInapScalarFieldEnum[]
+  }
+
+  /**
+   * DetailNotaInap findFirstOrThrow
+   */
+  export type DetailNotaInapFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DetailNotaInap
+     */
+    select?: DetailNotaInapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DetailNotaInap
+     */
+    omit?: DetailNotaInapOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DetailNotaInapInclude<ExtArgs> | null
+    /**
+     * Filter, which DetailNotaInap to fetch.
+     */
+    where?: DetailNotaInapWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DetailNotaInaps to fetch.
+     */
+    orderBy?: DetailNotaInapOrderByWithRelationInput | DetailNotaInapOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DetailNotaInaps.
+     */
+    cursor?: DetailNotaInapWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DetailNotaInaps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DetailNotaInaps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DetailNotaInaps.
+     */
+    distinct?: DetailNotaInapScalarFieldEnum | DetailNotaInapScalarFieldEnum[]
+  }
+
+  /**
+   * DetailNotaInap findMany
+   */
+  export type DetailNotaInapFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DetailNotaInap
+     */
+    select?: DetailNotaInapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DetailNotaInap
+     */
+    omit?: DetailNotaInapOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DetailNotaInapInclude<ExtArgs> | null
+    /**
+     * Filter, which DetailNotaInaps to fetch.
+     */
+    where?: DetailNotaInapWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DetailNotaInaps to fetch.
+     */
+    orderBy?: DetailNotaInapOrderByWithRelationInput | DetailNotaInapOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DetailNotaInaps.
+     */
+    cursor?: DetailNotaInapWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DetailNotaInaps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DetailNotaInaps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DetailNotaInaps.
+     */
+    distinct?: DetailNotaInapScalarFieldEnum | DetailNotaInapScalarFieldEnum[]
+  }
+
+  /**
+   * DetailNotaInap create
+   */
+  export type DetailNotaInapCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DetailNotaInap
+     */
+    select?: DetailNotaInapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DetailNotaInap
+     */
+    omit?: DetailNotaInapOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DetailNotaInapInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DetailNotaInap.
+     */
+    data: XOR<DetailNotaInapCreateInput, DetailNotaInapUncheckedCreateInput>
+  }
+
+  /**
+   * DetailNotaInap createMany
+   */
+  export type DetailNotaInapCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DetailNotaInaps.
+     */
+    data: DetailNotaInapCreateManyInput | DetailNotaInapCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DetailNotaInap update
+   */
+  export type DetailNotaInapUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DetailNotaInap
+     */
+    select?: DetailNotaInapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DetailNotaInap
+     */
+    omit?: DetailNotaInapOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DetailNotaInapInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DetailNotaInap.
+     */
+    data: XOR<DetailNotaInapUpdateInput, DetailNotaInapUncheckedUpdateInput>
+    /**
+     * Choose, which DetailNotaInap to update.
+     */
+    where: DetailNotaInapWhereUniqueInput
+  }
+
+  /**
+   * DetailNotaInap updateMany
+   */
+  export type DetailNotaInapUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DetailNotaInaps.
+     */
+    data: XOR<DetailNotaInapUpdateManyMutationInput, DetailNotaInapUncheckedUpdateManyInput>
+    /**
+     * Filter which DetailNotaInaps to update
+     */
+    where?: DetailNotaInapWhereInput
+    /**
+     * Limit how many DetailNotaInaps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DetailNotaInap upsert
+   */
+  export type DetailNotaInapUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DetailNotaInap
+     */
+    select?: DetailNotaInapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DetailNotaInap
+     */
+    omit?: DetailNotaInapOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DetailNotaInapInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DetailNotaInap to update in case it exists.
+     */
+    where: DetailNotaInapWhereUniqueInput
+    /**
+     * In case the DetailNotaInap found by the `where` argument doesn't exist, create a new DetailNotaInap with this data.
+     */
+    create: XOR<DetailNotaInapCreateInput, DetailNotaInapUncheckedCreateInput>
+    /**
+     * In case the DetailNotaInap was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DetailNotaInapUpdateInput, DetailNotaInapUncheckedUpdateInput>
+  }
+
+  /**
+   * DetailNotaInap delete
+   */
+  export type DetailNotaInapDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DetailNotaInap
+     */
+    select?: DetailNotaInapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DetailNotaInap
+     */
+    omit?: DetailNotaInapOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DetailNotaInapInclude<ExtArgs> | null
+    /**
+     * Filter which DetailNotaInap to delete.
+     */
+    where: DetailNotaInapWhereUniqueInput
+  }
+
+  /**
+   * DetailNotaInap deleteMany
+   */
+  export type DetailNotaInapDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DetailNotaInaps to delete
+     */
+    where?: DetailNotaInapWhereInput
+    /**
+     * Limit how many DetailNotaInaps to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DetailNotaInap without action
+   */
+  export type DetailNotaInapDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DetailNotaInap
+     */
+    select?: DetailNotaInapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DetailNotaInap
+     */
+    omit?: DetailNotaInapOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DetailNotaInapInclude<ExtArgs> | null
   }
 
 
@@ -6796,6 +7849,7 @@ export namespace Prisma {
     status_bayar?: boolean
     status_poli?: boolean
     detailNotaJalan?: boolean | RegPeriksa$detailNotaJalanArgs<ExtArgs>
+    detailNotaInap?: boolean | RegPeriksa$detailNotaInapArgs<ExtArgs>
     _count?: boolean | RegPeriksaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["regPeriksa"]>
 
@@ -6826,6 +7880,7 @@ export namespace Prisma {
   export type RegPeriksaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"no_reg" | "no_rawat" | "tgl_registrasi" | "jam_reg" | "kd_dokter" | "no_rkm_medis" | "kd_poli" | "p_jawab" | "almt_pj" | "hubunganpj" | "biaya_reg" | "stts" | "stts_daftar" | "status_lanjut" | "kd_pj" | "umurdaftar" | "sttsumur" | "status_bayar" | "status_poli", ExtArgs["result"]["regPeriksa"]>
   export type RegPeriksaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     detailNotaJalan?: boolean | RegPeriksa$detailNotaJalanArgs<ExtArgs>
+    detailNotaInap?: boolean | RegPeriksa$detailNotaInapArgs<ExtArgs>
     _count?: boolean | RegPeriksaCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -6833,6 +7888,7 @@ export namespace Prisma {
     name: "RegPeriksa"
     objects: {
       detailNotaJalan: Prisma.$DetailNotaJalanPayload<ExtArgs>[]
+      detailNotaInap: Prisma.$DetailNotaInapPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       no_reg: string
@@ -7195,6 +8251,7 @@ export namespace Prisma {
   export interface Prisma__RegPeriksaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     detailNotaJalan<T extends RegPeriksa$detailNotaJalanArgs<ExtArgs> = {}>(args?: Subset<T, RegPeriksa$detailNotaJalanArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DetailNotaJalanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    detailNotaInap<T extends RegPeriksa$detailNotaInapArgs<ExtArgs> = {}>(args?: Subset<T, RegPeriksa$detailNotaInapArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DetailNotaInapPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7615,6 +8672,30 @@ export namespace Prisma {
   }
 
   /**
+   * RegPeriksa.detailNotaInap
+   */
+  export type RegPeriksa$detailNotaInapArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DetailNotaInap
+     */
+    select?: DetailNotaInapSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DetailNotaInap
+     */
+    omit?: DetailNotaInapOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DetailNotaInapInclude<ExtArgs> | null
+    where?: DetailNotaInapWhereInput
+    orderBy?: DetailNotaInapOrderByWithRelationInput | DetailNotaInapOrderByWithRelationInput[]
+    cursor?: DetailNotaInapWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DetailNotaInapScalarFieldEnum | DetailNotaInapScalarFieldEnum[]
+  }
+
+  /**
    * RegPeriksa without action
    */
   export type RegPeriksaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7664,6 +8745,16 @@ export namespace Prisma {
   };
 
   export type DataTriaseIgdScalarFieldEnum = (typeof DataTriaseIgdScalarFieldEnum)[keyof typeof DataTriaseIgdScalarFieldEnum]
+
+
+  export const DetailNotaInapScalarFieldEnum: {
+    noRawat: 'noRawat',
+    namaBayar: 'namaBayar',
+    besarPpn: 'besarPpn',
+    besarBayar: 'besarBayar'
+  };
+
+  export type DetailNotaInapScalarFieldEnum = (typeof DetailNotaInapScalarFieldEnum)[keyof typeof DetailNotaInapScalarFieldEnum]
 
 
   export const DetailNotaJalanScalarFieldEnum: {
@@ -7776,6 +8867,14 @@ export namespace Prisma {
   };
 
   export type DataTriaseIgdOrderByRelevanceFieldEnum = (typeof DataTriaseIgdOrderByRelevanceFieldEnum)[keyof typeof DataTriaseIgdOrderByRelevanceFieldEnum]
+
+
+  export const DetailNotaInapOrderByRelevanceFieldEnum: {
+    noRawat: 'noRawat',
+    namaBayar: 'namaBayar'
+  };
+
+  export type DetailNotaInapOrderByRelevanceFieldEnum = (typeof DetailNotaInapOrderByRelevanceFieldEnum)[keyof typeof DetailNotaInapOrderByRelevanceFieldEnum]
 
 
   export const DetailNotaJalanOrderByRelevanceFieldEnum: {
@@ -8095,6 +9194,60 @@ export namespace Prisma {
     suhu?: StringWithAggregatesFilter<"DataTriaseIgd"> | string
     saturasi_o2?: StringWithAggregatesFilter<"DataTriaseIgd"> | string
     nyeri?: StringWithAggregatesFilter<"DataTriaseIgd"> | string
+  }
+
+  export type DetailNotaInapWhereInput = {
+    AND?: DetailNotaInapWhereInput | DetailNotaInapWhereInput[]
+    OR?: DetailNotaInapWhereInput[]
+    NOT?: DetailNotaInapWhereInput | DetailNotaInapWhereInput[]
+    noRawat?: StringFilter<"DetailNotaInap"> | string
+    namaBayar?: StringFilter<"DetailNotaInap"> | string
+    besarPpn?: FloatFilter<"DetailNotaInap"> | number
+    besarBayar?: FloatFilter<"DetailNotaInap"> | number
+    regPeriksa?: XOR<RegPeriksaScalarRelationFilter, RegPeriksaWhereInput>
+  }
+
+  export type DetailNotaInapOrderByWithRelationInput = {
+    noRawat?: SortOrder
+    namaBayar?: SortOrder
+    besarPpn?: SortOrder
+    besarBayar?: SortOrder
+    regPeriksa?: RegPeriksaOrderByWithRelationInput
+    _relevance?: DetailNotaInapOrderByRelevanceInput
+  }
+
+  export type DetailNotaInapWhereUniqueInput = Prisma.AtLeast<{
+    noRawat_namaBayar?: DetailNotaInapNoRawatNamaBayarCompoundUniqueInput
+    AND?: DetailNotaInapWhereInput | DetailNotaInapWhereInput[]
+    OR?: DetailNotaInapWhereInput[]
+    NOT?: DetailNotaInapWhereInput | DetailNotaInapWhereInput[]
+    noRawat?: StringFilter<"DetailNotaInap"> | string
+    namaBayar?: StringFilter<"DetailNotaInap"> | string
+    besarPpn?: FloatFilter<"DetailNotaInap"> | number
+    besarBayar?: FloatFilter<"DetailNotaInap"> | number
+    regPeriksa?: XOR<RegPeriksaScalarRelationFilter, RegPeriksaWhereInput>
+  }, "noRawat_namaBayar">
+
+  export type DetailNotaInapOrderByWithAggregationInput = {
+    noRawat?: SortOrder
+    namaBayar?: SortOrder
+    besarPpn?: SortOrder
+    besarBayar?: SortOrder
+    _count?: DetailNotaInapCountOrderByAggregateInput
+    _avg?: DetailNotaInapAvgOrderByAggregateInput
+    _max?: DetailNotaInapMaxOrderByAggregateInput
+    _min?: DetailNotaInapMinOrderByAggregateInput
+    _sum?: DetailNotaInapSumOrderByAggregateInput
+  }
+
+  export type DetailNotaInapScalarWhereWithAggregatesInput = {
+    AND?: DetailNotaInapScalarWhereWithAggregatesInput | DetailNotaInapScalarWhereWithAggregatesInput[]
+    OR?: DetailNotaInapScalarWhereWithAggregatesInput[]
+    NOT?: DetailNotaInapScalarWhereWithAggregatesInput | DetailNotaInapScalarWhereWithAggregatesInput[]
+    noRawat?: StringWithAggregatesFilter<"DetailNotaInap"> | string
+    namaBayar?: StringWithAggregatesFilter<"DetailNotaInap"> | string
+    besarPpn?: FloatWithAggregatesFilter<"DetailNotaInap"> | number
+    besarBayar?: FloatWithAggregatesFilter<"DetailNotaInap"> | number
   }
 
   export type DetailNotaJalanWhereInput = {
@@ -8444,6 +9597,7 @@ export namespace Prisma {
     status_bayar?: EnumStatusBayarFilter<"RegPeriksa"> | $Enums.StatusBayar
     status_poli?: EnumStatusPoliFilter<"RegPeriksa"> | $Enums.StatusPoli
     detailNotaJalan?: DetailNotaJalanListRelationFilter
+    detailNotaInap?: DetailNotaInapListRelationFilter
   }
 
   export type RegPeriksaOrderByWithRelationInput = {
@@ -8467,6 +9621,7 @@ export namespace Prisma {
     status_bayar?: SortOrder
     status_poli?: SortOrder
     detailNotaJalan?: DetailNotaJalanOrderByRelationAggregateInput
+    detailNotaInap?: DetailNotaInapOrderByRelationAggregateInput
     _relevance?: RegPeriksaOrderByRelevanceInput
   }
 
@@ -8494,6 +9649,7 @@ export namespace Prisma {
     status_bayar?: EnumStatusBayarFilter<"RegPeriksa"> | $Enums.StatusBayar
     status_poli?: EnumStatusPoliFilter<"RegPeriksa"> | $Enums.StatusPoli
     detailNotaJalan?: DetailNotaJalanListRelationFilter
+    detailNotaInap?: DetailNotaInapListRelationFilter
   }, "no_rawat">
 
   export type RegPeriksaOrderByWithAggregationInput = {
@@ -8658,6 +9814,54 @@ export namespace Prisma {
     suhu?: StringFieldUpdateOperationsInput | string
     saturasi_o2?: StringFieldUpdateOperationsInput | string
     nyeri?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DetailNotaInapCreateInput = {
+    namaBayar: string
+    besarPpn: number
+    besarBayar: number
+    regPeriksa: RegPeriksaCreateNestedOneWithoutDetailNotaInapInput
+  }
+
+  export type DetailNotaInapUncheckedCreateInput = {
+    noRawat: string
+    namaBayar: string
+    besarPpn: number
+    besarBayar: number
+  }
+
+  export type DetailNotaInapUpdateInput = {
+    namaBayar?: StringFieldUpdateOperationsInput | string
+    besarPpn?: FloatFieldUpdateOperationsInput | number
+    besarBayar?: FloatFieldUpdateOperationsInput | number
+    regPeriksa?: RegPeriksaUpdateOneRequiredWithoutDetailNotaInapNestedInput
+  }
+
+  export type DetailNotaInapUncheckedUpdateInput = {
+    noRawat?: StringFieldUpdateOperationsInput | string
+    namaBayar?: StringFieldUpdateOperationsInput | string
+    besarPpn?: FloatFieldUpdateOperationsInput | number
+    besarBayar?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type DetailNotaInapCreateManyInput = {
+    noRawat: string
+    namaBayar: string
+    besarPpn: number
+    besarBayar: number
+  }
+
+  export type DetailNotaInapUpdateManyMutationInput = {
+    namaBayar?: StringFieldUpdateOperationsInput | string
+    besarPpn?: FloatFieldUpdateOperationsInput | number
+    besarBayar?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type DetailNotaInapUncheckedUpdateManyInput = {
+    noRawat?: StringFieldUpdateOperationsInput | string
+    namaBayar?: StringFieldUpdateOperationsInput | string
+    besarPpn?: FloatFieldUpdateOperationsInput | number
+    besarBayar?: FloatFieldUpdateOperationsInput | number
   }
 
   export type DetailNotaJalanCreateInput = {
@@ -9044,6 +10248,7 @@ export namespace Prisma {
     status_bayar: $Enums.StatusBayar
     status_poli: $Enums.StatusPoli
     detailNotaJalan?: DetailNotaJalanCreateNestedManyWithoutRegPeriksaInput
+    detailNotaInap?: DetailNotaInapCreateNestedManyWithoutRegPeriksaInput
   }
 
   export type RegPeriksaUncheckedCreateInput = {
@@ -9067,6 +10272,7 @@ export namespace Prisma {
     status_bayar: $Enums.StatusBayar
     status_poli: $Enums.StatusPoli
     detailNotaJalan?: DetailNotaJalanUncheckedCreateNestedManyWithoutRegPeriksaInput
+    detailNotaInap?: DetailNotaInapUncheckedCreateNestedManyWithoutRegPeriksaInput
   }
 
   export type RegPeriksaUpdateInput = {
@@ -9090,6 +10296,7 @@ export namespace Prisma {
     status_bayar?: EnumStatusBayarFieldUpdateOperationsInput | $Enums.StatusBayar
     status_poli?: EnumStatusPoliFieldUpdateOperationsInput | $Enums.StatusPoli
     detailNotaJalan?: DetailNotaJalanUpdateManyWithoutRegPeriksaNestedInput
+    detailNotaInap?: DetailNotaInapUpdateManyWithoutRegPeriksaNestedInput
   }
 
   export type RegPeriksaUncheckedUpdateInput = {
@@ -9113,6 +10320,7 @@ export namespace Prisma {
     status_bayar?: EnumStatusBayarFieldUpdateOperationsInput | $Enums.StatusBayar
     status_poli?: EnumStatusPoliFieldUpdateOperationsInput | $Enums.StatusPoli
     detailNotaJalan?: DetailNotaJalanUncheckedUpdateManyWithoutRegPeriksaNestedInput
+    detailNotaInap?: DetailNotaInapUncheckedUpdateManyWithoutRegPeriksaNestedInput
   }
 
   export type RegPeriksaCreateManyInput = {
@@ -9360,6 +10568,64 @@ export namespace Prisma {
     isNot?: RegPeriksaWhereInput
   }
 
+  export type DetailNotaInapOrderByRelevanceInput = {
+    fields: DetailNotaInapOrderByRelevanceFieldEnum | DetailNotaInapOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type DetailNotaInapNoRawatNamaBayarCompoundUniqueInput = {
+    noRawat: string
+    namaBayar: string
+  }
+
+  export type DetailNotaInapCountOrderByAggregateInput = {
+    noRawat?: SortOrder
+    namaBayar?: SortOrder
+    besarPpn?: SortOrder
+    besarBayar?: SortOrder
+  }
+
+  export type DetailNotaInapAvgOrderByAggregateInput = {
+    besarPpn?: SortOrder
+    besarBayar?: SortOrder
+  }
+
+  export type DetailNotaInapMaxOrderByAggregateInput = {
+    noRawat?: SortOrder
+    namaBayar?: SortOrder
+    besarPpn?: SortOrder
+    besarBayar?: SortOrder
+  }
+
+  export type DetailNotaInapMinOrderByAggregateInput = {
+    noRawat?: SortOrder
+    namaBayar?: SortOrder
+    besarPpn?: SortOrder
+    besarBayar?: SortOrder
+  }
+
+  export type DetailNotaInapSumOrderByAggregateInput = {
+    besarPpn?: SortOrder
+    besarBayar?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type DetailNotaJalanOrderByRelevanceInput = {
     fields: DetailNotaJalanOrderByRelevanceFieldEnum | DetailNotaJalanOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -9400,22 +10666,6 @@ export namespace Prisma {
   export type DetailNotaJalanSumOrderByAggregateInput = {
     besarppn?: SortOrder
     besarBayar?: SortOrder
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type EnumStatusKamarFilter<$PrismaModel = never> = {
@@ -9910,7 +11160,17 @@ export namespace Prisma {
     none?: DetailNotaJalanWhereInput
   }
 
+  export type DetailNotaInapListRelationFilter = {
+    every?: DetailNotaInapWhereInput
+    some?: DetailNotaInapWhereInput
+    none?: DetailNotaInapWhereInput
+  }
+
   export type DetailNotaJalanOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DetailNotaInapOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -10092,9 +11352,9 @@ export namespace Prisma {
     set?: $Enums.AlasanKedatangan
   }
 
-  export type RegPeriksaCreateNestedOneWithoutDetailNotaJalanInput = {
-    create?: XOR<RegPeriksaCreateWithoutDetailNotaJalanInput, RegPeriksaUncheckedCreateWithoutDetailNotaJalanInput>
-    connectOrCreate?: RegPeriksaCreateOrConnectWithoutDetailNotaJalanInput
+  export type RegPeriksaCreateNestedOneWithoutDetailNotaInapInput = {
+    create?: XOR<RegPeriksaCreateWithoutDetailNotaInapInput, RegPeriksaUncheckedCreateWithoutDetailNotaInapInput>
+    connectOrCreate?: RegPeriksaCreateOrConnectWithoutDetailNotaInapInput
     connect?: RegPeriksaWhereUniqueInput
   }
 
@@ -10104,6 +11364,20 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type RegPeriksaUpdateOneRequiredWithoutDetailNotaInapNestedInput = {
+    create?: XOR<RegPeriksaCreateWithoutDetailNotaInapInput, RegPeriksaUncheckedCreateWithoutDetailNotaInapInput>
+    connectOrCreate?: RegPeriksaCreateOrConnectWithoutDetailNotaInapInput
+    upsert?: RegPeriksaUpsertWithoutDetailNotaInapInput
+    connect?: RegPeriksaWhereUniqueInput
+    update?: XOR<XOR<RegPeriksaUpdateToOneWithWhereWithoutDetailNotaInapInput, RegPeriksaUpdateWithoutDetailNotaInapInput>, RegPeriksaUncheckedUpdateWithoutDetailNotaInapInput>
+  }
+
+  export type RegPeriksaCreateNestedOneWithoutDetailNotaJalanInput = {
+    create?: XOR<RegPeriksaCreateWithoutDetailNotaJalanInput, RegPeriksaUncheckedCreateWithoutDetailNotaJalanInput>
+    connectOrCreate?: RegPeriksaCreateOrConnectWithoutDetailNotaJalanInput
+    connect?: RegPeriksaWhereUniqueInput
   }
 
   export type RegPeriksaUpdateOneRequiredWithoutDetailNotaJalanNestedInput = {
@@ -10173,11 +11447,25 @@ export namespace Prisma {
     connect?: DetailNotaJalanWhereUniqueInput | DetailNotaJalanWhereUniqueInput[]
   }
 
+  export type DetailNotaInapCreateNestedManyWithoutRegPeriksaInput = {
+    create?: XOR<DetailNotaInapCreateWithoutRegPeriksaInput, DetailNotaInapUncheckedCreateWithoutRegPeriksaInput> | DetailNotaInapCreateWithoutRegPeriksaInput[] | DetailNotaInapUncheckedCreateWithoutRegPeriksaInput[]
+    connectOrCreate?: DetailNotaInapCreateOrConnectWithoutRegPeriksaInput | DetailNotaInapCreateOrConnectWithoutRegPeriksaInput[]
+    createMany?: DetailNotaInapCreateManyRegPeriksaInputEnvelope
+    connect?: DetailNotaInapWhereUniqueInput | DetailNotaInapWhereUniqueInput[]
+  }
+
   export type DetailNotaJalanUncheckedCreateNestedManyWithoutRegPeriksaInput = {
     create?: XOR<DetailNotaJalanCreateWithoutRegPeriksaInput, DetailNotaJalanUncheckedCreateWithoutRegPeriksaInput> | DetailNotaJalanCreateWithoutRegPeriksaInput[] | DetailNotaJalanUncheckedCreateWithoutRegPeriksaInput[]
     connectOrCreate?: DetailNotaJalanCreateOrConnectWithoutRegPeriksaInput | DetailNotaJalanCreateOrConnectWithoutRegPeriksaInput[]
     createMany?: DetailNotaJalanCreateManyRegPeriksaInputEnvelope
     connect?: DetailNotaJalanWhereUniqueInput | DetailNotaJalanWhereUniqueInput[]
+  }
+
+  export type DetailNotaInapUncheckedCreateNestedManyWithoutRegPeriksaInput = {
+    create?: XOR<DetailNotaInapCreateWithoutRegPeriksaInput, DetailNotaInapUncheckedCreateWithoutRegPeriksaInput> | DetailNotaInapCreateWithoutRegPeriksaInput[] | DetailNotaInapUncheckedCreateWithoutRegPeriksaInput[]
+    connectOrCreate?: DetailNotaInapCreateOrConnectWithoutRegPeriksaInput | DetailNotaInapCreateOrConnectWithoutRegPeriksaInput[]
+    createMany?: DetailNotaInapCreateManyRegPeriksaInputEnvelope
+    connect?: DetailNotaInapWhereUniqueInput | DetailNotaInapWhereUniqueInput[]
   }
 
   export type EnumStatusRegPeriksaFieldUpdateOperationsInput = {
@@ -10226,6 +11514,20 @@ export namespace Prisma {
     deleteMany?: DetailNotaJalanScalarWhereInput | DetailNotaJalanScalarWhereInput[]
   }
 
+  export type DetailNotaInapUpdateManyWithoutRegPeriksaNestedInput = {
+    create?: XOR<DetailNotaInapCreateWithoutRegPeriksaInput, DetailNotaInapUncheckedCreateWithoutRegPeriksaInput> | DetailNotaInapCreateWithoutRegPeriksaInput[] | DetailNotaInapUncheckedCreateWithoutRegPeriksaInput[]
+    connectOrCreate?: DetailNotaInapCreateOrConnectWithoutRegPeriksaInput | DetailNotaInapCreateOrConnectWithoutRegPeriksaInput[]
+    upsert?: DetailNotaInapUpsertWithWhereUniqueWithoutRegPeriksaInput | DetailNotaInapUpsertWithWhereUniqueWithoutRegPeriksaInput[]
+    createMany?: DetailNotaInapCreateManyRegPeriksaInputEnvelope
+    set?: DetailNotaInapWhereUniqueInput | DetailNotaInapWhereUniqueInput[]
+    disconnect?: DetailNotaInapWhereUniqueInput | DetailNotaInapWhereUniqueInput[]
+    delete?: DetailNotaInapWhereUniqueInput | DetailNotaInapWhereUniqueInput[]
+    connect?: DetailNotaInapWhereUniqueInput | DetailNotaInapWhereUniqueInput[]
+    update?: DetailNotaInapUpdateWithWhereUniqueWithoutRegPeriksaInput | DetailNotaInapUpdateWithWhereUniqueWithoutRegPeriksaInput[]
+    updateMany?: DetailNotaInapUpdateManyWithWhereWithoutRegPeriksaInput | DetailNotaInapUpdateManyWithWhereWithoutRegPeriksaInput[]
+    deleteMany?: DetailNotaInapScalarWhereInput | DetailNotaInapScalarWhereInput[]
+  }
+
   export type DetailNotaJalanUncheckedUpdateManyWithoutRegPeriksaNestedInput = {
     create?: XOR<DetailNotaJalanCreateWithoutRegPeriksaInput, DetailNotaJalanUncheckedCreateWithoutRegPeriksaInput> | DetailNotaJalanCreateWithoutRegPeriksaInput[] | DetailNotaJalanUncheckedCreateWithoutRegPeriksaInput[]
     connectOrCreate?: DetailNotaJalanCreateOrConnectWithoutRegPeriksaInput | DetailNotaJalanCreateOrConnectWithoutRegPeriksaInput[]
@@ -10238,6 +11540,20 @@ export namespace Prisma {
     update?: DetailNotaJalanUpdateWithWhereUniqueWithoutRegPeriksaInput | DetailNotaJalanUpdateWithWhereUniqueWithoutRegPeriksaInput[]
     updateMany?: DetailNotaJalanUpdateManyWithWhereWithoutRegPeriksaInput | DetailNotaJalanUpdateManyWithWhereWithoutRegPeriksaInput[]
     deleteMany?: DetailNotaJalanScalarWhereInput | DetailNotaJalanScalarWhereInput[]
+  }
+
+  export type DetailNotaInapUncheckedUpdateManyWithoutRegPeriksaNestedInput = {
+    create?: XOR<DetailNotaInapCreateWithoutRegPeriksaInput, DetailNotaInapUncheckedCreateWithoutRegPeriksaInput> | DetailNotaInapCreateWithoutRegPeriksaInput[] | DetailNotaInapUncheckedCreateWithoutRegPeriksaInput[]
+    connectOrCreate?: DetailNotaInapCreateOrConnectWithoutRegPeriksaInput | DetailNotaInapCreateOrConnectWithoutRegPeriksaInput[]
+    upsert?: DetailNotaInapUpsertWithWhereUniqueWithoutRegPeriksaInput | DetailNotaInapUpsertWithWhereUniqueWithoutRegPeriksaInput[]
+    createMany?: DetailNotaInapCreateManyRegPeriksaInputEnvelope
+    set?: DetailNotaInapWhereUniqueInput | DetailNotaInapWhereUniqueInput[]
+    disconnect?: DetailNotaInapWhereUniqueInput | DetailNotaInapWhereUniqueInput[]
+    delete?: DetailNotaInapWhereUniqueInput | DetailNotaInapWhereUniqueInput[]
+    connect?: DetailNotaInapWhereUniqueInput | DetailNotaInapWhereUniqueInput[]
+    update?: DetailNotaInapUpdateWithWhereUniqueWithoutRegPeriksaInput | DetailNotaInapUpdateWithWhereUniqueWithoutRegPeriksaInput[]
+    updateMany?: DetailNotaInapUpdateManyWithWhereWithoutRegPeriksaInput | DetailNotaInapUpdateManyWithWhereWithoutRegPeriksaInput[]
+    deleteMany?: DetailNotaInapScalarWhereInput | DetailNotaInapScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10754,6 +12070,114 @@ export namespace Prisma {
     _max?: NestedEnumStatusPoliFilter<$PrismaModel>
   }
 
+  export type RegPeriksaCreateWithoutDetailNotaInapInput = {
+    no_reg: string
+    no_rawat: string
+    tgl_registrasi: Date | string
+    jam_reg: Date | string
+    kd_dokter: string
+    no_rkm_medis: string
+    kd_poli: string
+    p_jawab: string
+    almt_pj: string
+    hubunganpj: string
+    biaya_reg: number
+    stts: $Enums.StatusRegPeriksa
+    stts_daftar: $Enums.StatusDaftar
+    status_lanjut: $Enums.StatusLanjut
+    kd_pj: string
+    umurdaftar: number
+    sttsumur: $Enums.StatusUmur
+    status_bayar: $Enums.StatusBayar
+    status_poli: $Enums.StatusPoli
+    detailNotaJalan?: DetailNotaJalanCreateNestedManyWithoutRegPeriksaInput
+  }
+
+  export type RegPeriksaUncheckedCreateWithoutDetailNotaInapInput = {
+    no_reg: string
+    no_rawat: string
+    tgl_registrasi: Date | string
+    jam_reg: Date | string
+    kd_dokter: string
+    no_rkm_medis: string
+    kd_poli: string
+    p_jawab: string
+    almt_pj: string
+    hubunganpj: string
+    biaya_reg: number
+    stts: $Enums.StatusRegPeriksa
+    stts_daftar: $Enums.StatusDaftar
+    status_lanjut: $Enums.StatusLanjut
+    kd_pj: string
+    umurdaftar: number
+    sttsumur: $Enums.StatusUmur
+    status_bayar: $Enums.StatusBayar
+    status_poli: $Enums.StatusPoli
+    detailNotaJalan?: DetailNotaJalanUncheckedCreateNestedManyWithoutRegPeriksaInput
+  }
+
+  export type RegPeriksaCreateOrConnectWithoutDetailNotaInapInput = {
+    where: RegPeriksaWhereUniqueInput
+    create: XOR<RegPeriksaCreateWithoutDetailNotaInapInput, RegPeriksaUncheckedCreateWithoutDetailNotaInapInput>
+  }
+
+  export type RegPeriksaUpsertWithoutDetailNotaInapInput = {
+    update: XOR<RegPeriksaUpdateWithoutDetailNotaInapInput, RegPeriksaUncheckedUpdateWithoutDetailNotaInapInput>
+    create: XOR<RegPeriksaCreateWithoutDetailNotaInapInput, RegPeriksaUncheckedCreateWithoutDetailNotaInapInput>
+    where?: RegPeriksaWhereInput
+  }
+
+  export type RegPeriksaUpdateToOneWithWhereWithoutDetailNotaInapInput = {
+    where?: RegPeriksaWhereInput
+    data: XOR<RegPeriksaUpdateWithoutDetailNotaInapInput, RegPeriksaUncheckedUpdateWithoutDetailNotaInapInput>
+  }
+
+  export type RegPeriksaUpdateWithoutDetailNotaInapInput = {
+    no_reg?: StringFieldUpdateOperationsInput | string
+    no_rawat?: StringFieldUpdateOperationsInput | string
+    tgl_registrasi?: DateTimeFieldUpdateOperationsInput | Date | string
+    jam_reg?: DateTimeFieldUpdateOperationsInput | Date | string
+    kd_dokter?: StringFieldUpdateOperationsInput | string
+    no_rkm_medis?: StringFieldUpdateOperationsInput | string
+    kd_poli?: StringFieldUpdateOperationsInput | string
+    p_jawab?: StringFieldUpdateOperationsInput | string
+    almt_pj?: StringFieldUpdateOperationsInput | string
+    hubunganpj?: StringFieldUpdateOperationsInput | string
+    biaya_reg?: FloatFieldUpdateOperationsInput | number
+    stts?: EnumStatusRegPeriksaFieldUpdateOperationsInput | $Enums.StatusRegPeriksa
+    stts_daftar?: EnumStatusDaftarFieldUpdateOperationsInput | $Enums.StatusDaftar
+    status_lanjut?: EnumStatusLanjutFieldUpdateOperationsInput | $Enums.StatusLanjut
+    kd_pj?: StringFieldUpdateOperationsInput | string
+    umurdaftar?: IntFieldUpdateOperationsInput | number
+    sttsumur?: EnumStatusUmurFieldUpdateOperationsInput | $Enums.StatusUmur
+    status_bayar?: EnumStatusBayarFieldUpdateOperationsInput | $Enums.StatusBayar
+    status_poli?: EnumStatusPoliFieldUpdateOperationsInput | $Enums.StatusPoli
+    detailNotaJalan?: DetailNotaJalanUpdateManyWithoutRegPeriksaNestedInput
+  }
+
+  export type RegPeriksaUncheckedUpdateWithoutDetailNotaInapInput = {
+    no_reg?: StringFieldUpdateOperationsInput | string
+    no_rawat?: StringFieldUpdateOperationsInput | string
+    tgl_registrasi?: DateTimeFieldUpdateOperationsInput | Date | string
+    jam_reg?: DateTimeFieldUpdateOperationsInput | Date | string
+    kd_dokter?: StringFieldUpdateOperationsInput | string
+    no_rkm_medis?: StringFieldUpdateOperationsInput | string
+    kd_poli?: StringFieldUpdateOperationsInput | string
+    p_jawab?: StringFieldUpdateOperationsInput | string
+    almt_pj?: StringFieldUpdateOperationsInput | string
+    hubunganpj?: StringFieldUpdateOperationsInput | string
+    biaya_reg?: FloatFieldUpdateOperationsInput | number
+    stts?: EnumStatusRegPeriksaFieldUpdateOperationsInput | $Enums.StatusRegPeriksa
+    stts_daftar?: EnumStatusDaftarFieldUpdateOperationsInput | $Enums.StatusDaftar
+    status_lanjut?: EnumStatusLanjutFieldUpdateOperationsInput | $Enums.StatusLanjut
+    kd_pj?: StringFieldUpdateOperationsInput | string
+    umurdaftar?: IntFieldUpdateOperationsInput | number
+    sttsumur?: EnumStatusUmurFieldUpdateOperationsInput | $Enums.StatusUmur
+    status_bayar?: EnumStatusBayarFieldUpdateOperationsInput | $Enums.StatusBayar
+    status_poli?: EnumStatusPoliFieldUpdateOperationsInput | $Enums.StatusPoli
+    detailNotaJalan?: DetailNotaJalanUncheckedUpdateManyWithoutRegPeriksaNestedInput
+  }
+
   export type RegPeriksaCreateWithoutDetailNotaJalanInput = {
     no_reg: string
     no_rawat: string
@@ -10774,6 +12198,7 @@ export namespace Prisma {
     sttsumur: $Enums.StatusUmur
     status_bayar: $Enums.StatusBayar
     status_poli: $Enums.StatusPoli
+    detailNotaInap?: DetailNotaInapCreateNestedManyWithoutRegPeriksaInput
   }
 
   export type RegPeriksaUncheckedCreateWithoutDetailNotaJalanInput = {
@@ -10796,6 +12221,7 @@ export namespace Prisma {
     sttsumur: $Enums.StatusUmur
     status_bayar: $Enums.StatusBayar
     status_poli: $Enums.StatusPoli
+    detailNotaInap?: DetailNotaInapUncheckedCreateNestedManyWithoutRegPeriksaInput
   }
 
   export type RegPeriksaCreateOrConnectWithoutDetailNotaJalanInput = {
@@ -10834,6 +12260,7 @@ export namespace Prisma {
     sttsumur?: EnumStatusUmurFieldUpdateOperationsInput | $Enums.StatusUmur
     status_bayar?: EnumStatusBayarFieldUpdateOperationsInput | $Enums.StatusBayar
     status_poli?: EnumStatusPoliFieldUpdateOperationsInput | $Enums.StatusPoli
+    detailNotaInap?: DetailNotaInapUpdateManyWithoutRegPeriksaNestedInput
   }
 
   export type RegPeriksaUncheckedUpdateWithoutDetailNotaJalanInput = {
@@ -10856,6 +12283,7 @@ export namespace Prisma {
     sttsumur?: EnumStatusUmurFieldUpdateOperationsInput | $Enums.StatusUmur
     status_bayar?: EnumStatusBayarFieldUpdateOperationsInput | $Enums.StatusBayar
     status_poli?: EnumStatusPoliFieldUpdateOperationsInput | $Enums.StatusPoli
+    detailNotaInap?: DetailNotaInapUncheckedUpdateManyWithoutRegPeriksaNestedInput
   }
 
   export type DetailNotaJalanCreateWithoutRegPeriksaInput = {
@@ -10877,6 +12305,28 @@ export namespace Prisma {
 
   export type DetailNotaJalanCreateManyRegPeriksaInputEnvelope = {
     data: DetailNotaJalanCreateManyRegPeriksaInput | DetailNotaJalanCreateManyRegPeriksaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DetailNotaInapCreateWithoutRegPeriksaInput = {
+    namaBayar: string
+    besarPpn: number
+    besarBayar: number
+  }
+
+  export type DetailNotaInapUncheckedCreateWithoutRegPeriksaInput = {
+    namaBayar: string
+    besarPpn: number
+    besarBayar: number
+  }
+
+  export type DetailNotaInapCreateOrConnectWithoutRegPeriksaInput = {
+    where: DetailNotaInapWhereUniqueInput
+    create: XOR<DetailNotaInapCreateWithoutRegPeriksaInput, DetailNotaInapUncheckedCreateWithoutRegPeriksaInput>
+  }
+
+  export type DetailNotaInapCreateManyRegPeriksaInputEnvelope = {
+    data: DetailNotaInapCreateManyRegPeriksaInput | DetailNotaInapCreateManyRegPeriksaInput[]
     skipDuplicates?: boolean
   }
 
@@ -10906,9 +12356,41 @@ export namespace Prisma {
     besarBayar?: FloatFilter<"DetailNotaJalan"> | number
   }
 
+  export type DetailNotaInapUpsertWithWhereUniqueWithoutRegPeriksaInput = {
+    where: DetailNotaInapWhereUniqueInput
+    update: XOR<DetailNotaInapUpdateWithoutRegPeriksaInput, DetailNotaInapUncheckedUpdateWithoutRegPeriksaInput>
+    create: XOR<DetailNotaInapCreateWithoutRegPeriksaInput, DetailNotaInapUncheckedCreateWithoutRegPeriksaInput>
+  }
+
+  export type DetailNotaInapUpdateWithWhereUniqueWithoutRegPeriksaInput = {
+    where: DetailNotaInapWhereUniqueInput
+    data: XOR<DetailNotaInapUpdateWithoutRegPeriksaInput, DetailNotaInapUncheckedUpdateWithoutRegPeriksaInput>
+  }
+
+  export type DetailNotaInapUpdateManyWithWhereWithoutRegPeriksaInput = {
+    where: DetailNotaInapScalarWhereInput
+    data: XOR<DetailNotaInapUpdateManyMutationInput, DetailNotaInapUncheckedUpdateManyWithoutRegPeriksaInput>
+  }
+
+  export type DetailNotaInapScalarWhereInput = {
+    AND?: DetailNotaInapScalarWhereInput | DetailNotaInapScalarWhereInput[]
+    OR?: DetailNotaInapScalarWhereInput[]
+    NOT?: DetailNotaInapScalarWhereInput | DetailNotaInapScalarWhereInput[]
+    noRawat?: StringFilter<"DetailNotaInap"> | string
+    namaBayar?: StringFilter<"DetailNotaInap"> | string
+    besarPpn?: FloatFilter<"DetailNotaInap"> | number
+    besarBayar?: FloatFilter<"DetailNotaInap"> | number
+  }
+
   export type DetailNotaJalanCreateManyRegPeriksaInput = {
     namaBayar: string
     besarppn: number
+    besarBayar: number
+  }
+
+  export type DetailNotaInapCreateManyRegPeriksaInput = {
+    namaBayar: string
+    besarPpn: number
     besarBayar: number
   }
 
@@ -10927,6 +12409,24 @@ export namespace Prisma {
   export type DetailNotaJalanUncheckedUpdateManyWithoutRegPeriksaInput = {
     namaBayar?: StringFieldUpdateOperationsInput | string
     besarppn?: FloatFieldUpdateOperationsInput | number
+    besarBayar?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type DetailNotaInapUpdateWithoutRegPeriksaInput = {
+    namaBayar?: StringFieldUpdateOperationsInput | string
+    besarPpn?: FloatFieldUpdateOperationsInput | number
+    besarBayar?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type DetailNotaInapUncheckedUpdateWithoutRegPeriksaInput = {
+    namaBayar?: StringFieldUpdateOperationsInput | string
+    besarPpn?: FloatFieldUpdateOperationsInput | number
+    besarBayar?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type DetailNotaInapUncheckedUpdateManyWithoutRegPeriksaInput = {
+    namaBayar?: StringFieldUpdateOperationsInput | string
+    besarPpn?: FloatFieldUpdateOperationsInput | number
     besarBayar?: FloatFieldUpdateOperationsInput | number
   }
 

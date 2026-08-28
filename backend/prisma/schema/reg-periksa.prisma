@@ -29,6 +29,9 @@ model RegPeriksa {
 
   detailNotaJalan DetailNotaJalan[]
 
+  detailNotaInap DetailNotaInap[]
+
+
   @@map("reg_periksa")
 }
 
