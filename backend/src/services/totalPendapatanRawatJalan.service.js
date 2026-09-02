@@ -57,7 +57,7 @@ async function totalPendapatanRawatInapService(tanggal) {
             besarBayar: true
         }
     })
-
+ 
     let totalPendapatanInap = 0
 
     for (let i = 0; i < pendapatanRawatInap.length; i++) {

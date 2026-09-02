@@ -281,6 +281,12 @@
   height: 16px;
 }
 
+.alert-antrian-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 @keyframes dash-shimmer {
   from { transform: translateX(-100%); }
   to { transform: translateX(100%); }

@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
 
 import PasienCard from "../components/PasienCard";
 import Chart from "../components/Chart";
-import PendapatanHarianCard from "../components/PendapatanHarianCard";
 
 import {
   Users,
@@ -29,6 +28,7 @@ import {
   Shield,
   Ribbon,
   ClipboardList,
+  AlertTriangle,
 } from "lucide-react";
 
 import "../styles/DashboardPageStyle.css";
@@ -41,35 +41,35 @@ export default function DashboardPage() {
   const [lastUpdate, setLastUpdate] = useState(null);
   const [fetching, setFetching] = useState(false);
 
-  useEffect(() => {
-    const fetchDashboard = async () => {
-      if (fetching) return;
+  const fetchDashboard = useCallback(async () => {
+    if (fetching) return;
 
-      setFetching(true);
+    setFetching(true);
 
-      try {
-        const response = await axiosInstance.get("/api/data-harian");
+    try {
+      const response = await axiosInstance.get("/api/data-harian");
 
-        setDashboard(response.data.data);
-        setConnected(true);
-        setError("");
-        setLastUpdate(new Date());
-      } catch (error) {
-        console.error("Dashboard Error:", error);
+      setDashboard(response.data.data);
+      setConnected(true);
+      setError("");
+      setLastUpdate(new Date());
+    } catch (error) {
+      console.error("Dashboard Error:", error);
 
-        setConnected(false);
+      setConnected(false);
 
-        if (!navigator.onLine) {
-          setError("Internet terputus");
-        } else {
-          setError("Koneksi ke server terputus");
-        }
-      } finally {
-        setLoading(false);
-        setFetching(false);
+      if (!navigator.onLine) {
+        setError("Internet terputus");
+      } else {
+        setError("Koneksi ke server terputus");
       }
-    };
+    } finally {
+      setLoading(false);
+      setFetching(false);
+    }
+  }, [fetching]);
 
+  useEffect(() => {
     const handleOnline = () => {
       setConnected(true);
       setError("");
@@ -82,9 +82,8 @@ export default function DashboardPage() {
     };
 
     window.addEventListener("online", handleOnline);
-
     window.addEventListener("offline", handleOffline);
-
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchDashboard();
 
     const interval = setInterval(fetchDashboard, 30000);
@@ -93,10 +92,9 @@ export default function DashboardPage() {
       clearInterval(interval);
 
       window.removeEventListener("online", handleOnline);
-
       window.removeEventListener("offline", handleOffline);
     };
-  }, [fetching]);
+  }, [fetchDashboard]);
 
   if (loading && !dashboard) {
     return (
@@ -110,6 +108,7 @@ export default function DashboardPage() {
           {[...Array(16)].map((_, index) => (
             <div key={index} className="card-skeleton">
               <div className="skeleton skeleton-icon"></div>
+
               <div className="skeleton-content">
                 <div className="skeleton skeleton-text"></div>
                 <div className="skeleton skeleton-number"></div>
@@ -121,6 +120,8 @@ export default function DashboardPage() {
     );
   }
 
+  const alertMessages = dashboard?.alertAntrianPasien?.alertMessage ?? [];
+
   return (
     <div className="dashboard-page">
       {!connected && (
@@ -130,14 +131,17 @@ export default function DashboardPage() {
         </div>
       )}
 
+      {/* System Banner */}
       <div className="system-banner">
         <div className="system-banner-content">
           <div className="pulse-indicator">
             <span className="ring"></span>
             <span className="core"></span>
           </div>
+
           <div>
             <h3>Sistem Monitoring Rumah Sakit</h3>
+
             <p>
               Data pasien dan pelayanan diperbarui secara otomatis setiap 30
               detik
@@ -147,6 +151,7 @@ export default function DashboardPage() {
 
         <div className="sync-info">
           <span>Sinkronisasi Terakhir</span>
+
           <strong>
             {lastUpdate
               ? lastUpdate.toLocaleString("id-ID", {
@@ -155,207 +160,253 @@ export default function DashboardPage() {
                   year: "numeric",
                   hour: "2-digit",
                   minute: "2-digit",
-                }) + " WIB"
+                }) + " WITA"
               : "-"}
           </strong>
         </div>
       </div>
 
+      {/* Header */}
       <div className="dashboard-header">
         <span className="eyebrow">Hospital Analytics</span>
+
         <h1>RSU. Tumpaan Medical Center</h1>
       </div>
 
-      {/* KPI Utama */}
+      {/* =========================
+          ALERT ANTRIAN PASIEN
+      ========================= */}
+      {alertMessages.length > 0 && (
+        <section className="dashboard-section">
+          <h2 className="section-title">Peringatan Antrian</h2>
+
+          <div className="alert-antrian-list">
+            {alertMessages.map((message, index) => (
+              <div className="connection-error" key={index}>
+                <AlertTriangle size={14} />
+                {message}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* =========================
+          RINGKASAN PASIEN
+      ========================= */}
       <section className="dashboard-section">
         <h2 className="section-title">Ringkasan Pasien</h2>
+
         <div className="dashboard-grid-main">
           <PasienCard
             title="Total Pasien"
-            value={dashboard?.total_pasien}
+            value={dashboard?.ringkasan?.total_pasien ?? 0}
             icon={<Users />}
           />
+
           <PasienCard
             title="IGD"
-            value={dashboard?.total_igd}
+            value={dashboard?.ringkasan?.total_igd ?? 0}
             icon={<HeartPulse />}
             variant="vital"
           />
 
           <PasienCard
             title="Gawat Darurat"
-            value={dashboard?.total_gawat_darurat}
+            value={dashboard?.ringkasan?.total_gawat_darurat ?? 0}
             icon={<Siren />}
             variant="vital"
           />
+
           <PasienCard
             title="Rawat Jalan"
-            value={dashboard?.total_ralan}
+            value={dashboard?.ringkasan?.total_ralan ?? 0}
             icon={<Activity />}
           />
+
           <PasienCard
             title="Rawat Inap"
-            value={dashboard?.total_ranap}
+            value={dashboard?.ringkasan?.total_ranap ?? 0}
             icon={<Bed />}
           />
         </div>
       </section>
 
-      <section className="dashboard-section">
-        <h2 className="section-title">Pendapatan Harian</h2>
-        <PendapatanHarianCard
-          data={dashboard?.pendapatan_harian}
-          loading={loading}
-        />
-      </section>
-
-      {/* Grafik */}
+      {/* =========================
+          GRAFIK
+      ========================= */}
       <section className="dashboard-section">
         <h2 className="section-title">Tren Kunjungan</h2>
+
         <Chart />
       </section>
 
-      {/* Laboratorium */}
+      {/* =========================
+          LABORATORIUM
+      ========================= */}
       <section className="dashboard-section">
         <h2 className="section-title">Laboratorium</h2>
+
         <div className="dashboard-grid-lab">
           <PasienCard
             title="Lab Rawat Jalan"
-            value={dashboard?.total_laboratorium_ralan}
+            value={dashboard?.laboratorium?.total_laboratorium_ralan ?? 0}
             icon={<FlaskConical />}
             variant="lab"
           />
+
           <PasienCard
             title="Lab Rawat Inap"
-            value={dashboard?.total_laboratorium_ranap}
+            value={dashboard?.laboratorium?.total_laboratorium_ranap ?? 0}
             icon={<FlaskConical />}
             variant="lab"
           />
+
           <PasienCard
             title="Lab Patologi Klinik"
-            value={dashboard?.total_laboratorium_pk}
+            value={dashboard?.laboratorium?.total_laboratorium_pk ?? 0}
             icon={<FlaskConical />}
             variant="lab"
           />
+
           <PasienCard
             title="Lab Patologi Anatomi"
-            value={dashboard?.total_laboratorium_pa}
+            value={dashboard?.laboratorium?.total_laboratorium_pa ?? 0}
             icon={<Microscope />}
             variant="lab"
           />
 
           <PasienCard
             title="Mikrobiologi"
-            value={dashboard?.total_laboratorium_mb}
+            value={dashboard?.laboratorium?.total_laboratorium_mb ?? 0}
             icon={<Microscope />}
             variant="lab"
           />
         </div>
       </section>
 
-      {/* Poliklinik */}
+      {/* =========================
+          POLIKLINIK
+      ========================= */}
       <section className="dashboard-section">
-        <h2 className="section-title">Poliklinik &amp; Unit Layanan</h2>
+        <h2 className="section-title">Poliklinik & Unit Layanan</h2>
+
         <div className="dashboard-grid-lab">
           <PasienCard
             title="Penyakit Dalam"
-            value={dashboard?.total_penyakit_dalam}
+            value={dashboard?.poliklinik?.total_penyakit_dalam ?? 0}
             icon={<Stethoscope />}
             variant="poli"
           />
+
           <PasienCard
             title="Pediatri / Anak"
-            value={dashboard?.total_pediatri_anak}
+            value={dashboard?.poliklinik?.total_pediatri_anak ?? 0}
             icon={<Baby />}
             variant="poli"
           />
+
           <PasienCard
             title="Bedah"
-            value={dashboard?.total_bedah}
+            value={dashboard?.poliklinik?.total_bedah ?? 0}
             icon={<Scissors />}
             variant="poli"
           />
+
           <PasienCard
-            title="Kandungan &amp; Kebidanan"
-            value={dashboard?.total_kandungan_kebidanan}
+            title="Kandungan & Kebidanan"
+            value={dashboard?.poliklinik?.total_kandungan_kebidanan ?? 0}
             icon={<HeartPulse />}
             variant="poli"
           />
+
           <PasienCard
             title="Neurologi / Saraf"
-            value={dashboard?.total_neurologi_saraf}
+            value={dashboard?.poliklinik?.total_neurologi_saraf ?? 0}
             icon={<Brain />}
             variant="poli"
           />
+
           <PasienCard
-            title="Jantung &amp; Pembuluh Darah"
-            value={dashboard?.total_jantung_pembuluh_darah}
+            title="Jantung & Pembuluh Darah"
+            value={dashboard?.poliklinik?.total_jantung_pembuluh_darah ?? 0}
             icon={<HeartCrack />}
             variant="poli"
           />
+
           <PasienCard
             title="Rehabilitasi Medik"
-            value={dashboard?.total_rehabilitasi_medik}
+            value={dashboard?.poliklinik?.total_rehabilitasi_medik ?? 0}
             icon={<User />}
             variant="poli"
           />
+
           <PasienCard
-            title="Kulit &amp; Kelamin"
-            value={dashboard?.total_kulit_kelamin}
+            title="Kulit & Kelamin"
+            value={dashboard?.poliklinik?.total_kulit_kelamin ?? 0}
             icon={<Bug />}
             variant="poli"
           />
+
           <PasienCard
             title="THT KL"
-            value={dashboard?.total_tht_kl}
+            value={dashboard?.poliklinik?.total_tht_kl ?? 0}
             icon={<Volume2 />}
             variant="poli"
           />
+
           <PasienCard
             title="Mata"
-            value={dashboard?.total_mata}
+            value={dashboard?.poliklinik?.total_mata ?? 0}
             icon={<Eye />}
             variant="poli"
           />
+
           <PasienCard
             title="Geriatri"
-            value={dashboard?.total_geriatri}
+            value={dashboard?.poliklinik?.total_geriatri ?? 0}
             icon={<Heart />}
             variant="poli"
           />
+
           <PasienCard
             title="Orthopedi"
-            value={dashboard?.total_orthopedi}
+            value={dashboard?.poliklinik?.total_orthopedi ?? 0}
             icon={<Bone />}
             variant="poli"
           />
+
           <PasienCard
             title="Urologi"
-            value={dashboard?.total_urologi}
+            value={dashboard?.poliklinik?.total_urologi ?? 0}
             icon={<Droplets />}
             variant="poli"
           />
+
           <PasienCard
-            title="Gigi &amp; Mulut"
-            value={dashboard?.total_gigi_mulut}
+            title="Gigi & Mulut"
+            value={dashboard?.poliklinik?.total_gigi_mulut ?? 0}
             icon={<Smile />}
             variant="poli"
           />
+
           <PasienCard
             title="TB-DOTS"
-            value={dashboard?.total_tb_dots}
+            value={dashboard?.poliklinik?.total_tb_dots ?? 0}
             icon={<Shield />}
             variant="poli"
           />
+
           <PasienCard
             title="VCT"
-            value={dashboard?.total_vct}
+            value={dashboard?.poliklinik?.total_vct ?? 0}
             icon={<Ribbon />}
             variant="poli"
           />
+
           <PasienCard
             title="Umum / MCU"
-            value={dashboard?.total_umum_mcu}
+            value={dashboard?.poliklinik?.total_umum_mcu ?? 0}
             icon={<ClipboardList />}
             variant="poli"
           />

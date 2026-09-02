@@ -39,6 +39,7 @@ export const getTotalDataHarian = async (req, res) => {
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end} 
       AND stts != 'Batal'`,
 
+
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_ralan FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
@@ -194,9 +195,13 @@ export const getTotalDataHarian = async (req, res) => {
     ]);
 
     const totalPasien = Number(dataPasien[0]?.total_pasien ?? 0);
+
     const totalRalan = Number(dataRalan[0]?.total_ralan ?? 0);
     const totalRanap = Number(dataRanap[0]?.total_ranap ?? 0);
+
     const totalIgd = Number(dataIgd[0]?.total_igd ?? 0);
+
+
     const totalLabRalan = Number(
       dataLabRalan[0]?.total_laboratorium_ralan ?? 0,
     );
@@ -241,19 +246,51 @@ export const getTotalDataHarian = async (req, res) => {
     const totalVct = Number(dataVct[0]?.total_vct ?? 0);
     const totalUmumMcu = Number(dataUmumMcu[0]?.total_umum_mcu ?? 0);
 
+    const dataAntrianPasien = {
+      IGD: totalIgd,
+      Laboratorium_Patologi_Anatomi: totalLabPa,
+      Laboratorium_Patologi_Klinik : totalLabPk,
+      Laboratorium_Myocardial_Band : totalLabMb,
+      Gawat_Darurat : totalGawatDarurat,
+      Poli_Penyakit_Dalam : totalPenyakitDalam,
+      Poli_Anak : totalPediatriAnak,
+      Poli_Bedah : totalBedah,
+      Poli_Kandungan_Kebidanan : totalKandunganKebidanan,
+      Poli_Neurologi_Saraf : totalNeurologiSaraf,
+      Poli_Jantung_Pembuluh_Darah : totalJantungPembuluhDarah,
+      Poli_Rehabilitas_Medik : totalRehabilitasiMedik,
+      Poli_Kulit_Kelamin : totalKulitKelamin,
+    }
+
+    const alertMessage = []
+
+    for (const [key, value] of Object.entries(dataAntrianPasien)) {
+      if (value > 5) {
+        alertMessage.push(`${key} : ${value} pasien sedang menunggu`)
+      } 
+    }
+
     return res.status(200).json({
       success: true,
       data: {
+        ringkasan: {
         total_pasien: totalPasien,
         total_ralan: totalRalan,
         total_ranap: totalRanap,
         total_igd: totalIgd,
+        total_gawat_darurat: totalGawatDarurat,
+      },
+      alertAntrianPasien: {
+        alertMessage,
+      },        
+      laboratorium: {
         total_laboratorium_ralan: totalLabRalan,
         total_laboratorium_ranap: totalLabRanap,
         total_laboratorium_pa: totalLabPa,
         total_laboratorium_pk: totalLabPk,
         total_laboratorium_mb: totalLabMb,
-        total_gawat_darurat: totalGawatDarurat,
+      },
+        poliklinik: {
         total_penyakit_dalam: totalPenyakitDalam,
         total_pediatri_anak: totalPediatriAnak,
         total_bedah: totalBedah,
@@ -271,6 +308,7 @@ export const getTotalDataHarian = async (req, res) => {
         total_tb_dots: totalTbDots,
         total_vct: totalVct,
         total_umum_mcu: totalUmumMcu,
+        }, 
       },
     });
   } catch (error) {
