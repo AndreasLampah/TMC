@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600;700&display=swap");
-
 :root {
   --bg-void: #0a0f14;
   --bg-surface: #121a21;
@@ -319,5 +317,59 @@
   .dashboard-grid-lab {
     grid-template-columns: 1fr;
     padding: 4px 16px;
+  }
+}
+
+/* =========================
+   POLI DETAIL — ANTRIAN & PERIKSA
+========================= */
+
+.poli-detail-group {
+  margin-bottom: 18px;
+}
+
+.poli-detail-group:last-child {
+  margin-bottom: 0;
+}
+
+.poli-detail-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 0 0 8px 2px;
+}
+
+.poli-detail-label .count-badge {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--signal-teal);
+  background: rgba(51, 214, 192, 0.1);
+  border: 1px solid rgba(51, 214, 192, 0.25);
+  border-radius: 20px;
+  padding: 1px 8px;
+}
+
+.poli-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .poli-detail-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .poli-detail-grid {
+    grid-template-columns: 1fr;
   }
 }

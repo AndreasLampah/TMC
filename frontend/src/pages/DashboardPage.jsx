@@ -29,6 +29,8 @@ import {
   Ribbon,
   ClipboardList,
   AlertTriangle,
+  Clock,
+  CheckCircle2,
 } from "lucide-react";
 
 import "../styles/DashboardPageStyle.css";
@@ -121,6 +123,37 @@ export default function DashboardPage() {
   }
 
   const alertMessages = dashboard?.alertAntrianPasien?.alertMessage ?? [];
+
+  // Poli dengan breakdown antrian/periksa
+  const poliDenganAntrian = [
+    {
+      key: "Poli_Penyakit_Dalam",
+      title: "Penyakit Dalam",
+      icon: <Stethoscope />,
+      data: dashboard?.Poli_Penyakit_Dalam,
+      totalField: "total_penyakit_dalam",
+      antrianField: "total_antrian_penyakit_dalam",
+      periksaField: "total_periksa_penyakit_dalam",
+    },
+    {
+      key: "Poli_Anak",
+      title: "Pediatri / Anak",
+      icon: <Baby />,
+      data: dashboard?.Poli_Anak,
+      totalField: "total_pediatri_anak",
+      antrianField: "total_antrian_anak",
+      periksaField: "total_periksa_anak",
+    },
+    {
+      key: "Poli_Bedah",
+      title: "Bedah",
+      icon: <Scissors />,
+      data: dashboard?.Poli_Bedah,
+      totalField: "total_bedah",
+      antrianField: "total_antrian_bedah",
+      periksaField: "total_periksa_bedah",
+    },
+  ];
 
   return (
     <div className="dashboard-page">
@@ -286,33 +319,46 @@ export default function DashboardPage() {
       </section>
 
       {/* =========================
-          POLIKLINIK
+          POLI DENGAN DETAIL ANTRIAN
       ========================= */}
       <section className="dashboard-section">
-        <h2 className="section-title">Poliklinik & Unit Layanan</h2>
+        <h2 className="section-title">Poli Prioritas — Detail Antrian</h2>
+
+        {poliDenganAntrian.map(
+          ({ key, title, icon, data, totalField, antrianField, periksaField }) => (
+            <div key={key} className="dashboard-grid-main" style={{ marginBottom: 12 }}>
+              <PasienCard
+                title={title}
+                value={data?.[totalField] ?? 0}
+                icon={icon}
+                variant="poli"
+              />
+
+              <PasienCard
+                title={`${title} — Menunggu`}
+                value={data?.[antrianField] ?? 0}
+                icon={<Clock />}
+                variant="vital"
+              />
+
+              <PasienCard
+                title={`${title} — Selesai Periksa`}
+                value={data?.[periksaField] ?? 0}
+                icon={<CheckCircle2 />}
+                variant="lab"
+              />
+            </div>
+          )
+        )}
+      </section>
+
+      {/* =========================
+          POLIKLINIK & UNIT LAYANAN LAINNYA
+      ========================= */}
+      <section className="dashboard-section">
+        <h2 className="section-title">Poliklinik & Unit Layanan Lainnya</h2>
 
         <div className="dashboard-grid-lab">
-          <PasienCard
-            title="Penyakit Dalam"
-            value={dashboard?.poliklinik?.total_penyakit_dalam ?? 0}
-            icon={<Stethoscope />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="Pediatri / Anak"
-            value={dashboard?.poliklinik?.total_pediatri_anak ?? 0}
-            icon={<Baby />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="Bedah"
-            value={dashboard?.poliklinik?.total_bedah ?? 0}
-            icon={<Scissors />}
-            variant="poli"
-          />
-
           <PasienCard
             title="Kandungan & Kebidanan"
             value={dashboard?.poliklinik?.total_kandungan_kebidanan ?? 0}

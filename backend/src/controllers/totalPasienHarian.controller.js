@@ -17,8 +17,14 @@ export const getTotalDataHarian = async (req, res) => {
       dataLabMb,
       dataGawatDarurat,
       dataPenyakitDalam,
+      dataAntrianPenyakitDalam,
+      dataPeriksaPenyakitDalam,
       dataPediatriAnak,
+      dataAntrianAnak,
+      dataPeriksaAnak,
       dataBedah,
+      dataAntrianBedah,
+      dataPeriksaBedah,
       dataKandunganKebidanan,
       dataNeurologiSaraf,
       dataJantungPembuluhDarah,
@@ -37,38 +43,40 @@ export const getTotalDataHarian = async (req, res) => {
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_pasien FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end} 
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_ralan FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND status_lanjut = 'Ralan'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_ranap FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND status_lanjut = 'Ranap'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_igd FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'IGDK'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,  
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_laboratorium_ralan FROM periksa_lab
       WHERE tgl_periksa >= ${start} AND tgl_periksa < ${end}
-      AND status = 'Ralan'
-      `,
+      AND status = 'Ralan'`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_laboratorium_ranap FROM periksa_lab
       WHERE tgl_periksa >= ${start} AND tgl_periksa < ${end}
-      AND status = 'Ranap'
-      `,
+      AND status = 'Ranap'`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_laboratorium_pa FROM periksa_lab
@@ -89,109 +97,175 @@ export const getTotalDataHarian = async (req, res) => {
       SELECT COUNT(*) AS total_gawat_darurat FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0001'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_penyakit_dalam FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0002'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_antrian_penyakit_dalam FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0002'
+      AND stts != 'Batal'
+      AND stts = 'Belum'
+      AND stts_daftar IN ('Lama','Baru')`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_periksa_penyakit_dalam FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0002'
+      AND stts != 'Batal'
+      AND stts = 'Sudah'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_pediatri_anak FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0003'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_antrian_anak FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0003'
+      AND stts != 'Batal'
+      AND stts = 'Belum'
+      AND stts_daftar IN ('Lama','Baru')`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_periksa_anak FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0003'
+      AND stts != 'Batal'
+      AND stts = 'Sudah'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_bedah FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0004'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_antrian_bedah FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0004'
+      AND stts != 'Batal'
+      AND stts = 'Belum'
+      AND stts_daftar IN ('Lama','Baru')`,
+
+      prisma.$queryRaw`
+      SELECT COUNT(*) AS total_periksa_bedah FROM reg_periksa
+      WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
+      AND kd_poli = 'U0004'
+      AND stts != 'Batal'
+      AND stts = 'Sudah'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_kandungan_kebidanan FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0005'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_neurologi_saraf FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0006'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_jantung_pembuluh_darah FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0007'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_rehabilitasi_medik FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli ='U0008'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_kulit_kelamin FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0009'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_tht_kl FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0010'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_mata FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli ='U0011'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_geriatri FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0012'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_orthopedi FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND  kd_poli = 'U0013'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_urologi FROM reg_periksa 
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0014'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_gigi_mulut FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0015'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_tb_dots FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0016'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_vct FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0017'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
 
       prisma.$queryRaw`
       SELECT COUNT(*) AS total_umum_mcu FROM reg_periksa
       WHERE tgl_registrasi >= ${start} AND tgl_registrasi < ${end}
       AND kd_poli = 'U0020'
-      AND stts != 'Batal'`,
+      AND stts != 'Batal'
+      AND stts_daftar IN ('Lama','Baru')`,
     ]);
 
     const totalPasien = Number(dataPasien[0]?.total_pasien ?? 0);
@@ -214,13 +288,30 @@ export const getTotalDataHarian = async (req, res) => {
     const totalGawatDarurat = Number(
       dataGawatDarurat[0]?.total_gawat_darurat ?? 0,
     );
+
     const totalPenyakitDalam = Number(
       dataPenyakitDalam[0]?.total_penyakit_dalam ?? 0,
     );
+    const totalAntrianPenyakitDalam = Number(dataAntrianPenyakitDalam[0]?.total_antrian_penyakit_dalam ?? 0)
+    const totalPeriksaPenyakitDalam = Number(
+      dataPeriksaPenyakitDalam[0]?.total_periksa_penyakit_dalam ?? 0,
+    );
+
     const totalPediatriAnak = Number(
       dataPediatriAnak[0]?.total_pediatri_anak ?? 0,
     );
+    const totalAntrianPediatriAnak = Number(
+      dataAntrianAnak[0]?.total_antrian_anak ?? 0,
+    );
+    const totalPeriksaPediatriAnak = Number(
+      dataPeriksaAnak[0]?.total_periksa_anak ?? 0,
+    );
+
     const totalBedah = Number(dataBedah[0]?.total_bedah ?? 0);
+    const totalAntrianBedah = Number(dataAntrianBedah[0]?.total_antrian_bedah ?? 0);
+    const totalPeriksaBedah = Number(dataPeriksaBedah[0]?.total_periksa_bedah ?? 0);
+
+
     const totalKandunganKebidanan = Number(
       dataKandunganKebidanan[0]?.total_kandungan_kebidanan ?? 0,
     );
@@ -272,7 +363,7 @@ export const getTotalDataHarian = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      data: {
+      data: { 
         ringkasan: {
         total_pasien: totalPasien,
         total_ralan: totalRalan,
@@ -290,10 +381,22 @@ export const getTotalDataHarian = async (req, res) => {
         total_laboratorium_pk: totalLabPk,
         total_laboratorium_mb: totalLabMb,
       },
-        poliklinik: {
+      Poli_Penyakit_Dalam: {
         total_penyakit_dalam: totalPenyakitDalam,
+        total_antrian_penyakit_dalam: totalAntrianPenyakitDalam,
+        total_periksa_penyakit_dalam: totalPeriksaPenyakitDalam,
+      },
+      Poli_Anak: {
         total_pediatri_anak: totalPediatriAnak,
+        total_antrian_anak: totalAntrianPediatriAnak,
+        total_periksa_anak: totalPeriksaPediatriAnak,
+      },
+      Poli_Bedah: {
         total_bedah: totalBedah,
+        total_antrian_bedah: totalAntrianBedah,
+        total_periksa_bedah: totalPeriksaBedah,
+      },
+        poliklinik: {
         total_kandungan_kebidanan: totalKandunganKebidanan,
         total_neurologi_saraf: totalNeurologiSaraf,
         total_jantung_pembuluh_darah: totalJantungPembuluhDarah,
