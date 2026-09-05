@@ -124,7 +124,8 @@ export default function DashboardPage() {
 
   const alertMessages = dashboard?.alertAntrianPasien?.alertMessage ?? [];
 
-  // Poli dengan breakdown antrian/periksa
+  // Semua poli di bawah ini memang punya breakdown total / antrian (menunggu) /
+  // periksa (selesai) sesuai response backend getTotalDataHarian.
   const poliDenganAntrian = [
     {
       key: "Poli_Penyakit_Dalam",
@@ -152,6 +153,132 @@ export default function DashboardPage() {
       totalField: "total_bedah",
       antrianField: "total_antrian_bedah",
       periksaField: "total_periksa_bedah",
+    },
+    {
+      key: "Poli_Kandungan_Kebidanan",
+      title: "Kandungan & Kebidanan",
+      icon: <HeartPulse />,
+      data: dashboard?.Poli_Kandungan_Kebidanan,
+      totalField: "total_kandungan_kebidanan",
+      antrianField: "total_antrian_kandungan_kebidanan",
+      periksaField: "total_periksa_kandungan_kebidanan",
+    },
+    {
+      key: "Poli_Neurologi_Saraf",
+      title: "Neurologi / Saraf",
+      icon: <Brain />,
+      data: dashboard?.Poli_Neurologi_Saraf,
+      totalField: "total_neurologi_saraf",
+      antrianField: "total_antrian_neurologi_saraf",
+      periksaField: "total_periksa_neurologi_saraf",
+    },
+    {
+      key: "Poli_Jantung_Pembuluh_Darah",
+      title: "Jantung & Pembuluh Darah",
+      icon: <HeartCrack />,
+      data: dashboard?.Poli_Jantung_Pembuluh_Darah,
+      totalField: "total_jantung_pembuluh_darah",
+      antrianField: "total_antrian_jantung_pembuluh_darah",
+      periksaField: "total_periksa_jantung_pembuluh_darah",
+    },
+    {
+      key: "Poli_Rehabilitas_Medik",
+      title: "Rehabilitasi Medik",
+      icon: <User />,
+      data: dashboard?.Poli_Rehabilitas_Medik,
+      totalField: "total_rehabilitasi_medik",
+      antrianField: "total_antrian_rehabilitasi_medik",
+      periksaField: "total_periksa_rehabilitasi_medik",
+    },
+    {
+      key: "Poli_Kulit_Kelamin",
+      title: "Kulit & Kelamin",
+      icon: <Bug />,
+      data: dashboard?.Poli_Kulit_Kelamin,
+      totalField: "total_kulit_kelamin",
+      antrianField: "total_antrian_kulit_kelamin",
+      periksaField: "total_periksa_kulit_kelamin",
+    },
+    {
+      key: "Poli_Tht_Kl",
+      title: "THT - KL",
+      icon: <Volume2 />,
+      data: dashboard?.Poli_Tht_Kl,
+      totalField: "total_tht_kl",
+      antrianField: "total_antrian_tht_kl",
+      periksaField: "total_periksa_tht_kl",
+    },
+    {
+      key: "Poli_Mata",
+      title: "Mata",
+      icon: <Eye />,
+      data: dashboard?.Poli_Mata,
+      totalField: "total_mata",
+      antrianField: "total_antrian_mata",
+      periksaField: "total_periksa_mata",
+    },
+    {
+      key: "Poli_Geriatri",
+      title: "Geriatri",
+      icon: <Heart />,
+      data: dashboard?.Poli_Geriatri,
+      totalField: "total_geriatri",
+      antrianField: "total_antrian_geriatri",
+      periksaField: "total_periksa_geriatri",
+    },
+    {
+      key: "Poli_Orthopedi",
+      title: "Orthopedi",
+      icon: <Bone />,
+      data: dashboard?.Poli_Orthopedi,
+      totalField: "total_orthopedi",
+      antrianField: "total_antrian_orthopedi",
+      periksaField: "total_periksa_orthopedi",
+    },
+    {
+      key: "Poli_Urologi",
+      title: "Urologi",
+      icon: <Droplets />,
+      data: dashboard?.Poli_Urologi,
+      totalField: "total_urologi",
+      antrianField: "total_antrian_urologi",
+      periksaField: "total_periksa_urologi",
+    },
+    {
+      key: "Poli_Gigi_Mulut",
+      title: "Gigi & Mulut",
+      icon: <Smile />,
+      data: dashboard?.Poli_Gigi_Mulut,
+      totalField: "total_gigi_mulut",
+      antrianField: "total_antrian_gigi_mulut",
+      periksaField: "total_periksa_gigi_mulut",
+    },
+    {
+      key: "Poli_Tb_Dots",
+      title: "TB-DOTS",
+      icon: <Shield />,
+      data: dashboard?.Poli_Tb_Dots,
+      totalField: "total_tb_dots",
+      antrianField: "total_antrian_tb_dots",
+      periksaField: "total_periksa_tb_dots",
+    },
+    {
+      key: "Poli_VCT",
+      title: "VCT",
+      icon: <Ribbon />,
+      data: dashboard?.Poli_VCT,
+      totalField: "total_vct",
+      antrianField: "total_antrian_vct",
+      periksaField: "total_periksa_vct",
+    },
+    {
+      key: "Poli_Umum_Mcu",
+      title: "Umum / MCU",
+      icon: <ClipboardList />,
+      data: dashboard?.Poli_Umum_Mcu,
+      totalField: "total_umum_mcu",
+      antrianField: "total_antrian_umum_mcu",
+      periksaField: "total_periksa_umum_mcu",
     },
   ];
 
@@ -319,14 +446,26 @@ export default function DashboardPage() {
       </section>
 
       {/* =========================
-          POLI DENGAN DETAIL ANTRIAN
+          SEMUA POLI — TOTAL / ANTRIAN / SELESAI
       ========================= */}
       <section className="dashboard-section">
-        <h2 className="section-title">Poli Prioritas — Detail Antrian</h2>
+        <h2 className="section-title">Poliklinik — Total, Menunggu & Selesai</h2>
 
         {poliDenganAntrian.map(
-          ({ key, title, icon, data, totalField, antrianField, periksaField }) => (
-            <div key={key} className="dashboard-grid-main" style={{ marginBottom: 12 }}>
+          ({
+            key,
+            title,
+            icon,
+            data,
+            totalField,
+            antrianField,
+            periksaField,
+          }) => (
+            <div
+              key={key}
+              className="dashboard-grid-main"
+              style={{ marginBottom: 12 }}
+            >
               <PasienCard
                 title={title}
                 value={data?.[totalField] ?? 0}
@@ -350,113 +489,6 @@ export default function DashboardPage() {
             </div>
           )
         )}
-      </section>
-
-      {/* =========================
-          POLIKLINIK & UNIT LAYANAN LAINNYA
-      ========================= */}
-      <section className="dashboard-section">
-        <h2 className="section-title">Poliklinik & Unit Layanan Lainnya</h2>
-
-        <div className="dashboard-grid-lab">
-          <PasienCard
-            title="Kandungan & Kebidanan"
-            value={dashboard?.poliklinik?.total_kandungan_kebidanan ?? 0}
-            icon={<HeartPulse />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="Neurologi / Saraf"
-            value={dashboard?.poliklinik?.total_neurologi_saraf ?? 0}
-            icon={<Brain />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="Jantung & Pembuluh Darah"
-            value={dashboard?.poliklinik?.total_jantung_pembuluh_darah ?? 0}
-            icon={<HeartCrack />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="Rehabilitasi Medik"
-            value={dashboard?.poliklinik?.total_rehabilitasi_medik ?? 0}
-            icon={<User />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="Kulit & Kelamin"
-            value={dashboard?.poliklinik?.total_kulit_kelamin ?? 0}
-            icon={<Bug />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="THT KL"
-            value={dashboard?.poliklinik?.total_tht_kl ?? 0}
-            icon={<Volume2 />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="Mata"
-            value={dashboard?.poliklinik?.total_mata ?? 0}
-            icon={<Eye />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="Geriatri"
-            value={dashboard?.poliklinik?.total_geriatri ?? 0}
-            icon={<Heart />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="Orthopedi"
-            value={dashboard?.poliklinik?.total_orthopedi ?? 0}
-            icon={<Bone />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="Urologi"
-            value={dashboard?.poliklinik?.total_urologi ?? 0}
-            icon={<Droplets />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="Gigi & Mulut"
-            value={dashboard?.poliklinik?.total_gigi_mulut ?? 0}
-            icon={<Smile />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="TB-DOTS"
-            value={dashboard?.poliklinik?.total_tb_dots ?? 0}
-            icon={<Shield />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="VCT"
-            value={dashboard?.poliklinik?.total_vct ?? 0}
-            icon={<Ribbon />}
-            variant="poli"
-          />
-
-          <PasienCard
-            title="Umum / MCU"
-            value={dashboard?.poliklinik?.total_umum_mcu ?? 0}
-            icon={<ClipboardList />}
-            variant="poli"
-          />
-        </div>
       </section>
     </div>
   );
